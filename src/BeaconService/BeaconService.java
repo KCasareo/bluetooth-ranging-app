@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
+import android.bluetooth.BluetoothAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * Created by Kevin on 5/05/2017.
@@ -24,6 +26,7 @@ public class BeaconService extends Service {
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     private List<Snapshot> snapshots;
+    private BluetoothAdapter adapter;
 
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -55,6 +58,8 @@ public class BeaconService extends Service {
         thread.start();
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
+        adapter = BluetoothAdapter.getDefaultAdapter();
+
     }
 
     @Override
@@ -93,4 +98,7 @@ public class BeaconService extends Service {
         return null;
     }
 
+    public void ping() {
+
+    }
 }

@@ -3,15 +3,14 @@ package BeaconService.Beacons;
 import BeaconService.Beacons.Bluetooth.BluetoothFactory;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
+import android.bluetooth.BluetoothAdapter;
 /**
  * Created by Kevin on 5/05/2017.
  */
 
-
 public class Beacons {
+
     private HashMap<String, Beacon> beacons;
     private HashMap<String, Thread> threads;
 

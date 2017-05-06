@@ -1,5 +1,4 @@
 package BeaconService.Beacons;
-
 import BeaconService.Beacons.Bluetooth.*;
 
 /**

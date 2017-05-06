@@ -1,7 +1,6 @@
 package BeaconService.Beacons;
 
-import BeaconService.BeaconService;
-import android.os.*;
+import android.os.Process;
 
 import java.util.concurrent.Semaphore;
 
@@ -13,14 +12,14 @@ import java.util.concurrent.Semaphore;
 public abstract class Beacon implements Runnable {
     public abstract int signal_strength();
     public abstract String id();
-    public abstract void update();
+    private static final int MAX_PERMIT = 1;
+    protected abstract void update();
 
-    // Locks the write semaphore.
-    public Semaphore semaphore;
+    // Locks the semaphore so neither read nor write occur at the same time.
+    // If the reading thread happens to attempt acquisition, it will not miss a chance to read.
+    public final Semaphore semaphore = new Semaphore(MAX_PERMIT, true);
 
-    // Locks all other semaphores
-    // public Semaphore writeSemaphore;
-
+    // Called with super to turn all runnable beacon threads to background processes.
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
     }

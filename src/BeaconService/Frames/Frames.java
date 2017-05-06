@@ -3,7 +3,6 @@ package BeaconService.Frames;
 import BeaconService.Beacons.Beacons;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Kevin on 6/05/2017.
@@ -12,7 +11,6 @@ public class Frames {
     private ArrayList<Frame> frames;
     private Beacons beacons;
     public static int frameCount;
-
 
     public Frames(Beacons beacons) {
         this.frames = new ArrayList<>();

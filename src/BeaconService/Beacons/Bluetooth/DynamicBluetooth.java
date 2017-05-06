@@ -1,18 +1,24 @@
-package BeaconService.Beacons.Bluetooth;
+package beaconService.Beacons.Bluetooth;
+
+import android.bluetooth.BluetoothDevice;
 
 /**
  * Created by Kevin on 5/05/2017.
+ * This class may become just a data structure to store changes in RSSI
  */
 public class DynamicBluetooth extends Bluetooth {
-    public DynamicBluetooth(String id) {
-        super(id);
+    private BluetoothDevice device;
+    public DynamicBluetooth(BluetoothDevice device) {
+        super(device.getAddress());
+        this.device = device;
+
     }
 
-    public int signal_strength() {
-        return signalStrength;
+    public int signalStrength() {
+        return this.signalStrength;
     }
-
-
+    /*
+    // Not sure if I need this anymore.
     @Override
     public void run() {
         super.run();
@@ -20,7 +26,7 @@ public class DynamicBluetooth extends Bluetooth {
             // Lock while signal strength is being updated.
             try {
                 semaphore.acquire();
-                this.update();
+                //this.update();
                 semaphore.release();
             }
             catch (final InterruptedException e) {
@@ -29,9 +35,10 @@ public class DynamicBluetooth extends Bluetooth {
             }
         }
     }
-    @Override
-    protected void update() {
-        // Change code later
-        signalStrength++;
-    }
+*/
+
+
+
+
+
 }

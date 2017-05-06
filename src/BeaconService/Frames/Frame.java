@@ -1,4 +1,4 @@
-package BeaconService.Frames;
+package beaconService.Frames;
 
 import java.util.Map;
 

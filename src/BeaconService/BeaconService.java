@@ -1,13 +1,17 @@
-package BeaconService;
+package beaconService;
 
-import BeaconService.Beacons.Beacons;
-import BeaconService.Frames.Snapshot;
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
-import android.bluetooth.BluetoothAdapter;
+import beaconService.Beacons.BeaconCreateDescription;
+import beaconService.Beacons.Beacons;
+import beaconService.Frames.Snapshot;
 
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class BeaconService extends Service {
     private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
+    private BluetoothReceiver mReceiver;
     private List<Snapshot> snapshots;
     private BluetoothAdapter adapter;
 
@@ -54,8 +59,13 @@ public class BeaconService extends Service {
         thread.start();
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
-        adapter = BluetoothAdapter.getDefaultAdapter();
+        mReceiver = new BluetoothReceiver();
 
+        // Set the private receiver object
+        // Consider setting IntentFilter param when code is more properly organised.
+        registerReceiver(mReceiver, null, null, mServiceHandler);
+        adapter = BluetoothAdapter.getDefaultAdapter();
+        adapter.startDiscovery();
     }
 
     @Override
@@ -72,7 +82,10 @@ public class BeaconService extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
+        unregisterReceiver(mReceiver);
+        adapter.cancelDiscovery();
+        //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
+
     }
 
     /* Private methods
@@ -94,7 +107,30 @@ public class BeaconService extends Service {
         return null;
     }
 
+    // Initiate a discovery command to get the signal strength and determine
     public void ping() {
-
+        adapter.startDiscovery();
     }
+
+    /* Broadcast discovery handler
+
+     */
+    private class BluetoothReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                // If device not found.
+                if (beacons.findBeacon(device.getAddress()) == null) {
+                    // Get a bluetooth device and create an object to handle it.
+                    beacons.add(new BeaconCreateDescription(device));
+                }
+
+                // Set the RSSI
+                int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+                beacons.findBeacon(device.getAddress()).signalStrength = rssi;
+            }
+        }
+    };
 }

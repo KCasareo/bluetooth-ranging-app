@@ -1,4 +1,4 @@
-package BeaconService.Beacons.Bluetooth;
+package beaconService.Beacons.Bluetooth;
 
 /**
  * Created by Kevin on 5/05/2017.

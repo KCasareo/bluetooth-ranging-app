@@ -1,6 +1,6 @@
-package BeaconService.Frames;
+package beaconService.Frames;
 
-import BeaconService.Beacons.Beacons;
+import beaconService.Beacons.Beacons;
 
 import java.util.ArrayList;
 

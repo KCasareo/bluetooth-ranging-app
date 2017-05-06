@@ -1,4 +1,4 @@
-package BeaconService.Beacons;
+package beaconService.Beacons;
 
 import java.util.concurrent.Semaphore;
 
@@ -7,11 +7,13 @@ import java.util.concurrent.Semaphore;
  * Interface class for Beacon state objects.
  * EXTEND THIS TO ADD YOUR BEACON TYPE
  */
-public abstract class Beacon implements Runnable {
-    public abstract int signal_strength();
+public abstract class Beacon {
+    //public abstract int signalStrength();
     public abstract String id();
     private static final int MAX_PERMIT = 1;
-    protected abstract void update();
+
+    public int signalStrength;
+    //protected abstract void update();
 
     // Locks the semaphore so neither read nor write occur at the same time.
     // If the reading thread happens to attempt acquisition, it will not miss a chance to read.
@@ -21,6 +23,5 @@ public abstract class Beacon implements Runnable {
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
     }
-
 
 }

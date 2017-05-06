@@ -1,4 +1,4 @@
-package BeaconService.Beacons;
+package beaconService.Beacons;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +20,7 @@ public class Beacons {
 
     public void add(BeaconCreateDescription description) {
         Beacon beacon = BeaconFactory.create(description);
-        Thread thread = new Thread(beacon);
-        thread.start();
-        threads.put(description.id(), thread);
+
         beacons.put(description.id(), beacon);
     }
     // Return a beacon that matches the given id
@@ -36,7 +34,7 @@ public class Beacons {
         for (Beacon beacon : beacons.values()) {
             // Wait until the beacon is free to read.
             while (!beacon.semaphore.tryAcquire()) { // Wait until the beacon has stopped writing.  }
-                signal_strength.put(beacon.id(), beacon.signal_strength());
+                signal_strength.put(beacon.id(), beacon.signalStrength);
                 beacon.semaphore.release();
             }
         }

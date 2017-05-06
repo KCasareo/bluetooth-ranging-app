@@ -1,6 +1,6 @@
-package BeaconService.Beacons;
+package beaconService.Beacons;
 
-import BeaconService.Beacons.Bluetooth.BluetoothFactory;
+import beaconService.Beacons.Bluetooth.BluetoothFactory;
 
 /**
  * Created by Kevin on 5/05/2017.

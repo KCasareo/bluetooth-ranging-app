@@ -1,6 +1,6 @@
-package BeaconService.Beacons.Bluetooth;
+package beaconService.Beacons.Bluetooth;
 
-import BeaconService.Beacons.BeaconCreateDescription;
+import beaconService.Beacons.BeaconCreateDescription;
 
 /**
  * Created by Kevin on 5/05/2017.
@@ -20,7 +20,7 @@ public class BluetoothFactory {
                 return new SensorTag(description.id());
             default:
                 // Return a non-reliable bluetooth sensor connection if the connection is unrecognised;
-                return new DynamicBluetooth(description.id());
+                return new DynamicBluetooth(description.device());
         }
     }
 }

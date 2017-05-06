@@ -1,9 +1,23 @@
 package BeaconService.Beacons.Bluetooth;
 
-import BeaconService.Beacons.BeaconService;
-
+import BeaconService.Beacons.Beacon;
 /**
  * Created by Kevin on 5/05/2017.
  */
-public abstract class Bluetooth implements BeaconService.Beacon {
+public abstract class Bluetooth extends Beacon {
+    protected String id;
+    protected int signalStrength;
+
+    public Bluetooth(String id) {
+        this.id = id;
+    }
+    @Override
+    public void run() {
+        super.run();
+    }
+
+    @Override
+    public String id() {
+        return null;
+    }
 }

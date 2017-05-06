@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dbe84ad5-c515-47bc-b931-08d270fae4a3" name="Default" comment="" />
+    <list default="true" id="dbe84ad5-c515-47bc-b931-08d270fae4a3" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BEACON_TYPE.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BEACON_TYPE.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BLUETOOTH_TYPE.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BLUETOOTH_TYPE.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacon.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconCreateDescription.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconCreateDescription.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconFactory.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/BeaconService.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/BeaconService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacons.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacons.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Bluetooth.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Bluetooth.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BluetoothFactory.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BluetoothFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/DynamicBluetooth.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/DynamicBluetooth.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Estimote.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Estimote.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frame.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frames.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frames.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/SensorTag.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/SensorTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Snapshot.java" afterPath="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Snapshot.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="ranging.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -22,51 +40,107 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="BeaconService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beaconService/BeaconService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="16.241379">
               <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
               <folding />
+=======
+      <file leaf-file-name="Beacons.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacons.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="46" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#842#843#0" expanded="true" />
+                <element signature="e#880#881#0" expanded="true" />
+              </folding>
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="Frames.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/beaconService/Frames/Frames.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.8016807">
               <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
               <folding />
+=======
+      <file leaf-file-name="BeaconService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/BeaconService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="92" column="20" selection-start-line="92" selection-start-column="20" selection-end-line="92" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2416#2417#0" expanded="true" />
+                <element signature="e#2443#2444#0" expanded="true" />
+              </folding>
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="Frame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beaconService/Frames/Frame.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
+=======
+      <file leaf-file-name="Snapshot.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Snapshot.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="BeaconCreateDescription.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/BeaconCreateDescription.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
               <folding />
+=======
+      <file leaf-file-name="Frames.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frames.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.425">
+              <caret line="24" column="84" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="Beacon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/Beacon.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
+=======
+      <file leaf-file-name="Frame.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -74,11 +148,19 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="DynamicBluetooth.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/DynamicBluetooth.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="11" column="50" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
+=======
+      <file leaf-file-name="BeaconFactory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,6 +168,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/application/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -96,16 +179,58 @@
                 <element signature="e#950#951#0" expanded="true" />
                 <element signature="e#980#981#0" expanded="true" />
               </folding>
+=======
+      <file leaf-file-name="BluetoothFactory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BluetoothFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="BeaconCreateDescription.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconCreateDescription.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DynamicBluetooth.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/DynamicBluetooth.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+              <folding />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <file leaf-file-name="Beacons.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/Beacons.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding />
+=======
+      <file leaf-file-name="SensorTag.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/SensorTag.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <folding>
+                <element signature="e#161#162#0" expanded="true" />
+                <element signature="e#186#187#0" expanded="true" />
+                <element signature="e#354#355#0" expanded="true" />
+                <element signature="e#381#382#0" expanded="true" />
+              </folding>
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
             </state>
           </provider>
         </entry>
@@ -115,9 +240,20 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
         <option value="valueResourceFile" />
+=======
+        <option value="Activity" />
+        <option value="Service" />
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -127,6 +263,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
         <option value="$PROJECT_DIR$/src/com/kcasareo/ranging/BeaconService/Beacons/BeaconCreateDescription.java" />
         <option value="$PROJECT_DIR$/src/BeaconService/Beacons/BeaconCreateDescription.java" />
         <option value="$PROJECT_DIR$/src/com/kcasareo/ranging/BeaconService/BeaconService.java" />
@@ -141,6 +278,52 @@
         <option value="$PROJECT_DIR$/src/beaconService/BeaconService.java" />
         <option value="$PROJECT_DIR$/src/application/MainActivity.java" />
         <option value="$PROJECT_DIR$/src/beaconService/Frames/Frames.java" />
+=======
+        <option value="$PROJECT_DIR$/bluetooth/src/Main.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/Estimote.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/MainActivity.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/Bluetooth.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/Sensor.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/sensors/BluetoothConnections.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/sensors/Sensor.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/navigation/navigation.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/navigation/navigator.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/sensors/Estimote.java" />
+        <option value="$PROJECT_DIR$/BluetoothSensorApp/src/NavigationService.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/application/NavigationService.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/application/MainActivity.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/navigation/Navigator.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/sensors/Wifi.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/sensors/Bluetooth.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/sensors/BeaconSensor.java" />
+        <option value="$PROJECT_DIR$/src/application/NavigationService.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/beacons/SensorTag.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/beacons/Estimote.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/beacons/SensorFactory.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/beacons/Bluetooth.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/beacons/BeaconService.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacon.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconService.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/SensorCreateData.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/SensorFactory.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/SensorCreateDescription.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BLUETOOTH_TYPE.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BEACON_TYPE.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frame.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/BeaconService.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Bluetooth.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconCreateDescription.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Snapshot.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/SensorTag.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frames.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacon.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/DynamicBluetooth.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Estimote.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacons.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BluetoothFactory.java" />
+        <option value="$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconFactory.java" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
       </list>
     </option>
   </component>
@@ -153,7 +336,7 @@
     <option name="width" value="1382" />
     <option name="height" value="754" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -176,8 +359,13 @@
       <sortByType />
     </navigator>
     <panes>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <pane id="Scope" />
       <pane id="Scratches" />
+=======
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -231,6 +419,50 @@
               <option name="myItemId" value="beaconService" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bluetooth" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeaconService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bluetooth" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeaconService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Frames" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -254,7 +486,45 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
               <option name="myItemId" value="Beacons" />
+=======
+              <option name="myItemId" value="BeaconService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beacons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ranging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bluetooth" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeaconService" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beacons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Bluetooth" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -318,6 +588,7 @@
           </PATH>
         </subPane>
       </pane>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -333,6 +604,18 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.kcasareo.ranging" />
     </key>
+=======
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Kevin/IdeaProjects/ranging/bluetooth/src/BeaconService/BeaconService.java" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
   </component>
   <component name="RunManager" selected="Android Application.ranging">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -507,6 +790,9 @@
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="dbe84ad5-c515-47bc-b931-08d270fae4a3" name="Default" comment="" />
@@ -517,7 +803,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+=======
+    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -531,8 +821,14 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25037822" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+=======
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299595" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -545,8 +841,19 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -558,6 +865,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/DynamicBluetooth.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -572,44 +880,142 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/application/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/bluetooth.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/application/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="1" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BEACON_TYPE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/BeaconCreateDescription.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BLUETOOTH_TYPE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/Beacons.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Bluetooth.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+          <folding>
+            <element signature="e#262#263#0" expanded="true" />
+            <element signature="e#290#291#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/Estimote.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/beaconService/Beacons/Beacon.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#583#584#0" expanded="true" />
+            <element signature="e#682#683#0" expanded="true" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/beaconService/BeaconService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="16.241379">
           <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/BeaconService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="20" selection-start-line="92" selection-start-column="20" selection-end-line="92" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2416#2417#0" expanded="true" />
+            <element signature="e#2443#2444#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/SensorTag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding>
+            <element signature="e#161#162#0" expanded="true" />
+            <element signature="e#186#187#0" expanded="true" />
+            <element signature="e#354#355#0" expanded="true" />
+            <element signature="e#381#382#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/DynamicBluetooth.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/application/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -618,17 +1024,160 @@
             <element signature="imports" expanded="true" />
             <element signature="e#950#951#0" expanded="true" />
             <element signature="e#980#981#0" expanded="true" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Beacons.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="46" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#842#843#0" expanded="true" />
+            <element signature="e#880#881#0" expanded="true" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
     <entry file="file://$PROJECT_DIR$/src/beaconService/Frames/Frames.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8016807">
           <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconCreateDescription.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/Bluetooth/BluetoothFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="10" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD:app/src/bluetooth-ranging-app/.idea/workspace.xml
+=======
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Beacons/BeaconFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Snapshot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetooth/src/BeaconService/Frames/Frames.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.425">
+          <caret line="24" column="84" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Android</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>bluetooth</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+>>>>>>> Switched to static factory methods:.idea/workspace.xml
   </component>
 </project>

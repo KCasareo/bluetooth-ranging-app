@@ -1,11 +1,18 @@
 package BeaconService;
 
 import BeaconService.Beacons.Beacons;
+import BeaconService.Frames.Frame;
+import BeaconService.Frames.Frames;
+import BeaconService.Frames.Snapshot;
 import android.app.Service;
 import android.content.Intent;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Kevin on 5/05/2017.
@@ -16,6 +23,7 @@ public class BeaconService extends Service {
     private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
+    private List<Snapshot> snapshots;
 
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -66,11 +74,23 @@ public class BeaconService extends Service {
         Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
     }
 
-    /* Client methods
+    /* Private methods
     *
     * */
 
+    // Create a snapshot to use
+    private void createSnapshot() {
+        snapshots.add(new Snapshot(beacons));
+    }
 
 
+    /* Client methods
+    * Methods that should be accessible by from the service.
+    * */
+
+    // Get snapshot within the given time
+    public Snapshot snapshot(int thresholdUpper, int thresholdLower) {
+        return null;
+    }
 
 }

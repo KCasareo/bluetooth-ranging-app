@@ -112,6 +112,8 @@ public class BeaconService extends Service {
         adapter.startDiscovery();
     }
 
+    public void cancel() { adapter.cancelDiscovery(); }
+
     /* Broadcast discovery handler
 
      */
@@ -119,6 +121,7 @@ public class BeaconService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            // Discovery
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If device not found.
@@ -126,7 +129,10 @@ public class BeaconService extends Service {
                     // Get a bluetooth device and create an object to handle it.
                     beacons.add(new BeaconCreateDescription(device));
                 }
-
+            }
+            // Broadcast Action detected.
+            if(BluetoothDevice.ACTION_UUID.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.ACTION_UUID);
                 // Set the RSSI
                 int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
                 beacons.findBeacon(device.getAddress()).signalStrength = rssi;

@@ -1,8 +1,6 @@
 package BeaconService;
 
 import BeaconService.Beacons.Beacons;
-import BeaconService.Frames.Frame;
-import BeaconService.Frames.Frames;
 import BeaconService.Frames.Snapshot;
 import android.app.Service;
 import android.content.Intent;
@@ -11,8 +9,6 @@ import android.os.Process;
 import android.widget.Toast;
 import android.bluetooth.BluetoothAdapter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 

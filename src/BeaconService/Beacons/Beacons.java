@@ -1,10 +1,8 @@
 package BeaconService.Beacons;
 
-import BeaconService.Beacons.Bluetooth.BluetoothFactory;
-
 import java.util.HashMap;
 import java.util.Map;
-import android.bluetooth.BluetoothAdapter;
+
 /**
  * Created by Kevin on 5/05/2017.
  */

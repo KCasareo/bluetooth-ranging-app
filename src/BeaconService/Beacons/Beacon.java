@@ -1,7 +1,5 @@
 package BeaconService.Beacons;
 
-import android.os.Process;
-
 import java.util.concurrent.Semaphore;
 
 /**

@@ -1,7 +1,6 @@
 package BeaconService.Beacons;
 
 import BeaconService.Beacons.Bluetooth.BluetoothFactory;
-import android.hardware.Sensor;
 
 /**
  * Created by Kevin on 5/05/2017.

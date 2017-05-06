@@ -1,7 +1,5 @@
 package BeaconService.Frames;
 
-import BeaconService.Beacons.Beacons;
-
 import java.util.Map;
 
 /**

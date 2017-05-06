@@ -1,7 +1,10 @@
 package BeaconService.Beacons.Bluetooth;
 
 /**
- * Created by Kevin on 5/05/2017.
+ * Created by Kevin on 6/05/2017.
  */
-public enum BLUETOOTH_TYPE {
+enum BLUETOOTH_TYPE {
+    NONE, // For use in BeaconCreateDescription
+    ESTIMOTE,
+    SENSOR_TAG
 }

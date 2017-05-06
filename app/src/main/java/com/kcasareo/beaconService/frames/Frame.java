@@ -1,12 +1,5 @@
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/frames/Frame.java
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/frames/Frame.java
 package com.kcasareo.beaconService.frames;
-=======
-package BeaconService.Frames;
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/Frames/Frame.java
-=======
-package beaconService.Frames;
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/Frames/Frame.java
+
 
 import java.util.Map;
 

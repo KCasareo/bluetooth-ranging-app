@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="64e06aa9-ff61-4054-a43a-ea4bda7e5027" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Kevin\IdeaProjects\ranging\.idea\dictionaries\Kevin.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Kevin\IdeaProjects\ranging\.idea\dictionaries\copyright\profiles_settings.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\BEACON_TYPE.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/BEACON_TYPE.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\BLUETOOTH_TYPE.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/BLUETOOTH_TYPE.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Beacon.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Beacon.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\BeaconCreateDescription.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/BeaconCreateDescription.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\BeaconFactory.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/BeaconFactory.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\BeaconService.java" afterPath="$PROJECT_DIR$/src/beaconService/BeaconService.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Beacons.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Beacons.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\Bluetooth.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/Bluetooth.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\BluetoothFactory.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/BluetoothFactory.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\DynamicBluetooth.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/DynamicBluetooth.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\Estimote.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/Estimote.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Frames\Frame.java" afterPath="$PROJECT_DIR$/src/beaconService/Frames/Frame.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Frames\Frames.java" afterPath="$PROJECT_DIR$/src/beaconService/Frames/Frames.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/MainActivity.java" afterPath="$PROJECT_DIR$/src/application/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Beacons\Bluetooth\SensorTag.java" afterPath="$PROJECT_DIR$/src/beaconService/Beacons/Bluetooth/SensorTag.java" />
-      <change type="MODIFICATION" beforePath="C:\Users\Kevin\IdeaProjects\ranging\src\beaconService\Frames\Snapshot.java" afterPath="$PROJECT_DIR$/src/beaconService/Frames/Snapshot.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="64e06aa9-ff61-4054-a43a-ea4bda7e5027" name="Default" comment="" />
     <ignored path="ranging.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -120,8 +96,8 @@
         <entry file="file://$PROJECT_DIR$/src/beaconService/BeaconService.java">
 >>>>>>> Replaced threading with onreceive handler:.idea/workspace.xml
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.903125">
-              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.76979166">
+              <caret line="130" column="17" selection-start-line="130" selection-start-column="17" selection-end-line="130" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1242,8 +1218,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/beaconService/BeaconService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.903125">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.76979166">
+          <caret line="130" column="17" selection-start-line="130" selection-start-column="17" selection-end-line="130" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

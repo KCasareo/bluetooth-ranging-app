@@ -1,8 +1,4 @@
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/BeaconService.java
 package com.kcasareo.beaconService;
-=======
-package beaconService;
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/BeaconService.java
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -13,15 +9,9 @@ import android.content.Intent;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/BeaconService.java
 import com.kcasareo.beaconService.Beacons.BeaconCreateDescription;
 import com.kcasareo.beaconService.Beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
-=======
-import beaconService.Beacons.BeaconCreateDescription;
-import beaconService.Beacons.Beacons;
-import beaconService.Frames.Snapshot;
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/BeaconService.java
 
 import java.util.List;
 
@@ -70,15 +60,12 @@ public class BeaconService extends Service {
         mServiceLooper = thread.getLooper();
         mServiceHandler = new ServiceHandler(mServiceLooper);
         mReceiver = new BluetoothReceiver();
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/BeaconService.java
 
         // Set the private receiver object
         // Consider setting IntentFilter param when code is more properly organised.
         registerReceiver(mReceiver, null, null, mServiceHandler);
         adapter = BluetoothAdapter.getDefaultAdapter();
         adapter.startDiscovery();
-=======
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/BeaconService.java
 
         // Set the private receiver object
         // Consider setting IntentFilter param when code is more properly organised.
@@ -131,11 +118,9 @@ public class BeaconService extends Service {
         adapter.startDiscovery();
     }
 
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/BeaconService.java
     public void cancel() { adapter.cancelDiscovery(); }
 
-=======
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/BeaconService.java
+
     /* Broadcast discovery handler
 
      */
@@ -143,10 +128,8 @@ public class BeaconService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/BeaconService.java
             // Discovery
-=======
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/BeaconService.java
+
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If device not found.
@@ -154,14 +137,12 @@ public class BeaconService extends Service {
                     // Get a bluetooth device and create an object to handle it.
                     beacons.add(new BeaconCreateDescription(device));
                 }
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/BeaconService.java
+
             }
             // Broadcast Action detected.
             if(BluetoothDevice.ACTION_UUID.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.ACTION_UUID);
-=======
 
->>>>>>> Replaced threading with onreceive handler:src/BeaconService/BeaconService.java
                 // Set the RSSI
                 int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
                 beacons.findBeacon(device.getAddress()).signalStrength = rssi;

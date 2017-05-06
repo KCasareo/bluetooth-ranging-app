@@ -1,6 +1,12 @@
+<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/frames/Snapshot.java
 package com.kcasareo.beaconService.frames;
 
 import com.kcasareo.beaconService.Beacons.Beacons;
+=======
+package beaconService.Frames;
+
+import beaconService.Beacons.Beacons;
+>>>>>>> Replaced threading with onreceive handler:src/BeaconService/Frames/Snapshot.java
 
 import java.util.Date;
 

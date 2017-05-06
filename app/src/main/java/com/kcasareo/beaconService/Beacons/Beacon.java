@@ -1,3 +1,4 @@
+
 package com.kcasareo.beaconService.Beacons;
 
 import android.content.BroadcastReceiver;
@@ -27,6 +28,7 @@ public abstract class Beacon {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
     }
 
+<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/Beacons/Beacon.java
     //*/
 
 }

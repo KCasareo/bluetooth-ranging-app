@@ -1,6 +1,8 @@
+
 package com.kcasareo.beaconService.Beacons.Bluetooth;
 
 import com.kcasareo.beaconService.Beacons.Beacon;
+
 
 /**
  * Created by Kevin on 5/05/2017.

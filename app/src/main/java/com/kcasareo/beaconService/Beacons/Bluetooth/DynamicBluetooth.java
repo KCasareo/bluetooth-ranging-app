@@ -1,5 +1,6 @@
 package com.kcasareo.beaconService.Beacons.Bluetooth;
 
+
 import android.bluetooth.BluetoothDevice;
 
 /**
@@ -14,6 +15,7 @@ public class DynamicBluetooth extends Bluetooth {
         this.receiver = receiver;
 
     }
+
 
     /*
     // Not sure if I need this anymore.

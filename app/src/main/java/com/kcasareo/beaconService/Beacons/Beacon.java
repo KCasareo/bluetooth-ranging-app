@@ -1,7 +1,6 @@
 package com.kcasareo.beaconService.Beacons;
 
 import android.content.BroadcastReceiver;
-
 import java.util.concurrent.Semaphore;
 
 /**

@@ -2,6 +2,7 @@ package com.kcasareo.beaconService.Beacons.Bluetooth;
 
 
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 
 /**
  * Created by Kevin on 5/05/2017.

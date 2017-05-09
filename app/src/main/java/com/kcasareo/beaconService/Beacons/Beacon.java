@@ -1,7 +1,7 @@
-
 package com.kcasareo.beaconService.Beacons;
 
 import android.content.BroadcastReceiver;
+
 import java.util.concurrent.Semaphore;
 
 /**
@@ -29,6 +29,9 @@ public abstract class Beacon {
     }
 
 <<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/Beacons/Beacon.java
+<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/Beacons/Beacon.java
+=======
+>>>>>>> Threading the Frames object:src/BeaconService/Beacons/Beacon.java
     //*/
 
 }

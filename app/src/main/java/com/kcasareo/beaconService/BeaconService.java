@@ -67,11 +67,6 @@ public class BeaconService extends Service {
         adapter = BluetoothAdapter.getDefaultAdapter();
         adapter.startDiscovery();
 
-        // Set the private receiver object
-        // Consider setting IntentFilter param when code is more properly organised.
-        registerReceiver(mReceiver, null, null, mServiceHandler);
-        adapter = BluetoothAdapter.getDefaultAdapter();
-        adapter.startDiscovery();
     }
 
     @Override

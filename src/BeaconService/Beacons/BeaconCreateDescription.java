@@ -1,6 +1,7 @@
 package beaconService.Beacons;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 import beaconService.Beacons.Bluetooth.BEACON_TYPE;
 import beaconService.Beacons.Bluetooth.BLUETOOTH_TYPE;
 
@@ -13,6 +14,7 @@ public class BeaconCreateDescription {
     private BEACON_TYPE beacon_type;
     private BluetoothDevice device;
     private String id;
+    private BroadcastReceiver receiver;
 
     // Default creation message, needs all types defined.
     public BeaconCreateDescription (BEACON_TYPE beacon_type, BLUETOOTH_TYPE bluetooth_type, String id){
@@ -28,6 +30,7 @@ public class BeaconCreateDescription {
         bluetooth_type = BLUETOOTH_TYPE.NONE;
         this.device = device;
         this.id = device.getAddress();
+        //this.receiver = receiver;
     }
 
     public BLUETOOTH_TYPE bluetooth_type() {

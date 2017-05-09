@@ -3,14 +3,16 @@ package beaconService.Frames;
 import beaconService.Beacons.Beacons;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 /**
  * Created by Kevin on 6/05/2017.
  */
-public class Frames {
+public class Frames implements Runnable {
     private ArrayList<Frame> frames;
     private Beacons beacons;
     public static int frameCount;
+    public Semaphore semaphore;
 
     public Frames(Beacons beacons) {
         this.frames = new ArrayList<>();
@@ -25,6 +27,19 @@ public class Frames {
         frameCount++;
     }
 
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                semaphore.acquire();
+                update();
+            } catch (InterruptedException e) {
+                
+            } finally {
+                semaphore.release();
+            }
+        }
+    }
 
 
     // Return the frames from between the start and end frames

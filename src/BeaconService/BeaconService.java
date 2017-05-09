@@ -43,7 +43,7 @@ public class BeaconService extends Service {
     }
 
     public class BeaconServiceBinder extends Binder {
-        BeaconService getService () {
+        public BeaconService getService () {
             return BeaconService.this;
         }
     }
@@ -66,6 +66,7 @@ public class BeaconService extends Service {
         registerReceiver(mReceiver, null, null, mServiceHandler);
         adapter = BluetoothAdapter.getDefaultAdapter();
         adapter.startDiscovery();
+
     }
 
     @Override

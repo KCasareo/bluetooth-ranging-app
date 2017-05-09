@@ -1,6 +1,7 @@
 package beaconService.Beacons.Bluetooth;
 
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
 
 /**
  * Created by Kevin on 5/05/2017.
@@ -11,6 +12,7 @@ public class DynamicBluetooth extends Bluetooth {
     public DynamicBluetooth(BluetoothDevice device) {
         super(device.getAddress());
         this.device = device;
+        this.receiver = receiver;
 
     }
 

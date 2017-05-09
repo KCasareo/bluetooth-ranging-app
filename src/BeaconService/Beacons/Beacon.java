@@ -1,5 +1,7 @@
 package beaconService.Beacons;
 
+import android.content.BroadcastReceiver;
+
 import java.util.concurrent.Semaphore;
 
 /**
@@ -11,6 +13,7 @@ public abstract class Beacon {
     //public abstract int signalStrength();
     public abstract String id();
     private static final int MAX_PERMIT = 1;
+    protected BroadcastReceiver receiver;
 
     public int signalStrength;
     //protected abstract void update();
@@ -19,9 +22,12 @@ public abstract class Beacon {
     // If the reading thread happens to attempt acquisition, it will not miss a chance to read.
     public final Semaphore semaphore = new Semaphore(MAX_PERMIT, true);
 
-    // Called with super to turn all runnable beacon threads to background processes.
+
+    /* Called with super to turn all runnable beacon threads to background processes.
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
     }
+
+    //*/
 
 }

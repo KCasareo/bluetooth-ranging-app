@@ -1,6 +1,6 @@
-package BeaconService.Frames;
+package beaconService.Frames;
 
-import BeaconService.Beacons.Frames.*;
+import beaconService.Beacons.Beacons;
 
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
@@ -9,12 +9,12 @@ import java.util.concurrent.Semaphore;
  * Created by Kevin on 6/05/2017.
  */
 public class Frames implements Runnable {
-    private ArrayList<beaconService.Frames.Frame> frames;
-    private beaconService.Beacons.Beacons beacons;
+    private ArrayList<Frame> frames;
+    private Beacons beacons;
     public static int frameCount;
     public Semaphore semaphore;
 
-    public Frames(beaconService.Beacons.Beacons beacons) {
+    public Frames(Beacons beacons) {
         this.frames = new ArrayList<>();
         this.beacons = beacons;
         frameCount = 0;

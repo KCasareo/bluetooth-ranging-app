@@ -3,15 +3,20 @@ package com.kcasareo.beaconService.frames;
 import com.kcasareo.beaconService.Beacons.Beacons;
 
 import java.util.ArrayList;
+import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
 /**
  * Created by Kevin on 6/05/2017.
+ * TimerTask so it doesn't
  */
-public class Frames implements Runnable {
+
+
+public class Frames extends TimerTask {
+
     private ArrayList<Frame> frames;
     private Beacons beacons;
-    public static int frameCount;
+    private int frameCount;
     public Semaphore semaphore;
 
     public Frames(Beacons beacons) {
@@ -20,30 +25,20 @@ public class Frames implements Runnable {
         frameCount = 0;
     }
 
-    // Add a new frame.
-    public void update() {
-        // Adds a new frame. beacons.signalStrength() is blocking for this function.
-        this.frames.add(new Frame(beacons.signalStrength(), frameCount));
-        frameCount++;
-        // Will throw Interrupted Exception.
+    public int getFrameCount() {
+        return frameCount;
     }
 
+    // Add a new frame.
     @Override
     public void run() {
         while (true) {
-            try {
-                semaphore.acquire();
-                update();
-            } catch (InterruptedException e) {
-                Thread.currentThread().isInterrupted();
-            } finally {
-                semaphore.release();
-            }
+            this.frames.add(new Frame(beacons.signalStrength(), frameCount));
+            frameCount++;
         }
     }
+}
 
 
     // Return the frames from between the start and end frames
 
-
-}

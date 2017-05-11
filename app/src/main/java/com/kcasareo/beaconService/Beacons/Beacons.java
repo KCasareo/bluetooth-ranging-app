@@ -34,11 +34,7 @@ public class Beacons {
     public Map<String, Integer> signalStrength() {
         Map<String, Integer> signalStrength = new HashMap<>();
         for (Beacon beacon : beacons.values()) {
-            // Wait until the beacon is free to read.
-            while (!beacon.semaphore.tryAcquire()) { // Wait until the beacon has stopped writing.  }
-                signalStrength.put(beacon.id(), beacon.signalStrength);
-                beacon.semaphore.release();
-            }
+                signalStrength.put(beacon.id(), beacon.getSignalStrength());
         }
         return signalStrength;
     }

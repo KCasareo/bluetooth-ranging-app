@@ -14,6 +14,10 @@ import com.kcasareo.beaconService.Beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
 /**
@@ -28,6 +32,7 @@ public class BeaconService extends Service {
     private BluetoothReceiver mReceiver;
     private List<Snapshot> snapshots;
     private BluetoothAdapter adapter;
+    private Timer snapshotScheduler;
 
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -65,6 +70,17 @@ public class BeaconService extends Service {
         registerReceiver(mReceiver, null, null, mServiceHandler);
         adapter = BluetoothAdapter.getDefaultAdapter();
         adapter.startDiscovery();
+
+        snapshotScheduler = new Timer();
+        // Every 500ms create a new position snapshot.
+        snapshotScheduler.scheduleAtFixedRate(new TimerTask (){
+
+            @Override
+            public void run() {
+                snapshots.add(new Snapshot(beacons));
+            }
+        }, 0, MAX_REFRESH_TIME);
+
 
     }
 

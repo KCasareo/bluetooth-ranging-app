@@ -15,7 +15,16 @@ public abstract class Beacon {
     private static final int MAX_PERMIT = 1;
     protected BroadcastReceiver receiver;
 
-    public int signalStrength;
+    private int signalStrength;
+
+    public synchronized int getSignalStrength() {
+        return signalStrength;
+    }
+
+    public synchronized void setSignalStrength(int signalStrength) {
+        this.signalStrength = signalStrength;
+    }
+
     //protected abstract void update();
 
     // Locks the semaphore so neither read nor write occur at the same time.

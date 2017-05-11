@@ -11,7 +11,7 @@ import java.util.Date;
 public class Snapshot implements Runnable {
     private Frames frames;
     private Beacons beacons;
-    private Date start;
+    private final Date start;
     private static final int MAX_TIME = 500;
 
 
@@ -27,7 +27,17 @@ public class Snapshot implements Runnable {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         // Call this object while 500s have not passed.
         while ( new Date().getTime() < start.getTime() + MAX_TIME ) {
-            frames.update();
+            frames.run();
         }
+        try {
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().isInterrupted();
+        }
+    }
+
+
+    public Frames frames() {
+        return this.frames;
     }
 }

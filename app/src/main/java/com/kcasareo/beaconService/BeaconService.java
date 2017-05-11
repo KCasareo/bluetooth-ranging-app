@@ -33,7 +33,6 @@ public class BeaconService extends Service {
         public ServiceHandler(Looper looper) {
             super(looper);
         }
-
         @Override
         public void handleMessage(Message msg) {
             // Put time-dependent code here
@@ -117,7 +116,7 @@ public class BeaconService extends Service {
 
 
     /* Broadcast discovery handler
-
+     * Must exist in an activity class. 11-05-17
      */
     private class BluetoothReceiver extends BroadcastReceiver{
         @Override
@@ -128,7 +127,7 @@ public class BeaconService extends Service {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If device not found.
-                if (beacons.findBeacon(device.getAddress()) == null) {
+                if (beacons.findBeacon(device.getUuids().toString()) == null) {
                     // Get a bluetooth device and create an object to handle it.
                     beacons.add(new BeaconCreateDescription(device));
                 }
@@ -140,7 +139,7 @@ public class BeaconService extends Service {
 
                 // Set the RSSI
                 int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
-                beacons.findBeacon(device.getAddress()).signalStrength = rssi;
+                beacons.findBeacon(device.getUuids().toString()).setSignalStrength(rssi);
             }
         }
     };

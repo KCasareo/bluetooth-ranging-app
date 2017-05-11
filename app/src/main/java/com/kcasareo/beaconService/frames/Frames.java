@@ -25,6 +25,7 @@ public class Frames implements Runnable {
         // Adds a new frame. beacons.signalStrength() is blocking for this function.
         this.frames.add(new Frame(beacons.signalStrength(), frameCount));
         frameCount++;
+        // Will throw Interrupted Exception.
     }
 
     @Override
@@ -34,7 +35,7 @@ public class Frames implements Runnable {
                 semaphore.acquire();
                 update();
             } catch (InterruptedException e) {
-                
+                Thread.currentThread().isInterrupted();
             } finally {
                 semaphore.release();
             }

@@ -13,6 +13,8 @@ import com.kcasareo.beaconService.Beacons.BeaconCreateDescription;
 import com.kcasareo.beaconService.Beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,9 +32,11 @@ public class BeaconService extends Service {
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     private BluetoothReceiver mReceiver;
-    private List<Snapshot> snapshots;
+    // Use a thread safe list;
+    private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
     private BluetoothAdapter adapter;
     private Timer snapshotScheduler;
+    private final int MAX_SNAPSHOTS_HELD = 10;
 
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
@@ -73,11 +77,15 @@ public class BeaconService extends Service {
 
         snapshotScheduler = new Timer();
         // Every 500ms create a new position snapshot.
-        snapshotScheduler.scheduleAtFixedRate(new TimerTask (){
-
+        snapshotScheduler.scheduleAtFixedRate(new TimerTask () {
             @Override
             public void run() {
+                // Will block the task for 500 ms
                 snapshots.add(new Snapshot(beacons));
+                // Remove the earliest snapshot added.
+                while(snapshots.size() > MAX_SNAPSHOTS_HELD) {
+                    snapshots.remove(0);
+                }
             }
         }, 0, MAX_REFRESH_TIME);
 
@@ -122,6 +130,9 @@ public class BeaconService extends Service {
     public Snapshot snapshot(int thresholdUpper, int thresholdLower) {
         return null;
     }
+
+    // Get the latest snapshot
+    public Snapshot lastSnapshot() { return snapshots.remove(snapshots.size() - 1);}
 
     // Initiate a discovery command to get the signal strength and determine
     public void ping() {

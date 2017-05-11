@@ -10,11 +10,11 @@ import android.content.BroadcastReceiver;
  */
 public class DynamicBluetooth extends Bluetooth {
     private BluetoothDevice device;
+
     public DynamicBluetooth(BluetoothDevice device) {
         super(device.getAddress());
         this.device = device;
-        this.receiver = receiver;
-
+        //this.receiver = receiver;
     }
 
 

@@ -3,6 +3,7 @@ package com.kcasareo.beaconService.frames;
 import com.kcasareo.beaconService.Beacons.Beacons;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
@@ -17,7 +18,7 @@ public class Frames extends TimerTask {
     private ArrayList<Frame> frames;
     private Beacons beacons;
     private int frameCount;
-    public Semaphore semaphore;
+    //public Semaphore semaphore;
 
     public Frames(Beacons beacons) {
         this.frames = new ArrayList<>();
@@ -32,10 +33,12 @@ public class Frames extends TimerTask {
     // Add a new frame.
     @Override
     public void run() {
-        while (true) {
-            this.frames.add(new Frame(beacons.signalStrength(), frameCount));
-            frameCount++;
-        }
+        this.frames.add(new Frame(beacons.signalStrength(), frameCount));
+        frameCount++;
+    }
+
+    public void sort() {
+        Collections.sort(frames);
     }
 }
 

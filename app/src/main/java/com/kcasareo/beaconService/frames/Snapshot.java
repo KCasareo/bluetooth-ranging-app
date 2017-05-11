@@ -13,7 +13,9 @@ public class Snapshot {
     private Frames frames;
     private Thread thread;
     private Beacons beacons;
-    public static final int MAX_REFRESH_TIME = 500;
+    public static final long MAX_REFRESH_TIME = 500;
+    // Limit the number of frames to capture.
+    private static final long FRAME_LIMIT = MAX_REFRESH_TIME / 10;
 
 
     public Snapshot(Beacons beacons) {
@@ -22,11 +24,12 @@ public class Snapshot {
         long currentTime = System.currentTimeMillis();
         //
         Timer timer = new Timer();
-        timer.schedule(frames, 0);
+        timer.scheduleAtFixedRate(frames, 0, FRAME_LIMIT);
         while (System.currentTimeMillis() < currentTime + MAX_REFRESH_TIME) { ;}
         timer.cancel();
+        // Make sure all the frames are sorted from least to first.
+        frames.sort();
     }
-
 
     public Frames frames() {
         return this.frames;

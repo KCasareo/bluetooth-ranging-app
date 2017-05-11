@@ -16,8 +16,8 @@ public class Beacons {
     // This class handles factory dependencies
     public Beacons() {
         beacons = new HashMap<>();
-        threads = new HashMap<>();
-
+        // Threads are unnecessary now.
+        //threads = new HashMap<>();
     }
 
     public void add(BeaconCreateDescription description) {
@@ -30,7 +30,7 @@ public class Beacons {
         return beacons.get(id);
     }
 
-    // Return a snapshot of all signal strengths at this moment.
+    // Return a copy of all signal strengths at this moment.
     public Map<String, Integer> signalStrength() {
         Map<String, Integer> signalStrength = new HashMap<>();
         for (Beacon beacon : beacons.values()) {

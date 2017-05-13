@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.kcasareo.beaconService.BeaconService.BEACON_MSG.REGISTER;
+import static com.kcasareo.beaconService.BeaconService.BEACON_MSG.UNREGISTER;
 import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -38,6 +40,20 @@ public class BeaconService extends Service {
     private Timer snapshotScheduler;
     private final int MAX_SNAPSHOTS_HELD = 10;
 
+    /* Messages for the service handler
+    *
+    * */
+    public enum BEACON_MSG {
+        REGISTER,
+        UNREGISTER,
+        SET_VALUE,
+        SNAPSHOT,
+
+    }
+
+    /* Message handler for BeaconService
+    *
+    * */
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
             super(looper);
@@ -45,8 +61,27 @@ public class BeaconService extends Service {
         @Override
         public void handleMessage(Message msg) {
             // Put time-dependent code here
-
-            stopSelf(msg.arg1);
+            // Convert msg.what int into a readable enum message.
+            BEACON_MSG beaconMsg = BEACON_MSG.values()[msg.what];
+            switch(beaconMsg) {
+                case REGISTER:
+                    break;
+                case UNREGISTER:
+                    break;
+                case SET_VALUE:
+                    break;
+                case SNAPSHOT:
+                    Messenger msger = msg.replyTo;
+                    Message reply = new Message();
+                    reply.obj = lastSnapshot();
+                    try {
+                        msger.send(reply);
+                    } catch (RemoteException e) {
+                        // Handle when client no longer exists.
+                    }
+                    break;
+            }
+            //stopSelf(msg.arg1);
         }
     }
 

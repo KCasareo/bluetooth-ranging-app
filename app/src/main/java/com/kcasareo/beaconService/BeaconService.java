@@ -4,14 +4,17 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
 import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
 import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
+import com.kcasareo.beaconService.IBeaconService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,10 +31,12 @@ import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
  */
 public class BeaconService extends Service {
     private Beacons beacons;
-    private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
+    //private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     private BluetoothReceiver mReceiver;
+
+
     // Use a thread safe list;
     private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
     private BluetoothAdapter adapter;
@@ -135,9 +140,21 @@ public class BeaconService extends Service {
                 }
             }
         }, 0, MAX_REFRESH_TIME);
-
-
     }
+
+    private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
+        @Override
+        public int getPid() throws RemoteException {
+            return Process.myPid();
+        }
+
+        @Override
+        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
+
+        }
+    };
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

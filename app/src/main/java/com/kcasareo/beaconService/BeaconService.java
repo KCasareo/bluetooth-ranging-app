@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
-import com.kcasareo.beaconService.Beacons.BeaconCreateDescription;
-import com.kcasareo.beaconService.Beacons.Beacons;
+import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
+import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
 
 import java.util.ArrayList;
@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.kcasareo.beaconService.BeaconService.BEACON_MSG.REGISTER;
-import static com.kcasareo.beaconService.BeaconService.BEACON_MSG.UNREGISTER;
 import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -44,10 +42,19 @@ public class BeaconService extends Service {
     *
     * */
     public enum BEACON_MSG {
-        REGISTER,
-        UNREGISTER,
-        SET_VALUE,
-        SNAPSHOT,
+        REGISTER(0),
+        UNREGISTER(1),
+        SET_VALUE(2),
+        SNAPSHOT(3);
+
+        private final int value;
+        BEACON_MSG(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return value;
+        }
 
     }
 
@@ -55,13 +62,18 @@ public class BeaconService extends Service {
     *
     * */
     private final class ServiceHandler extends Handler {
+        /* Manual message handling?
+        *  Don't know if I want this yet.
+        *
+        * */
         public ServiceHandler(Looper looper) {
             super(looper);
         }
+        // Non AIDL messenging.
         @Override
         public void handleMessage(Message msg) {
             // Put time-dependent code here
-            // Convert msg.what int into a readable enum message.
+            // Convert msg.what int into a human readable enum message.
             BEACON_MSG beaconMsg = BEACON_MSG.values()[msg.what];
             switch(beaconMsg) {
                 case REGISTER:
@@ -71,11 +83,11 @@ public class BeaconService extends Service {
                 case SET_VALUE:
                     break;
                 case SNAPSHOT:
-                    Messenger msger = msg.replyTo;
+                    Messenger messenger = msg.replyTo;
                     Message reply = new Message();
                     reply.obj = lastSnapshot();
                     try {
-                        msger.send(reply);
+                        messenger.send(reply);
                     } catch (RemoteException e) {
                         // Handle when client no longer exists.
                     }
@@ -144,6 +156,7 @@ public class BeaconService extends Service {
         unregisterReceiver(mReceiver);
         adapter.cancelDiscovery();
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
+        snapshotScheduler.cancel();
 
     }
 

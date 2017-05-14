@@ -1,5 +1,5 @@
 
-package com.kcasareo.beaconService.Beacons;
+package com.kcasareo.beaconService.beacons;
 
 import java.util.HashMap;
 import java.util.Map;

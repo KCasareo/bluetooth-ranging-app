@@ -1,9 +1,8 @@
 package com.kcasareo.beaconService.frames;
 
-import com.kcasareo.beaconService.Beacons.Beacons;
+import com.kcasareo.beaconService.beacons.Beacons;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by Kevin on 6/05/2017.

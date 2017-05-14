@@ -1,4 +1,4 @@
-package com.kcasareo.beaconService.Beacons;
+package com.kcasareo.beaconService.beacons;
 
 import android.content.BroadcastReceiver;
 

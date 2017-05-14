@@ -133,10 +133,10 @@ public class BeaconService extends Service {
             @Override
             public void run() {
                 // Will block the task for 500 ms
-                snapshots.add(new Snapshot(beacons));
+                createSnapshot();
                 // Remove the earliest snapshot added.
                 while(snapshots.size() > MAX_SNAPSHOTS_HELD) {
-                    snapshots.remove(0);
+                    purgeSnapshot();
                 }
             }
         }, 0, MAX_REFRESH_TIME);
@@ -184,6 +184,11 @@ public class BeaconService extends Service {
     // Create a snapshot to use
     private void createSnapshot() {
         snapshots.add(new Snapshot(beacons));
+    }
+
+    // Remove the oldest snapshot
+    private void purgeSnapshot() {
+        snapshots.remove(0);
     }
 
 

@@ -1,11 +1,9 @@
 package com.kcasareo.beaconService.frames;
 
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.kcasareo.beaconService.beacons.Beacons;
-
 import java.util.Timer;
 
 //import static android.content.ComponentName.readFromParcel;
@@ -21,7 +19,6 @@ public class Snapshot implements Parcelable {
     public static final long MAX_REFRESH_TIME = 500;
     // Limit the number of frames to capture.
     private static final long FRAME_LIMIT = MAX_REFRESH_TIME / 10;
-
 
     public Snapshot(Beacons beacons) {
         this.beacons = beacons;

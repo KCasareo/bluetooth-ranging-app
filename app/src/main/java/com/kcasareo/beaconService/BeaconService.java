@@ -4,14 +4,17 @@ import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.*;
 import android.os.Process;
 import android.widget.Toast;
-import com.kcasareo.beaconService.Beacons.BeaconCreateDescription;
-import com.kcasareo.beaconService.Beacons.Beacons;
+import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
+import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
+import com.kcasareo.beaconService.IBeaconService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,25 +31,74 @@ import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
  */
 public class BeaconService extends Service {
     private Beacons beacons;
-    private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
+    //private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     private BluetoothReceiver mReceiver;
+
+
     // Use a thread safe list;
     private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
     private BluetoothAdapter adapter;
     private Timer snapshotScheduler;
     private final int MAX_SNAPSHOTS_HELD = 10;
 
+    /* Messages for the service handler
+    *
+    * */
+    public enum BEACON_MSG {
+        REGISTER(0),
+        UNREGISTER(1),
+        SET_VALUE(2),
+        SNAPSHOT(3);
+
+        private final int value;
+        BEACON_MSG(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return value;
+        }
+
+    }
+
+    /* Message handler for BeaconService
+    *
+    * */
     private final class ServiceHandler extends Handler {
+        /* Manual message handling?
+        *  Don't know if I want this yet.
+        *
+        * */
         public ServiceHandler(Looper looper) {
             super(looper);
         }
+        // Non AIDL messenging.
         @Override
         public void handleMessage(Message msg) {
             // Put time-dependent code here
-
-            stopSelf(msg.arg1);
+            // Convert msg.what int into a human readable enum message.
+            BEACON_MSG beaconMsg = BEACON_MSG.values()[msg.what];
+            switch(beaconMsg) {
+                case REGISTER:
+                    break;
+                case UNREGISTER:
+                    break;
+                case SET_VALUE:
+                    break;
+                case SNAPSHOT:
+                    Messenger messenger = msg.replyTo;
+                    Message reply = new Message();
+                    reply.obj = lastSnapshot();
+                    try {
+                        messenger.send(reply);
+                    } catch (RemoteException e) {
+                        // Handle when client no longer exists.
+                    }
+                    break;
+            }
+            //stopSelf(msg.arg1);
         }
     }
 
@@ -81,16 +133,28 @@ public class BeaconService extends Service {
             @Override
             public void run() {
                 // Will block the task for 500 ms
-                snapshots.add(new Snapshot(beacons));
+                createSnapshot();
                 // Remove the earliest snapshot added.
                 while(snapshots.size() > MAX_SNAPSHOTS_HELD) {
-                    snapshots.remove(0);
+                    purgeSnapshot();
                 }
             }
         }, 0, MAX_REFRESH_TIME);
-
-
     }
+
+    private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
+        @Override
+        public int getPid() throws RemoteException {
+            return Process.myPid();
+        }
+
+        @Override
+        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
+
+        }
+    };
+
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -109,6 +173,7 @@ public class BeaconService extends Service {
         unregisterReceiver(mReceiver);
         adapter.cancelDiscovery();
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
+        snapshotScheduler.cancel();
 
     }
 
@@ -119,6 +184,11 @@ public class BeaconService extends Service {
     // Create a snapshot to use
     private void createSnapshot() {
         snapshots.add(new Snapshot(beacons));
+    }
+
+    // Remove the oldest snapshot
+    private void purgeSnapshot() {
+        snapshots.remove(0);
     }
 
 

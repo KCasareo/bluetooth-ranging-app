@@ -1,7 +1,7 @@
 
-package com.kcasareo.beaconService.Beacons.Bluetooth;
+package com.kcasareo.beaconService.beacons.bluetooth;
 
-import com.kcasareo.beaconService.Beacons.Beacon;
+import com.kcasareo.beaconService.beacons.Beacon;
 
 
 /**

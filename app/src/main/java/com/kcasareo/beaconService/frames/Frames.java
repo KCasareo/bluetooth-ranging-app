@@ -1,11 +1,10 @@
 package com.kcasareo.beaconService.frames;
 
-import com.kcasareo.beaconService.Beacons.Beacons;
+import com.kcasareo.beaconService.beacons.Beacons;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TimerTask;
-import java.util.concurrent.Semaphore;
 
 /**
  * Created by Kevin on 6/05/2017.

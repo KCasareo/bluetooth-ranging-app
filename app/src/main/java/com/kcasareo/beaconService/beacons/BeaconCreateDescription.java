@@ -1,9 +1,9 @@
-package com.kcasareo.beaconService.Beacons;
+package com.kcasareo.beaconService.beacons;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
-import com.kcasareo.beaconService.Beacons.Bluetooth.BEACON_TYPE;
-import com.kcasareo.beaconService.Beacons.Bluetooth.BLUETOOTH_TYPE;
+import com.kcasareo.beaconService.beacons.bluetooth.BEACON_TYPE;
+import com.kcasareo.beaconService.beacons.bluetooth.BLUETOOTH_TYPE;
 
 /**
  * Created by Kevin on 6/05/2017.

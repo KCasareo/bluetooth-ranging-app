@@ -158,7 +158,6 @@ public class BeaconService extends Service {
                     // Get a bluetooth device and create an object to handle it.
                     beacons.add(new BeaconCreateDescription(device));
                 }
-
             }
             // Broadcast Action detected.
             if(BluetoothDevice.ACTION_UUID.equals(action)) {

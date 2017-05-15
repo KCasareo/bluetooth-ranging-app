@@ -1,15 +1,20 @@
 // IBeaconService.aidl
 package com.kcasareo.beaconService;
-
+import com.kcasareo.beaconService.frames.Snapshot;
 // Declare any non-default types here with import statements
 
 interface IBeaconService {
-    int getPid();
+    //int getPid();
 
     /**
      * Demonstrates some basic types that you can use as parameters
      * and return values in AIDL.
      */
-    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,
-            double aDouble, String aString);
+    //void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString);
+
+    //com.kcasareo.beaconService.frames.Snapshot sendSnapshot(com.kcasareo.beaconService.frames.Snapshot snapshot);
+    Snapshot getSnapshot();
+
+
+
 }

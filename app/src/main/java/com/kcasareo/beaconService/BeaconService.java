@@ -144,14 +144,10 @@ public class BeaconService extends Service {
 
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
         @Override
-        public int getPid() throws RemoteException {
-            return Process.myPid();
+        public Snapshot getSnapshot() {
+            return lastSnapshot();
         }
 
-        @Override
-        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
-
-        }
     };
 
 

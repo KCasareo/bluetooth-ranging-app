@@ -32,6 +32,9 @@ public class Snapshot implements Parcelable {
         // Make sure all the frames are sorted from least to first.
         frames.sort();
     }
+    public Snapshot() {
+
+    }
 
     protected Snapshot(Parcel in) {
         readFromParcel(in);
@@ -40,6 +43,7 @@ public class Snapshot implements Parcelable {
         this.thread = null;
     }
 
+    // De-marshal
     public void readFromParcel(Parcel in) {
         frames = (Frames) in.readValue(Frames.class.getClassLoader());
     }
@@ -65,6 +69,7 @@ public class Snapshot implements Parcelable {
         return 0;
     }
 
+    // Marshal
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(frames);

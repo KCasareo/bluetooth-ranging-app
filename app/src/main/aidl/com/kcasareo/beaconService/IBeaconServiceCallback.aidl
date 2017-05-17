@@ -11,12 +11,6 @@ import com.kcasareo.beaconService.frames.Snapshot;
 */
 
 interface IBeaconServiceCallback {
-    /**
-     * Demonstrates some basic types that you can use as parameters
-     * and return values in AIDL.
-     */
-    oneway void valueChanged(int value);
-
     //void handleResponse(String name);
 
     // Handle snapshot returns in the client.

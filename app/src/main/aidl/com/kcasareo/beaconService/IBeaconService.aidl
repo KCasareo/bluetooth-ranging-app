@@ -15,8 +15,10 @@ interface IBeaconService {
     //void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString);
 
     //com.kcasareo.beaconService.frames.Snapshot sendSnapshot(com.kcasareo.beaconService.frames.Snapshot snapshot);
-    Snapshot getSnapshot();
 
     oneway void lastSnap(IBeaconServiceCallback callback);
+
+    void registerCallback(IBeaconServiceCallback callback);
+    void unregisterCallback(IBeaconServiceCallback callback);
 
 }

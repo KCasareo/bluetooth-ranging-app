@@ -101,12 +101,12 @@ public class BeaconService extends Service {
             //stopSelf(msg.arg1);
         }
     }
-
+    /** Not needed anymore since I have an AIDL binder.
     public class BeaconServiceBinder extends Binder {
         public BeaconService getService () {
             return BeaconService.this;
         }
-    }
+    }*/
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -142,11 +142,9 @@ public class BeaconService extends Service {
         }, 0, MAX_REFRESH_TIME);
     }
 
+    /* Returned on bind */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
-        @Override
-        public Snapshot getSnapshot() {
-            return lastSnapshot();
-        }
+
 
         @Override
         public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {

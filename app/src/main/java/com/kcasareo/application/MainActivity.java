@@ -44,14 +44,10 @@ public class MainActivity extends Activity {
 
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
 
-        @Override
-        public void valueChanged(int value) throws RemoteException {
-
-        }
 
         @Override
         public void handleResponse(Snapshot snapshot) throws RemoteException {
-            
+
         }
 
     };

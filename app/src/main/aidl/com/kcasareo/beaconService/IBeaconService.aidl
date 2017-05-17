@@ -1,6 +1,8 @@
 // IBeaconService.aidl
 package com.kcasareo.beaconService;
 import com.kcasareo.beaconService.frames.Snapshot;
+import IBeaconServiceCallback;
+
 // Declare any non-default types here with import statements
 
 interface IBeaconService {

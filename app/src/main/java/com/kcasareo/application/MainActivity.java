@@ -7,8 +7,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcel;
+import android.os.RemoteException;
+
 import com.kcasareo.beaconService.BeaconService;
-import com.kcasareo.beaconService.BeaconService.BeaconServiceBinder;
+import com.kcasareo.beaconService.IBeaconService;
+import com.kcasareo.beaconService.IBeaconServiceCallback;
+import com.kcasareo.beaconService.frames.Snapshot;
 
 /**
  * Created by Kevin on 30/04/2017.
@@ -16,6 +21,7 @@ import com.kcasareo.beaconService.BeaconService.BeaconServiceBinder;
  */
 public class MainActivity extends Activity {
     private BeaconService beaconService;
+    private IBeaconService mBeaconService = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,11 +41,28 @@ public class MainActivity extends Activity {
         super.onStop();
     }
 
+
+    private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
+
+        @Override
+        public void valueChanged(int value) throws RemoteException {
+
+        }
+
+        @Override
+        public void handleResponse(Snapshot snapshot) throws RemoteException {
+            
+        }
+
+    };
+
+
+
     private ServiceConnection beaconServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            BeaconServiceBinder binder = (BeaconServiceBinder) iBinder;
-            beaconService = binder.getService();
+            mBeaconService = IBeaconService.Stub.asInterface(iBinder);
+
         }
 
         @Override

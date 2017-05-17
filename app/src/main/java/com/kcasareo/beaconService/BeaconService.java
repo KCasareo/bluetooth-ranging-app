@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
 import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.frames.Snapshot;
-import com.kcasareo.beaconService.IBeaconService;
+import com.kcasareo.beaconService.IBeaconServiceCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -148,6 +148,11 @@ public class BeaconService extends Service {
             return lastSnapshot();
         }
 
+        @Override
+        public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
+            callback.handleResponse(lastSnapshot());
+        }
+
     };
 
 
@@ -235,4 +240,6 @@ public class BeaconService extends Service {
             }
         }
     };
+
+
 }

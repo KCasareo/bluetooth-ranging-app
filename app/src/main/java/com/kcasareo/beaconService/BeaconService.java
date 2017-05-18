@@ -147,8 +147,8 @@ public class BeaconService extends Service {
 
 
         @Override
-        public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
-            callback.handleResponse(lastSnapshot());
+        public Snapshot getSnapshot() throws RemoteException {
+            return null;
         }
 
     };
@@ -175,7 +175,6 @@ public class BeaconService extends Service {
         snapshotScheduler.cancel();
 
     }
-
     /* Private methods
     *
     * */

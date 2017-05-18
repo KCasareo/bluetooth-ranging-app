@@ -13,7 +13,7 @@ public abstract class Beacon {
     //public abstract int signalStrength();
     public abstract String id();
     private static final int MAX_PERMIT = 1;
-    protected BroadcastReceiver receiver;
+    //protected BroadcastReceiver receiver;
 
     private int signalStrength;
 

@@ -18,7 +18,7 @@ public class Snapshot implements Parcelable {
     private Beacons beacons;
     public static final long MAX_REFRESH_TIME = 500;
     // Limit the number of frames to capture.
-    private static final long FRAME_LIMIT = MAX_REFRESH_TIME / 10;
+    private static final long FRAME_LIMIT = MAX_REFRESH_TIME / 20;
 
     public Snapshot(Beacons beacons) {
         this.beacons = beacons;

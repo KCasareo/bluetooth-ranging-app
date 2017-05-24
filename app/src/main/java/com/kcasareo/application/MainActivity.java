@@ -84,3 +84,8 @@ public class MainActivity extends Activity {
         }
     };
 }
+
+/*
+* Combine Drone Odometry, Beacon Distances to determine location.
+*
+* */

@@ -145,10 +145,9 @@ public class BeaconService extends Service {
     /* Returned on bind */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
 
-
         @Override
-        public Snapshot getSnapshot() throws RemoteException {
-            return null;
+        public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
+            callback.handleResponse(lastSnapshot());
         }
 
         @Override

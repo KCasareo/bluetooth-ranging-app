@@ -18,6 +18,7 @@ interface IBeaconService {
 
     oneway void lastSnap(IBeaconServiceCallback callback);
 
+    /* Register callback */
     void registerCallback(IBeaconServiceCallback callback);
     void unregisterCallback(IBeaconServiceCallback callback);
 

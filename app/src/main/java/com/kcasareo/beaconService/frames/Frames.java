@@ -4,6 +4,7 @@ import com.kcasareo.beaconService.beacons.Beacons;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.TimerTask;
 
 /**
@@ -38,6 +39,10 @@ public class Frames extends TimerTask {
 
     public void sort() {
         Collections.sort(frames);
+    }
+
+    public List<Frame> getList() {
+        return this.frames;
     }
 }
 

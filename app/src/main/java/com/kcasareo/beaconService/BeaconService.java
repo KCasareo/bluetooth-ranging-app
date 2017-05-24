@@ -151,6 +151,16 @@ public class BeaconService extends Service {
             callback.handleResponse(lastSnapshot());
         }
 
+        @Override
+        public void registerCallback(IBeaconServiceCallback callback) throws RemoteException {
+
+        }
+
+        @Override
+        public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
+
+        }
+
     };
 
 

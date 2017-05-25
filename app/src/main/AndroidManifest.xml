@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          
-    package="com.kcasareo.ranging"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+
+    package="com.kcasareo.ranging">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -13,5 +13,11 @@
         android:theme="@style/AppTheme">
 
     </application>
+    <service android:name="com.kcasareo.beaconService.BeaconService"
+        android:exported="false">
+        <intent-filter>
+            <action android:name="com.kcasareo.beaconService.BeaconService"/>
+        </intent-filter>
 
+    </service>
 </manifest>

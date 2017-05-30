@@ -18,6 +18,7 @@ import android.os.Bundle;
 import com.kcasareo.beaconService.BeaconService;
 import com.kcasareo.beaconService.IBeaconService;
 import com.kcasareo.beaconService.IBeaconServiceCallback;
+import com.kcasareo.beaconService.frames.Frame;
 import com.kcasareo.beaconService.frames.Frames;
 import com.kcasareo.beaconService.frames.Snapshot;
 import com.kcasareo.ranging.R;
@@ -34,9 +35,13 @@ public class MainActivity extends AppCompatActivity {
     private BeaconService beaconService;
     private IBeaconService mBeaconService = null;
     private Frames frames;
+    private ArrayList<String> current = new ArrayList<>();
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
     private ListView lv;
+    private boolean captured = false;
+    private ArrayAdapter<String> arrayAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,10 +63,18 @@ public class MainActivity extends AppCompatActivity {
 //                intent.setAction(IBeaconService.class.)
                 try {
                     mBeaconService.lastSnap(mCallback);
+
                 } catch (RemoteException e) {
                 }
             }
         }, 0, TIME_UPDATE) ;
+
+        if (arrayAdapter == null) {
+            arrayAdapter = new ArrayAdapter<String>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    current);
+        }
     }
 
     @Override
@@ -74,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void handleResponse(Snapshot snapshot) throws RemoteException {
             frames = snapshot.frames();
-            frames.getList();
+            captured = true;
+            current = frames.getLast().toList();
+            // Update the list view;
+            arrayAdapter.notifyDataSetChanged();
         }
     };
 
@@ -84,12 +100,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             mBeaconService = IBeaconService.Stub.asInterface(iBinder);
-
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+            // Stop all tiemrs if the service disconnects.
+            updateTimer.purge();
         }
     };
 }

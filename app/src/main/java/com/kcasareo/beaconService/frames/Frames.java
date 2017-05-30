@@ -44,6 +44,8 @@ public class Frames extends TimerTask {
     public List<Frame> getList() {
         return this.frames;
     }
+
+    public Frame getLast() { return this.frames.get(this.frames.size() - 1); }
 }
 
 

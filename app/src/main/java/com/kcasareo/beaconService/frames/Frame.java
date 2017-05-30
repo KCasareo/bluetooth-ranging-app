@@ -3,6 +3,8 @@ package com.kcasareo.beaconService.frames;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,4 +28,15 @@ public class Frame implements Comparable<Frame> {
     public int compareTo(@NonNull Frame o) {
         return frameNumber.compareTo(o.getFrameNumber());
     }
+
+    // Return string list version
+
+    public ArrayList<String> toList() {
+        ArrayList<String> value = new ArrayList<String>();
+        for(Map.Entry<String, Integer> entry : signalStrength.entrySet()) {
+            value.add(entry.getKey() + "" + entry.getValue());
+        }
+        return value;
+    }
+
 }

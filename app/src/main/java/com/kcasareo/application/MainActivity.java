@@ -9,14 +9,20 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import com.kcasareo.beaconService.BeaconService;
 import com.kcasareo.beaconService.IBeaconService;
 import com.kcasareo.beaconService.IBeaconServiceCallback;
 import com.kcasareo.beaconService.frames.Frames;
 import com.kcasareo.beaconService.frames.Snapshot;
+import com.kcasareo.ranging.R;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,16 +30,19 @@ import java.util.TimerTask;
  * Created by Kevin on 30/04/2017.
  * Main Activity is the user interface that uses and displays results from the Navigation Service
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     private BeaconService beaconService;
     private IBeaconService mBeaconService = null;
     private Frames frames;
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
+    private ListView lv;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
+        lv = (ListView) findViewById(R.id.listview_rssi);
     }
 
     @Override

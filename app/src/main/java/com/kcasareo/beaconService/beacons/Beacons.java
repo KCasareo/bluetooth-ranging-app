@@ -1,6 +1,7 @@
 
 package com.kcasareo.beaconService.beacons;
 
+import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -28,6 +29,14 @@ public class Beacons {
     // Return a beacon that matches the given id
     public Beacon findBeacon(String id) {
         return beacons.get(id);
+    }
+
+    public Beacon findBeacon(BluetoothDevice device) {
+        try {
+            return beacons.get(device.getAddress());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     // Return a copy of all signal strengths at this moment.

@@ -3,6 +3,10 @@ package com.kcasareo.beaconService;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -35,9 +39,10 @@ public class BeaconService extends Service {
     private Beacons beacons = new Beacons();
     //private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
     private Looper mServiceLooper;
-    private ServiceHandler mServiceHandler;
-    private BluetoothReceiver mReceiver;
+    //private ServiceHandler mServiceHandler;
+    //private BluetoothReceiver mReceiver;
     private ArrayList<BluetoothDevice> devices = new ArrayList<>();
+    private BluetoothManager btManager;
 
     // Use a thread safe list;
     private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
@@ -45,9 +50,10 @@ public class BeaconService extends Service {
     private Timer snapshotScheduler;
     private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
+    private Handler mServiceHandler;
     /* Messages for the service handler
     *
-    * */
+    *
     public enum BEACON_MSG {
         REGISTER(0),
         UNREGISTER(1),
@@ -63,16 +69,17 @@ public class BeaconService extends Service {
             return value;
         }
 
-    }
+    }//*/
 
     /* Message handler for BeaconService
     *
     * */
+    /*
     private final class ServiceHandler extends Handler {
         /* Manual message handling?
         *  Don't know if I want this yet.
         *
-        * */
+        *
         public ServiceHandler(Looper looper) {
             super(looper);
         }
@@ -102,7 +109,8 @@ public class BeaconService extends Service {
             }
             //stopSelf(msg.arg1);
         }
-    }
+    }//*/
+
     /** Not needed anymore since I have an AIDL binder.
     public class BeaconServiceBinder extends Binder {
         public BeaconService getService () {
@@ -120,8 +128,9 @@ public class BeaconService extends Service {
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
         mServiceLooper = thread.getLooper();
-        mServiceHandler = new ServiceHandler(mServiceLooper);
-        mReceiver = new BluetoothReceiver();
+        mServiceHandler = new Handler();
+        //mReceiver = new BluetoothReceiver();
+        btManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
 
 
         // Set the private receiver object
@@ -130,7 +139,13 @@ public class BeaconService extends Service {
         mReceiverFilter.addAction(BluetoothDevice.ACTION_FOUND);
         mReceiverFilter.addAction(BluetoothDevice.ACTION_UUID);
         registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
-        adapter = BluetoothAdapter.getDefaultAdapter();
+        adapter = btManager.getAdapter();
+
+        if(adapter != null && !adapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(enableIntent);
+        }
+
         adapter.startDiscovery();
 
         snapshotScheduler = new Timer();
@@ -139,14 +154,46 @@ public class BeaconService extends Service {
             @Override
             public void run() {
                 // Will block the task for 500 ms
+                if(adapter.isDiscovering()) {
+                    adapter.cancelDiscovery();
+                } else {
+                    adapter.startDiscovery();
+                }
                 createSnapshot();
                 // Remove the earliest snapshot added.
                 while(snapshots.size() > MAX_SNAPSHOTS_HELD) {
                     purgeSnapshot();
                 }
+
             }
         }, 0, MAX_REFRESH_TIME);
     }
+
+    // Code to use when scan occurs
+    private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
+
+        @Override
+        public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
+
+        }
+    };
+
+    private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            super.onConnectionStateChange(gatt, status, newState);
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
+
+        }
+
+        @Override
+        public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
+
+        }
+    };
 
     /* Returned on bind */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
@@ -188,7 +235,6 @@ public class BeaconService extends Service {
         Message msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
         mServiceHandler.sendMessage(msg);
-
         return START_STICKY;
 
     }
@@ -245,6 +291,7 @@ public class BeaconService extends Service {
     /* Broadcast discovery handler
      * Must exist in an activity class. 11-05-17
      */
+    /* Use Gatt receiver instead.
     private class BluetoothReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -255,8 +302,13 @@ public class BeaconService extends Service {
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If device not found.
                 if (device != null) {
-                    devices.add(device);
-                    beacons.add(new BeaconCreateDescription(device));
+                    // Check if the device exists
+                    if (beacons.findBeacon(device) != null) {
+                        beacons.findBeacon(device).setSignalStrength(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
+                    } else {
+                        beacons.add(new BeaconCreateDescription(device));
+                    }
+
                 }
             }
             // Broadcast Action detected.
@@ -265,10 +317,11 @@ public class BeaconService extends Service {
 
                 // Set the RSSI
                 int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
-                beacons.findBeacon(device.getUuids().toString()).setSignalStrength(rssi);
+                beacons.findBeacon(device.getAddress().toString()).setSignalStrength(rssi);
             }
         }
     };
 
 
 }
+*/

@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(activity_main);
         lv = (ListView) findViewById(R.id.listview_rssi);
         intent = new Intent(this, BeaconService.class);
+        startService(intent);
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
+
     }
 
     @Override

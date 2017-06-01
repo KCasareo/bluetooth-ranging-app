@@ -21,7 +21,5 @@ interface IBeaconService {
     /* Register callback */
     void registerCallback(IBeaconServiceCallback callback);
     void unregisterCallback(IBeaconServiceCallback callback);
-    void ping();
-    void cancel();
 
 }

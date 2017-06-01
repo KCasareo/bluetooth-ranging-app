@@ -13,8 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.*;
 import android.os.Process;
+import android.util.Log;
+import android.util.SparseArray;
 import android.widget.Toast;
 import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
 import com.kcasareo.beaconService.beacons.Beacons;
@@ -23,11 +26,14 @@ import com.kcasareo.beaconService.IBeaconServiceCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import static android.provider.Settings.Global.DEVICE_NAME;
 import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -51,6 +57,8 @@ public class BeaconService extends Service {
     private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
     private Handler mServiceHandler;
+    private BluetoothAdapter mBluetoothAdapter;
+    private SparseArray<BluetoothDevice> mDevices;
     /* Messages for the service handler
     *
     *
@@ -111,12 +119,14 @@ public class BeaconService extends Service {
         }
     }//*/
 
-    /** Not needed anymore since I have an AIDL binder.
-    public class BeaconServiceBinder extends Binder {
-        public BeaconService getService () {
-            return BeaconService.this;
-        }
-    }*/
+    /**
+     * Not needed anymore since I have an AIDL binder.
+     * public class BeaconServiceBinder extends Binder {
+     * public BeaconService getService () {
+     * return BeaconService.this;
+     * }
+     * }
+     */
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -130,18 +140,26 @@ public class BeaconService extends Service {
         mServiceLooper = thread.getLooper();
         mServiceHandler = new Handler();
         //mReceiver = new BluetoothReceiver();
-        btManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
+        btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
+        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(enableBtIntent);
+        }
+
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "No LE Support.", Toast.LENGTH_SHORT).show();
+        }
 
         // Set the private receiver object
         // Consider setting IntentFilter param when code is more properly organised.
         mReceiverFilter = new IntentFilter();
         mReceiverFilter.addAction(BluetoothDevice.ACTION_FOUND);
         mReceiverFilter.addAction(BluetoothDevice.ACTION_UUID);
-        registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
+        //registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
         adapter = btManager.getAdapter();
 
-        if(adapter != null && !adapter.isEnabled()) {
+        if (adapter != null && !adapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableIntent);
         }
@@ -150,34 +168,71 @@ public class BeaconService extends Service {
 
         snapshotScheduler = new Timer();
         // Every 500ms create a new position snapshot.
-        snapshotScheduler.scheduleAtFixedRate(new TimerTask () {
+        snapshotScheduler.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 // Will block the task for 500 ms
-                if(adapter.isDiscovering()) {
+                if (adapter.isDiscovering()) {
                     adapter.cancelDiscovery();
                 } else {
                     adapter.startDiscovery();
                 }
                 createSnapshot();
                 // Remove the earliest snapshot added.
-                while(snapshots.size() > MAX_SNAPSHOTS_HELD) {
+                while (snapshots.size() > MAX_SNAPSHOTS_HELD) {
                     purgeSnapshot();
                 }
 
             }
         }, 0, MAX_REFRESH_TIME);
     }
-
+    /* Code for BluetoothLE Connections
+    *
+    *
+    *
+     */
     // Code to use when scan occurs
     private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
 
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
+            Log.i("LE Scan", "New LE Device: " + device.getName() + " @ " + rssi);
+            mDevices.put(device.hashCode(), device);
+        }
 
+
+        private Runnable mStopRunnable = new Runnable() {
+            @Override
+            public void run() {
+                stopScan();
+            }
+        };
+
+        private Runnable mStartRunnable = new Runnable () {
+            @Override
+            public void run() {
+                startScan();
+            }
+        };
+        // Initiate a discovery command to get the signal strength and determine
+
+        private void startScan() {
+            mBluetoothAdapter.startDiscovery();
+            // Stop after 2500 ms
+            mServiceHandler.postDelayed(mStopRunnable, 2500);
+        }
+
+        private void stopScan() {
+            mBluetoothAdapter.cancelDiscovery();
+
+            mServiceHandler.postDelayed(mStartRunnable, 2500);
         }
     };
 
+
+
+
+    // All Gatt Communications functionality defined here.
     private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -193,9 +248,17 @@ public class BeaconService extends Service {
         public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
 
         }
+
+        @Override
+        public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
+            // Put RSSI update code here
+        }
+
     };
 
-    /* Returned on bind */
+    /* Returned on bind
+    *  These methods are exposed when the service is bound.
+    */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
 
         @Override
@@ -212,40 +275,15 @@ public class BeaconService extends Service {
         public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
 
         }
-
-        @Override
-        public void ping() throws RemoteException {
-            BeaconService.this.ping();
-        }
-
-        @Override
-        public void cancel() throws RemoteException {
-            BeaconService.this.cancel();
-        }
-
-
     };
 
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "Beacon Service Starting", Toast.LENGTH_SHORT).show();
-
-        Message msg = mServiceHandler.obtainMessage();
-        msg.arg1 = startId;
-        mServiceHandler.sendMessage(msg);
-        return START_STICKY;
-
-    }
+    
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
         adapter.cancelDiscovery();
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
         snapshotScheduler.cancel();
-
     }
     /* Private methods
     *
@@ -280,16 +318,12 @@ public class BeaconService extends Service {
     }
 
 
-    // Initiate a discovery command to get the signal strength and determine
-    public void ping() {
-        adapter.startDiscovery();
-    }
 
-    public void cancel() { adapter.cancelDiscovery(); }
 
 
     /* Broadcast discovery handler
      * Must exist in an activity class. 11-05-17
+     * Deprecated 01-06-17
      */
     /* Use Gatt receiver instead.
     private class BluetoothReceiver extends BroadcastReceiver{
@@ -325,3 +359,4 @@ public class BeaconService extends Service {
 
 }
 */
+}

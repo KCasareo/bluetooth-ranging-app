@@ -1,10 +1,12 @@
 package com.kcasareo.application;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean captured = false;
     private ArrayAdapter<String> arrayAdapter;
     private Intent intent;
+    private BluetoothAdapter mBluetoothAdapter;
 
 
     @Override
@@ -68,11 +71,18 @@ public class MainActivity extends AppCompatActivity {
                     current);
             lv.setAdapter(arrayAdapter);
         }
+
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        /*
+        if (mConnectedGatt != null) {
+            mConnectedGatt.disconnect();
+            mConnectedGatt = null;
+        } //*/
     }
 
     @Override

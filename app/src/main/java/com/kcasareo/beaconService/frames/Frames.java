@@ -1,5 +1,7 @@
 package com.kcasareo.beaconService.frames;
 
+import android.util.Log;
+
 import com.kcasareo.beaconService.beacons.Beacons;
 
 import java.util.ArrayList;
@@ -34,12 +36,13 @@ public class Frames extends TimerTask {
     @Override
     public void run() {
         if (beacons != null) {
+            //Log.d("Frames", "Adding new frame: " + frameCount);
             this.frames.add(new Frame(beacons.signalStrength(), frameCount));
             frameCount++;
         }
     }
 
-    public void sort() {
+    public synchronized void sort() {
         Collections.sort(frames);
     }
 

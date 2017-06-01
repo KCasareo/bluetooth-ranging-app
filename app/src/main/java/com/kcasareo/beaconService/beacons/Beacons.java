@@ -1,6 +1,8 @@
 
 package com.kcasareo.beaconService.beacons;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,9 +23,7 @@ public class Beacons {
     }
 
     public void add(BeaconCreateDescription description) {
-        Beacon beacon = BeaconFactory.create(description);
-
-        beacons.put(description.id(), beacon);
+        beacons.put(description.id(), BeaconFactory.create(description));
     }
     // Return a beacon that matches the given id
     public Beacon findBeacon(String id) {
@@ -35,6 +35,7 @@ public class Beacons {
         Map<String, Integer> signalStrength = new HashMap<>();
         for (Beacon beacon : beacons.values()) {
                 signalStrength.put(beacon.id(), beacon.getSignalStrength());
+                //Log.d("Beacons", "ID:" + beacon.id() + " Strength: " + beacon.getSignalStrength());
         }
         return signalStrength;
     }

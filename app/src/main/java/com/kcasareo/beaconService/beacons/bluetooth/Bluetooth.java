@@ -17,7 +17,7 @@ public abstract class Bluetooth extends Beacon {
 
     @Override
     public String id() {
-        return null;
+        return id;
     }
 
 }

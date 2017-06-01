@@ -2,6 +2,7 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 
 import android.bluetooth.BluetoothDevice;
+import android.util.Log;
 
 /**
  * Created by Kevin on 5/05/2017.
@@ -14,6 +15,7 @@ public class DynamicBluetooth extends Bluetooth {
         super(device.getAddress());
         this.device = device;
         //this.receiver = receiver;
+        Log.d("Dynamic Bluetooth", "Id: " + this.id());
     }
 
 

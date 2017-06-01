@@ -2,6 +2,8 @@ package com.kcasareo.beaconService.beacons;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.util.Log;
+
 import com.kcasareo.beaconService.beacons.bluetooth.BEACON_TYPE;
 import com.kcasareo.beaconService.beacons.bluetooth.BLUETOOTH_TYPE;
 
@@ -31,6 +33,8 @@ public class BeaconCreateDescription {
         this.device = device;
         this.id = device.getAddress();
         //this.receiver = receiver;
+        Log.d("Create", "Device" + device.getName() + " Device ID:" + device.getAddress());
+        ;
     }
 
     public BLUETOOTH_TYPE bluetooth_type() {

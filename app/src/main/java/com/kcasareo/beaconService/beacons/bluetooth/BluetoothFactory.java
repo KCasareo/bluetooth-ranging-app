@@ -1,5 +1,7 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
+import android.util.Log;
+
 import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
 
 /**
@@ -20,6 +22,7 @@ public class BluetoothFactory {
                 return new SensorTag(description.id());
             default:
                 // Return a non-reliable bluetooth sensor connection if the connection is unrecognised;
+                Log.d("Bluetooth Factory", "Dynamic Bluetooth Create");
                 return new DynamicBluetooth(description.device());
         }
     }

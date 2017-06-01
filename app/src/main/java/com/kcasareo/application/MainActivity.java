@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.kcasareo.ranging.R.layout.activity_main;
+
 /**
  * Created by Kevin on 30/04/2017.
  * Main Activity is the user interface that uses and displays results from the Navigation Service
@@ -41,39 +44,27 @@ public class MainActivity extends AppCompatActivity {
     private ListView lv;
     private boolean captured = false;
     private ArrayAdapter<String> arrayAdapter;
+    private Intent intent;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(activity_main);
         lv = (ListView) findViewById(R.id.listview_rssi);
+        intent = new Intent(this, BeaconService.class);
+        bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = new Intent(this, BeaconService.class);
-        bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
-        updateTimer = new Timer();
-        // Every 500 ms, call last snap
-        updateTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-//                intent.setAction(IBeaconService.class.)
-                try {
-                    mBeaconService.lastSnap(mCallback);
-
-                } catch (RemoteException e) {
-                }
-            }
-        }, 0, TIME_UPDATE) ;
-
         if (arrayAdapter == null) {
             arrayAdapter = new ArrayAdapter<String>(
                     this,
                     android.R.layout.simple_list_item_1,
                     current);
+            lv.setAdapter(arrayAdapter);
         }
     }
 
@@ -82,10 +73,19 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(beaconServiceConnection);
+    }
+
 
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
         @Override
         public void handleResponse(Snapshot snapshot) throws RemoteException {
+            if (frames == null) {
+                return;
+            }
             frames = snapshot.frames();
             captured = true;
             current = frames.getLast().toList();
@@ -99,7 +99,21 @@ public class MainActivity extends AppCompatActivity {
     private ServiceConnection beaconServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.d("MainActivity", "OnServiceConnected");
             mBeaconService = IBeaconService.Stub.asInterface(iBinder);
+            updateTimer = new Timer();
+            // Every 500 ms, call last snap
+            updateTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+//                intent.setAction(IBeaconService.class.)
+                    try {
+                        mBeaconService.lastSnap(mCallback);
+
+                    } catch (RemoteException e) {
+                    }
+                }
+            }, 0, TIME_UPDATE) ;
         }
 
         @Override

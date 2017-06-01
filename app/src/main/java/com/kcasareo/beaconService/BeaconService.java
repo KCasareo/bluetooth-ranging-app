@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.*;
 import android.os.Process;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -30,19 +32,19 @@ import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
  * Test code using the Android Developer guide
  */
 public class BeaconService extends Service {
-    private Beacons beacons;
+    private Beacons beacons = new Beacons();
     //private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
     private Looper mServiceLooper;
     private ServiceHandler mServiceHandler;
     private BluetoothReceiver mReceiver;
-
+    private ArrayList<BluetoothDevice> devices = new ArrayList<>();
 
     // Use a thread safe list;
     private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
     private BluetoothAdapter adapter;
     private Timer snapshotScheduler;
     private final int MAX_SNAPSHOTS_HELD = 10;
-
+    private IntentFilter mReceiverFilter;
     /* Messages for the service handler
     *
     * */
@@ -121,9 +123,13 @@ public class BeaconService extends Service {
         mServiceHandler = new ServiceHandler(mServiceLooper);
         mReceiver = new BluetoothReceiver();
 
+
         // Set the private receiver object
         // Consider setting IntentFilter param when code is more properly organised.
-        registerReceiver(mReceiver, null, null, mServiceHandler);
+        mReceiverFilter = new IntentFilter();
+        mReceiverFilter.addAction(BluetoothDevice.ACTION_FOUND);
+        mReceiverFilter.addAction(BluetoothDevice.ACTION_UUID);
+        registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
         adapter = BluetoothAdapter.getDefaultAdapter();
         adapter.startDiscovery();
 
@@ -159,6 +165,17 @@ public class BeaconService extends Service {
         public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
 
         }
+
+        @Override
+        public void ping() throws RemoteException {
+            BeaconService.this.ping();
+        }
+
+        @Override
+        public void cancel() throws RemoteException {
+            BeaconService.this.cancel();
+        }
+
 
     };
 
@@ -209,7 +226,13 @@ public class BeaconService extends Service {
     }
 
     // Get the latest snapshot
-    public Snapshot lastSnapshot() { return snapshots.remove(snapshots.size() - 1);}
+    public Snapshot lastSnapshot() {
+        if (snapshots != null && snapshots.size() > 0) {
+            return snapshots.remove(snapshots.size() - 1);
+        }
+        return null;
+    }
+
 
     // Initiate a discovery command to get the signal strength and determine
     public void ping() {
@@ -229,16 +252,16 @@ public class BeaconService extends Service {
             // Discovery
 
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If device not found.
-                if (beacons.findBeacon(device.getUuids().toString()) == null) {
-                    // Get a bluetooth device and create an object to handle it.
+                if (device != null) {
+                    devices.add(device);
                     beacons.add(new BeaconCreateDescription(device));
                 }
             }
             // Broadcast Action detected.
             if(BluetoothDevice.ACTION_UUID.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.ACTION_UUID);
+                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.ACTION_UUID);
 
                 // Set the RSSI
                 int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);

@@ -33,8 +33,10 @@ public class Frames extends TimerTask {
     // Add a new frame.
     @Override
     public void run() {
-        this.frames.add(new Frame(beacons.signalStrength(), frameCount));
-        frameCount++;
+        if (beacons != null) {
+            this.frames.add(new Frame(beacons.signalStrength(), frameCount));
+            frameCount++;
+        }
     }
 
     public void sort() {

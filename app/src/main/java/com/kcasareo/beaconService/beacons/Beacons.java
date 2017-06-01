@@ -39,4 +39,7 @@ public class Beacons {
         return signalStrength;
     }
 
+    public boolean empty() {
+        return beacons.isEmpty();
+    }
 }

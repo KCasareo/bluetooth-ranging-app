@@ -104,6 +104,11 @@ public class MainActivity extends AppCompatActivity {
             // Update the list view;
             arrayAdapter.notifyDataSetChanged();
         }
+
+        @Override
+        public void signalsResponse(int[] signalStrength) throws RemoteException {
+
+        }
     };
 
 

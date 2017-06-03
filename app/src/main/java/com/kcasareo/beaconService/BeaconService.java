@@ -21,6 +21,7 @@ import android.util.SparseArray;
 import android.widget.Toast;
 import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
 import com.kcasareo.beaconService.beacons.Beacons;
+import com.kcasareo.beaconService.frames.Frame;
 import com.kcasareo.beaconService.frames.Snapshot;
 import com.kcasareo.beaconService.IBeaconServiceCallback;
 
@@ -49,16 +50,18 @@ public class BeaconService extends Service {
     //private BluetoothReceiver mReceiver;
     private ArrayList<BluetoothDevice> devices = new ArrayList<>();
     private BluetoothManager btManager;
-
+    //private BluetoothGatt gatt;
     // Use a thread safe list;
-    private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
+    //private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
+    private List<Frame> frames = Collections.synchronizedList(new ArrayList<Frame>());
     private BluetoothAdapter adapter;
     private Timer snapshotScheduler;
     private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
     private Handler mServiceHandler;
     private BluetoothAdapter mBluetoothAdapter;
-    private SparseArray<BluetoothDevice> mDevices;
+    private HashMap<Integer, BluetoothDevice> mDevices;
+
     /* Messages for the service handler
     *
     *
@@ -142,6 +145,7 @@ public class BeaconService extends Service {
         //mReceiver = new BluetoothReceiver();
         btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
+
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableBtIntent);
@@ -153,10 +157,15 @@ public class BeaconService extends Service {
 
         // Set the private receiver object
         // Consider setting IntentFilter param when code is more properly organised.
+        /* This is for standard bluetooth
         mReceiverFilter = new IntentFilter();
         mReceiverFilter.addAction(BluetoothDevice.ACTION_FOUND);
         mReceiverFilter.addAction(BluetoothDevice.ACTION_UUID);
+
+        * Unnecessary since btManager handles this instead for Gatt
         //registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
+        //*/
+
         adapter = btManager.getAdapter();
 
         if (adapter != null && !adapter.isEnabled()) {
@@ -172,17 +181,7 @@ public class BeaconService extends Service {
             @Override
             public void run() {
                 // Will block the task for 500 ms
-                if (adapter.isDiscovering()) {
-                    adapter.cancelDiscovery();
-                } else {
-                    adapter.startDiscovery();
-                }
-                createSnapshot();
-                // Remove the earliest snapshot added.
-                while (snapshots.size() > MAX_SNAPSHOTS_HELD) {
-                    purgeSnapshot();
-                }
-
+                // Update code here
             }
         }, 0, MAX_REFRESH_TIME);
     }
@@ -191,13 +190,21 @@ public class BeaconService extends Service {
     *
     *
      */
-    // Code to use when scan occurs
+    /*
+    *  LE Scan Callback
+    *
+    * */
     private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
+        // Increase if period is too low
+        private final long PULSE_HALF_PERIOD = 500;
+
 
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
             Log.i("LE Scan", "New LE Device: " + device.getName() + " @ " + rssi);
             mDevices.put(device.hashCode(), device);
+            device.connectGatt(BeaconService.this, true, btleGattCallback);
+
         }
 
 
@@ -219,14 +226,16 @@ public class BeaconService extends Service {
         private void startScan() {
             mBluetoothAdapter.startDiscovery();
             // Stop after 2500 ms
-            mServiceHandler.postDelayed(mStopRunnable, 2500);
+            mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
         }
 
         private void stopScan() {
             mBluetoothAdapter.cancelDiscovery();
 
-            mServiceHandler.postDelayed(mStartRunnable, 2500);
+            // Start after 2500ms
+            mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
         }
+
     };
 
 
@@ -238,7 +247,7 @@ public class BeaconService extends Service {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             super.onConnectionStateChange(gatt, status, newState);
         }
-
+        // Code when the
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
 
@@ -252,6 +261,8 @@ public class BeaconService extends Service {
         @Override
         public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
             // Put RSSI update code here
+            super.onReadRemoteRssi(gatt, rssi, status);
+
         }
 
     };
@@ -263,7 +274,16 @@ public class BeaconService extends Service {
 
         @Override
         public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
-            callback.handleResponse(lastSnapshot());
+        }
+
+        @Override
+        public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {\
+            // Redesign beacon to take a bluetooth device and connect to gatt
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for (Map.Entry<Integer, BluetoothDevice> device : mDevices.entrySet()) {
+                //map.put();
+            }
+            //callback.signalsResponse();
         }
 
         @Override
@@ -277,7 +297,7 @@ public class BeaconService extends Service {
         }
     };
 
-    
+
 
     @Override
     public void onDestroy() {
@@ -290,6 +310,7 @@ public class BeaconService extends Service {
     * */
 
     // Create a snapshot to use
+    /*
     private void createSnapshot() {
         snapshots.add(new Snapshot(beacons));
     }
@@ -303,7 +324,7 @@ public class BeaconService extends Service {
     /* Client methods
     * Methods that should be accessible by from the service.
     * */
-
+/*
     // Get snapshot within the given time
     public Snapshot snapshot(int thresholdUpper, int thresholdLower) {
         return null;
@@ -317,7 +338,7 @@ public class BeaconService extends Service {
         return null;
     }
 
-
+*/
 
 
 

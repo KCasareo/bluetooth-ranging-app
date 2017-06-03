@@ -17,7 +17,7 @@ interface IBeaconService {
     //com.kcasareo.beaconService.frames.Snapshot sendSnapshot(com.kcasareo.beaconService.frames.Snapshot snapshot);
 
     oneway void lastSnap(IBeaconServiceCallback callback);
-
+    oneway void signalsStrength(IBeaconServiceCallback callback);
     /* Register callback */
     void registerCallback(IBeaconServiceCallback callback);
     void unregisterCallback(IBeaconServiceCallback callback);

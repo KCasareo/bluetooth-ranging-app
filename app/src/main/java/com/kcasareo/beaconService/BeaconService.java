@@ -7,17 +7,13 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.*;
 import android.os.Process;
 import android.util.Log;
-import android.util.SparseArray;
 import android.widget.Toast;
 //import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
 //import com.kcasareo.beaconService.beacons.Beacons;
@@ -25,21 +21,13 @@ import android.widget.Toast;
 //import com.kcasareo.beaconService.frames.Snapshot;
 //import com.kcasareo.beaconService.IBeaconServiceCallback;
 
-import com.kcasareo.beaconService.beacons.Beacon;
 import com.kcasareo.beaconService.beacons.Beacons;
-import com.kcasareo.beaconService.beacons.Bluetooth.Bluetooth;
-import com.kcasareo.beaconService.beacons.Bluetooth.GattCallback;
+import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
+import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import static android.provider.Settings.Global.DEVICE_NAME;
 //import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -286,11 +274,7 @@ public class BeaconService extends Service {
         @Override
         public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
-            HashMap<Integer, Integer> map = new HashMap<>();
-            for (Map.Entry<Integer, BluetoothDevice> device : mDevices.entrySet()) {
-                //map.put();
-            }
-            callback.signalsResponse(map);
+            //callback.signalsResponse();
         }
 
         @Override

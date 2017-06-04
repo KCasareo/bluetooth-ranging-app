@@ -1,24 +1,25 @@
-package com.kcasareo.beaconService.beacons.Bluetooth;
+package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.SparseArray;
+
+import java.util.HashMap;
 
 /**
  * Created by Kevin on 4/06/2017.
  */
 
 public class SignalData implements Parcelable {
-    private long rssi;
+    private HashMap<String, SignalDatum> signalData;
+
+
     protected SignalData(Parcel in) {
-        rssi = in.readLong();
+        signalData = new HashMap<>();
+        signalData = (HashMap<String, SignalDatum>) in.readSerializable();
     }
 
-
-    public SignalData(long rssi) {
-        this.rssi = rssi;
-    }
-
-    public final Creator<SignalData> CREATOR = new Creator<SignalData>() {
+    public static final Creator<SignalData> CREATOR = new Creator<SignalData>() {
         @Override
         public SignalData createFromParcel(Parcel in) {
             return new SignalData(in);
@@ -37,6 +38,8 @@ public class SignalData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.rssi);
+        dest.writeSerializable(signalData);
     }
+
+    
 }

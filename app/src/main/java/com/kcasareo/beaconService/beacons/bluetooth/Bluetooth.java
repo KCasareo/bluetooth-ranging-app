@@ -1,10 +1,7 @@
-package com.kcasareo.beaconService.beacons.Bluetooth;
+package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.os.Parcel;
-import android.telephony.SignalStrength;
 
 import com.kcasareo.beaconService.beacons.Beacon;
 

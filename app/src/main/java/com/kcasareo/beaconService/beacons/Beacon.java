@@ -1,10 +1,6 @@
 package com.kcasareo.beaconService.beacons;
 
-import android.bluetooth.BluetoothGattCallback;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.kcasareo.beaconService.beacons.Bluetooth.SignalData;
+import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -24,8 +20,8 @@ public abstract class Beacon {
     * Returns exportable data.
     *
     * */
-    public SignalData signalData() {
-        return new SignalData(signalStrength);
+    public SignalDatum signalData() {
+        return new SignalDatum(signalStrength);
     }
 
     public Beacon() { signalStrength = 0; }

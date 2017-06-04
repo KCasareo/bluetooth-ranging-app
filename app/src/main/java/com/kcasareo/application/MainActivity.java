@@ -24,6 +24,8 @@ import com.kcasareo.beaconService.IBeaconServiceCallback;
 //import com.kcasareo.beaconService.frames.Frame;
 //import com.kcasareo.beaconService.frames.Frames;
 //import com.kcasareo.beaconService.frames.Snapshot;
+import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
+import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 import com.kcasareo.ranging.R;
 
 import java.util.ArrayList;
@@ -40,15 +42,11 @@ import static com.kcasareo.ranging.R.layout.activity_main;
 public class MainActivity extends AppCompatActivity {
     private BeaconService beaconService;
     private IBeaconService mBeaconService = null;
-    //private Frames frames;
-    //private ArrayList<String> current = new ArrayList<>();
+    private SignalData signalData;
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
     private ListView lv;
-    private boolean captured = false;
-    private ArrayAdapter<String> arrayAdapter;
     private Intent intent;
-    private BluetoothAdapter mBluetoothAdapter;
 
 
     @Override
@@ -95,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
+        @Override
+        public void signalsResponse(SignalData data) throws RemoteException {
+            MainActivity.this.signalData = data;
+        }
         /*
         @Override
         public void handleResponse(Snapshot snapshot) throws RemoteException {
@@ -110,10 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
         }*/
 
-        @Override
-        public void signalsResponse(Map signalStrength) throws RemoteException {
-
-        }
 
     };
 

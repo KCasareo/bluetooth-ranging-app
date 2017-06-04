@@ -1,6 +1,8 @@
 package com.kcasareo.beaconService.beacons;
 
 import android.content.BroadcastReceiver;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.concurrent.Semaphore;
 
@@ -9,7 +11,10 @@ import java.util.concurrent.Semaphore;
  * Interface class for Beacon state objects.
  * EXTEND THIS TO ADD YOUR BEACON TYPE
  */
-public abstract class Beacon {
+
+public abstract class Beacon implements Parcelable {
+
+
     //public abstract int signalStrength();
     public abstract String id();
     private static final int MAX_PERMIT = 1;
@@ -25,22 +30,31 @@ public abstract class Beacon {
         this.signalStrength = signalStrength;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(signalStrength);
+    }
+
+    // Override this in child classes
+    public void readFromParcel(Parcel in) {
+        signalStrength = in.readInt();
+    }
+
     //protected abstract void update();
 
     // Locks the semaphore so neither read nor write occur at the same time.
     // If the reading thread happens to attempt acquisition, it will not miss a chance to read.
-    public final Semaphore semaphore = new Semaphore(MAX_PERMIT, true);
+    //public final Semaphore semaphore = new Semaphore(MAX_PERMIT, true);
 
 
     /* Called with super to turn all runnable beacon threads to background processes.
     public void run() {
-        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-    }
-
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/Beacons/Beacon.java
-<<<<<<< HEAD:app/src/main/java/com/kcasareo/beaconService/Beacons/Beacon.java
-=======
->>>>>>> Threading the Frames object:src/BeaconService/Beacons/Beacon.java
-    //*/
-
+        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND); */
 }
+
+

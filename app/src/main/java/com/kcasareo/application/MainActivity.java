@@ -27,6 +27,7 @@ import com.kcasareo.beaconService.frames.Snapshot;
 import com.kcasareo.ranging.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -106,9 +107,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void signalsResponse(int[] signalStrength) throws RemoteException {
+        public void signalsResponse(Map signalStrength) throws RemoteException {
 
         }
+
     };
 
 

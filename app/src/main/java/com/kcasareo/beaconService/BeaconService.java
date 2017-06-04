@@ -166,24 +166,18 @@ public class BeaconService extends Service {
         //registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
         //*/
 
+        // Get an adapter
         adapter = btManager.getAdapter();
 
+        // Enable bluetooth
         if (adapter != null && !adapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableIntent);
         }
+        //IntentFilter gattFilter = new IntentFilter();
 
-        adapter.startDiscovery();
+        startScan();
 
-        snapshotScheduler = new Timer();
-        // Every 500ms create a new position snapshot.
-        snapshotScheduler.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                // Will block the task for 500 ms
-                // Update code here
-            }
-        }, 0, MAX_REFRESH_TIME);
     }
     /* Code for BluetoothLE Connections
     *
@@ -196,7 +190,6 @@ public class BeaconService extends Service {
     * */
     private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
         // Increase if period is too low
-        private final long PULSE_HALF_PERIOD = 500;
 
 
         @Override
@@ -207,41 +200,42 @@ public class BeaconService extends Service {
 
         }
 
-
-        private Runnable mStopRunnable = new Runnable() {
-            @Override
-            public void run() {
-                stopScan();
-            }
-        };
-
-        private Runnable mStartRunnable = new Runnable () {
-            @Override
-            public void run() {
-                startScan();
-            }
-        };
-        // Initiate a discovery command to get the signal strength and determine
-
-        private void startScan() {
-            mBluetoothAdapter.startDiscovery();
-            // Stop after 2500 ms
-            mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
-        }
-
-        private void stopScan() {
-            mBluetoothAdapter.cancelDiscovery();
-
-            // Start after 2500ms
-            mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
-        }
-
     };
 
+    private final long PULSE_HALF_PERIOD = 500;
+
+    private Runnable mStopRunnable = new Runnable() {
+        @Override
+        public void run() {
+            stopScan();
+        }
+    };
+
+    private Runnable mStartRunnable = new Runnable () {
+        @Override
+        public void run() {
+            startScan();
+        }
+    };
+    // Initiate a discovery command to get the signal strength and determine
+
+    private void startScan() {
+        mBluetoothAdapter.startDiscovery();
+        // Stop after 2500 ms
+        mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
+    }
+
+    private void stopScan() {
+        mBluetoothAdapter.cancelDiscovery();
+
+        // Start after 2500ms
+        mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
+    }
 
 
 
     // All Gatt Communications functionality defined here.
+    // Maybe this should be a public class
     private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -277,13 +271,13 @@ public class BeaconService extends Service {
         }
 
         @Override
-        public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {\
+        public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
             HashMap<Integer, Integer> map = new HashMap<>();
             for (Map.Entry<Integer, BluetoothDevice> device : mDevices.entrySet()) {
                 //map.put();
             }
-            //callback.signalsResponse();
+            callback.signalsResponse(map);
         }
 
         @Override
@@ -296,6 +290,8 @@ public class BeaconService extends Service {
 
         }
     };
+
+    // Create a private implementation to gattcallback then pass a new copy of for each
 
 
 

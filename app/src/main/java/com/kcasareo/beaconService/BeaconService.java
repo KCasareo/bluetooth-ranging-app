@@ -60,8 +60,8 @@ public class BeaconService extends Service {
     //private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
     //private List<Frame> frames = Collections.synchronizedList(new ArrayList<Frame>());
     private BluetoothAdapter adapter;
-    private Timer snapshotScheduler;
-    private final int MAX_SNAPSHOTS_HELD = 10;
+    //private Timer snapshotScheduler;
+    //private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
     private Handler mServiceHandler;
     private BluetoothAdapter mBluetoothAdapter;
@@ -195,19 +195,26 @@ public class BeaconService extends Service {
     * */
     private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
         // Increase if period is too low
-
-
+        /*
+        * Callback that fires upon device discovery
+        *
+        * */
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
             Log.i("LE Scan", "New LE Device: " + device.getName() + " @ " + rssi);
+            // Will request a static factory next time.
             Bluetooth bluetooth = new Bluetooth(device);
             BluetoothGattCallback callback = new GattCallback(bluetooth);
-            device.connectGatt(BeaconService.this, true, callback);
-            beacons.add(bluetooth, callback);
+            BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
+            beacons.add(bluetooth, gatt);
         }
 
     };
 
+    /*
+    * Starts and restarts scan.
+    *
+    * */
     private final long PULSE_HALF_PERIOD = 500;
 
     private Runnable mStopRunnable = new Runnable() {
@@ -305,7 +312,6 @@ public class BeaconService extends Service {
     public void onDestroy() {
         adapter.cancelDiscovery();
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
-        snapshotScheduler.cancel();
     }
     /* Private methods
     *

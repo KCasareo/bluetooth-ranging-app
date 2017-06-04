@@ -7,6 +7,7 @@ import com.kcasareo.beaconService.beacons.Beacon;
 
 /**
  * Created by Kevin on 4/06/2017.
+ * This takes a reference to the beacon it is bound to so it can modify the RSSI value.
  */
 
 public class GattCallback extends BluetoothGattCallback {

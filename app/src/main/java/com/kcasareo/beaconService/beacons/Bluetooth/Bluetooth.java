@@ -13,9 +13,11 @@ import com.kcasareo.beaconService.beacons.Beacon;
  */
 
 public class Bluetooth extends Beacon {
+    private final String TAG = getClass().getSimpleName();
     protected BluetoothDevice device;
     protected int identifier;
-    
+    protected BluetoothGatt profile;
+
     public Bluetooth(BluetoothDevice device) {
         // Initialise signal strength to 0.
         super();
@@ -29,6 +31,7 @@ public class Bluetooth extends Beacon {
         return this.signalStrength;
     }
 
+    // Will be set by the gatt callback
     @Override
     public void setSignalStrength(long rssi) {
         this.signalStrength = rssi;
@@ -36,6 +39,12 @@ public class Bluetooth extends Beacon {
 
     @Override
     public String id() {
-        return null;
+        return device.getUuids().toString();
+    }
+
+    // Async request from server for rssi.
+    @Override
+    public void poll() {
+        profile.readRemoteRssi();
     }
 }

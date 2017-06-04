@@ -19,11 +19,16 @@ import android.os.Process;
 import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
-import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
+//import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
+//import com.kcasareo.beaconService.beacons.Beacons;
+//import com.kcasareo.beaconService.frames.Frame;
+//import com.kcasareo.beaconService.frames.Snapshot;
+//import com.kcasareo.beaconService.IBeaconServiceCallback;
+
+import com.kcasareo.beaconService.beacons.Beacon;
 import com.kcasareo.beaconService.beacons.Beacons;
-import com.kcasareo.beaconService.frames.Frame;
-import com.kcasareo.beaconService.frames.Snapshot;
-import com.kcasareo.beaconService.IBeaconServiceCallback;
+import com.kcasareo.beaconService.beacons.Bluetooth.Bluetooth;
+import com.kcasareo.beaconService.beacons.Bluetooth.GattCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +40,7 @@ import java.util.TimerTask;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 import static android.provider.Settings.Global.DEVICE_NAME;
-import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
+//import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
 /**
@@ -53,7 +58,7 @@ public class BeaconService extends Service {
     //private BluetoothGatt gatt;
     // Use a thread safe list;
     //private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
-    private List<Frame> frames = Collections.synchronizedList(new ArrayList<Frame>());
+    //private List<Frame> frames = Collections.synchronizedList(new ArrayList<Frame>());
     private BluetoothAdapter adapter;
     private Timer snapshotScheduler;
     private final int MAX_SNAPSHOTS_HELD = 10;
@@ -195,9 +200,10 @@ public class BeaconService extends Service {
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
             Log.i("LE Scan", "New LE Device: " + device.getName() + " @ " + rssi);
-            mDevices.put(device.hashCode(), device);
-            device.connectGatt(BeaconService.this, true, btleGattCallback);
-
+            Bluetooth bluetooth = new Bluetooth(device);
+            BluetoothGattCallback callback = new GattCallback(bluetooth);
+            device.connectGatt(BeaconService.this, true, callback);
+            beacons.add(bluetooth, callback);
         }
 
     };

@@ -21,9 +21,9 @@ import android.os.Bundle;
 import com.kcasareo.beaconService.BeaconService;
 import com.kcasareo.beaconService.IBeaconService;
 import com.kcasareo.beaconService.IBeaconServiceCallback;
-import com.kcasareo.beaconService.frames.Frame;
-import com.kcasareo.beaconService.frames.Frames;
-import com.kcasareo.beaconService.frames.Snapshot;
+//import com.kcasareo.beaconService.frames.Frame;
+//import com.kcasareo.beaconService.frames.Frames;
+//import com.kcasareo.beaconService.frames.Snapshot;
 import com.kcasareo.ranging.R;
 
 import java.util.ArrayList;
@@ -40,8 +40,8 @@ import static com.kcasareo.ranging.R.layout.activity_main;
 public class MainActivity extends AppCompatActivity {
     private BeaconService beaconService;
     private IBeaconService mBeaconService = null;
-    private Frames frames;
-    private ArrayList<String> current = new ArrayList<>();
+    //private Frames frames;
+    //private ArrayList<String> current = new ArrayList<>();
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
     private ListView lv;
@@ -65,13 +65,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        /*
         if (arrayAdapter == null) {
             arrayAdapter = new ArrayAdapter<String>(
                     this,
                     android.R.layout.simple_list_item_1,
                     current);
             lv.setAdapter(arrayAdapter);
-        }
+        }*/
 
 
     }
@@ -94,8 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
+        /*
         @Override
         public void handleResponse(Snapshot snapshot) throws RemoteException {
+            /*
             if (frames == null) {
                 return;
             }
@@ -104,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
             current = frames.getLast().toList();
             // Update the list view;
             arrayAdapter.notifyDataSetChanged();
-        }
+
+        }*/
 
         @Override
         public void signalsResponse(Map signalStrength) throws RemoteException {

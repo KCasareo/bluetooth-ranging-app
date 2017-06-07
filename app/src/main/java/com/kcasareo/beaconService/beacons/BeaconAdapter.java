@@ -27,8 +27,13 @@ public class BeaconAdapter extends BaseAdapter {
     }
 
     public void set(SignalData data) {
+        // Empty the list, add new values, notify.
+        // If data returned is null or the collection is empty, skip setting new values.
+        if(data.asMap().size() <= 0 )
+            return;
         mData.clear();
         mData.addAll(data.asMap().entrySet());
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,8 +64,8 @@ public class BeaconAdapter extends BaseAdapter {
 
         Map.Entry<String, SignalDatum> item = getItem(position);
 
-        ((TextView) result.findViewById(android.R.id.text1)).setText(item.getKey());
-        ((TextView) result.findViewById(android.R.id.text2)).setText(item.getValue().toString());
+        ((TextView) result.findViewById(R.id.signalAddress)).setText(item.getKey());
+        ((TextView) result.findViewById(R.id.signalData)).setText(item.getValue().toString());
         return result;
     }
 }

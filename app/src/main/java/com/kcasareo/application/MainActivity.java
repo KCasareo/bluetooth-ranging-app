@@ -103,8 +103,13 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "Signals Response.");
             Log.d(TAG, "SignalData Hash: " + data.hashCode());
 
+            // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
+                lv.setAdapter(beaconAdapter);
+            } else {
+                // Modify the entire dataset.
+                beaconAdapter.set(data);
             }
         }
 
@@ -146,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }, 0, TIME_UPDATE) ;
+
         }
 
         @Override

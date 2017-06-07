@@ -9,13 +9,20 @@ import android.os.Parcelable;
 
 public class SignalDatum implements Parcelable {
     private long rssi;
+    private String name;
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
+        name = in.readString();
+    }
+
+    public String name() {
+        return name;
     }
 
 
-    public SignalDatum(long rssi) {
+    public SignalDatum(long rssi, String name) {
         this.rssi = rssi;
+        this.name = name;
     }
 
     public final Creator<SignalDatum> CREATOR = new Creator<SignalDatum>() {
@@ -38,5 +45,6 @@ public class SignalDatum implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.rssi);
+        dest.writeString(this.name);
     }
 }

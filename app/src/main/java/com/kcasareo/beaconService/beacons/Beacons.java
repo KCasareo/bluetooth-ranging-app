@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothGattCallback;
 import android.util.Pair;
 import android.util.SparseArray;
 
+import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -45,6 +47,15 @@ public class Beacons {
 
     public Beacon findBeacon(String id) {
         return beacons.get(id).first;
+    }
+
+    public SignalData getSignalData() {
+        SignalData data = new SignalData();
+        for (HashMap.Entry<String, Pair<Beacon, BluetoothGatt>> entry : beacons.entrySet() ) {
+            Beacon beacon = entry.getValue().first;
+            data.add(beacon.datum());
+        }
+        return data;
     }
 
 }

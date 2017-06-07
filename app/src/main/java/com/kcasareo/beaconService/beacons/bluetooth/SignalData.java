@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.SparseArray;
 
+import com.kcasareo.beaconService.beacons.Beacon;
+
 import java.util.HashMap;
 
 /**
@@ -13,10 +15,22 @@ import java.util.HashMap;
 public class SignalData implements Parcelable {
     private HashMap<String, SignalDatum> signalData;
 
-
     protected SignalData(Parcel in) {
+        int size = in.readInt();
         signalData = new HashMap<>();
-        signalData = (HashMap<String, SignalDatum>) in.readSerializable();
+        for (int i = 0; i < size; i++) {
+            String name = in.readString();
+            SignalDatum datum = in.readParcelable(SignalDatum.class.getClassLoader());
+            signalData.put(name, datum);
+        }
+    }
+
+    public SignalData() {
+        signalData = new HashMap<>();
+    }
+
+    public void add(SignalDatum datum) {
+        signalData.put(datum.name(), datum);
     }
 
     public static final Creator<SignalData> CREATOR = new Creator<SignalData>() {
@@ -38,8 +52,17 @@ public class SignalData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(signalData);
+        int size = signalData.size();
+        dest.writeInt(size);
+        for ( HashMap.Entry<String, SignalDatum> entry : signalData.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeParcelable(entry.getValue(), 0);
+        }
     }
 
-    
+    public void add(Beacon beacon) {
+        signalData.put(beacon.id(), beacon.datum());
+    }
+
+
 }

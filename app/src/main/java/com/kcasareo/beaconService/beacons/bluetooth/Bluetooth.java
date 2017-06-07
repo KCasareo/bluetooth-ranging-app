@@ -20,6 +20,7 @@ public class Bluetooth extends Beacon {
         super();
         this.device = device;
         this.identifier = device.hashCode();
+        this.name = device.getName();
     }
 
 
@@ -30,8 +31,8 @@ public class Bluetooth extends Beacon {
 
     // Will be set by the gatt callback
     @Override
-    public void setSignalStrength(long rssi) {
-        this.signalStrength = rssi;
+    public void setSignalStrength(long signalStrength) {
+        this.signalStrength = signalStrength;
     }
 
     @Override
@@ -43,5 +44,10 @@ public class Bluetooth extends Beacon {
     @Override
     public void poll() {
         profile.readRemoteRssi();
+    }
+
+    @Override
+    public SignalDatum datum() {
+        return new SignalDatum(signalStrength, name);
     }
 }

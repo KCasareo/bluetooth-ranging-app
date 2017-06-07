@@ -10,18 +10,18 @@ import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 public abstract class Beacon {
     private final String TAG = getClass().getSimpleName();
     protected long signalStrength;
-    protected String id;
+    protected String name;
     public abstract long signalStrength();
-    public abstract void setSignalStrength(long rssi);
+    public abstract void setSignalStrength(long signalStrength);
     public abstract String id();
     public abstract void poll();
-
+    public abstract SignalDatum datum();
     /*
     * Returns exportable data.
     *
     * */
     public SignalDatum signalData() {
-        return new SignalDatum(signalStrength);
+        return new SignalDatum(signalStrength, name);
     }
 
     public Beacon() { signalStrength = 0; }

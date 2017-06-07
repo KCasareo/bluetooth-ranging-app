@@ -26,8 +26,6 @@ import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
 import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 //import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -36,24 +34,24 @@ import java.util.Map;
  * Test code using the Android Developer guide
  */
 public class BeaconService extends Service {
+    private final String TAG = "Beacon Service";
     private Beacons beacons = new Beacons();
     //private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
-    private Looper mServiceLooper;
+    //private Looper mServiceLooper;
     //private ServiceHandler mServiceHandler;
     //private BluetoothReceiver mReceiver;
     private ArrayList<BluetoothDevice> devices = new ArrayList<>();
-    private BluetoothManager btManager;
+    private BluetoothManager mBluetoothManager;
     //private BluetoothGatt gatt;
     // Use a thread safe list;
     //private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
     //private List<Frame> frames = Collections.synchronizedList(new ArrayList<Frame>());
-    private BluetoothAdapter adapter;
+    private BluetoothAdapter mBluetoothAdapter;
     //private Timer snapshotScheduler;
     //private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
     private Handler mServiceHandler;
-    private BluetoothAdapter mBluetoothAdapter;
-    private HashMap<Integer, BluetoothDevice> mDevices;
+    //private BluetoothAdapter mBluetoothAdapter;
 
     /* Messages for the service handler
     *
@@ -126,6 +124,7 @@ public class BeaconService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+
         return mBeaconServiceBinder;
     }
 
@@ -133,10 +132,10 @@ public class BeaconService extends Service {
     public void onCreate() {
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
-        mServiceLooper = thread.getLooper();
+        //mServiceLooper = thread.getLooper();
         mServiceHandler = new Handler();
         //mReceiver = new BluetoothReceiver();
-        btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
 
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
@@ -148,27 +147,16 @@ public class BeaconService extends Service {
             Toast.makeText(this, "No LE Support.", Toast.LENGTH_SHORT).show();
         }
 
-        // Set the private receiver object
-        // Consider setting IntentFilter param when code is more properly organised.
-        /* This is for standard bluetooth
-        mReceiverFilter = new IntentFilter();
-        mReceiverFilter.addAction(BluetoothDevice.ACTION_FOUND);
-        mReceiverFilter.addAction(BluetoothDevice.ACTION_UUID);
-
-        * Unnecessary since btManager handles this instead for Gatt
-        //registerReceiver(mReceiver, mReceiverFilter, null, mServiceHandler);
-        //*/
-
-        // Get an adapter
-        adapter = btManager.getAdapter();
+        mBluetoothAdapter = mBluetoothManager.getAdapter();
 
         // Enable bluetooth
-        if (adapter != null && !adapter.isEnabled()) {
+        if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableIntent);
         }
         //IntentFilter gattFilter = new IntentFilter();
 
+        // Begin discovery loop.
         startScan();
 
     }
@@ -189,7 +177,8 @@ public class BeaconService extends Service {
         * */
         @Override
         public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-            Log.i("LE Scan", "New LE Device: " + device.getName() + " @ " + rssi);
+            final String TAG = "LE Scan Callback";
+            Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
             // Will request a static factory next time.
             Bluetooth bluetooth = new Bluetooth(device);
             BluetoothGattCallback callback = new GattCallback(bluetooth);
@@ -237,6 +226,11 @@ public class BeaconService extends Service {
 
     // All Gatt Communications functionality defined here.
     // Maybe this should be a public class
+    /*
+    * This will be unnecessary since you have one callback per device.
+    *
+    * */
+    /*
     private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -260,7 +254,7 @@ public class BeaconService extends Service {
 
         }
 
-    };
+    }; //*/
 
     /* Returned on bind
     *  These methods are exposed when the service is bound.
@@ -274,7 +268,7 @@ public class BeaconService extends Service {
         @Override
         public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
-            //callback.signalsResponse();
+            callback.signalsResponse(beacons.getSignalData());
         }
 
         @Override
@@ -294,7 +288,7 @@ public class BeaconService extends Service {
 
     @Override
     public void onDestroy() {
-        adapter.cancelDiscovery();
+        mBluetoothAdapter.cancelDiscovery();
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
     }
     /* Private methods

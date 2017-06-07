@@ -25,12 +25,5 @@
             android:layout_marginTop="214dp"></ListView>
     </RelativeLayout>
 
-    <ToggleButton
-        android:id="@+id/discoverToggleButton"
-        android:layout_width="368dp"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="404dp" />
 
 </android.support.constraint.ConstraintLayout>

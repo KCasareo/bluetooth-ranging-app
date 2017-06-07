@@ -11,7 +11,7 @@ import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
 */
 
 interface IBeaconServiceCallback {
-    //void handleResponse(String name);
+    //void handleResponse(String address);
 
     // Handle snapshot returns in the client.
     //void handleResponse(in Snapshot snapshot);

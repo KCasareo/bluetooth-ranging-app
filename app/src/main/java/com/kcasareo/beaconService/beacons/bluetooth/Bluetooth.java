@@ -20,9 +20,10 @@ public class Bluetooth extends Beacon {
         super();
         this.device = device;
         this.identifier = device.hashCode();
+        this.address = device.getAddress();
         this.name = device.getName();
+        this.id = device.getUuids().hashCode();
     }
-
 
     @Override
     public long signalStrength() {
@@ -36,8 +37,13 @@ public class Bluetooth extends Beacon {
     }
 
     @Override
-    public String id() {
-        return device.getUuids().toString();
+    public long id() {
+        return id;
+    }
+
+    @Override
+    public String name() {
+        return this.name;
     }
 
     // Async request from server for rssi.
@@ -47,7 +53,12 @@ public class Bluetooth extends Beacon {
     }
 
     @Override
+    public String address() {
+        return this.address;
+    }
+
+    @Override
     public SignalDatum datum() {
-        return new SignalDatum(signalStrength, name);
+        return new SignalDatum(signalStrength, address, id);
     }
 }

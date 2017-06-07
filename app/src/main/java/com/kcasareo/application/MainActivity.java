@@ -24,6 +24,7 @@ import com.kcasareo.beaconService.IBeaconServiceCallback;
 //import com.kcasareo.beaconService.frames.Frame;
 //import com.kcasareo.beaconService.frames.Frames;
 //import com.kcasareo.beaconService.frames.Snapshot;
+import com.kcasareo.beaconService.beacons.BeaconAdapter;
 import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
 import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 import com.kcasareo.ranging.R;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private static final long TIME_UPDATE = 500;
     private ListView lv;
     private Intent intent;
+    private BeaconAdapter beaconAdapter = null;
 
 
     @Override
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(this, BeaconService.class);
         startService(intent);
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
+
 
     }
 
@@ -93,10 +96,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
+        final String TAG = "MainActivity/bscb";
         @Override
         public void signalsResponse(SignalData data) throws RemoteException {
             MainActivity.this.signalData = data;
+            Log.i(TAG, "Signals Response.");
+            Log.d(TAG, "SignalData Hash: " + data.hashCode());
+
+            if( beaconAdapter == null) {
+                beaconAdapter = new BeaconAdapter(data);
+            }
         }
+
         /*
         @Override
         public void handleResponse(Snapshot snapshot) throws RemoteException {
@@ -129,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 //                intent.setAction(IBeaconService.class.)
                     try {
-                        mBeaconService.lastSnap(mCallback);
+                        mBeaconService.signalsStrength(mCallback);
 
                     } catch (RemoteException e) {
                     }

@@ -6,6 +6,7 @@ import android.util.SparseArray;
 
 import com.kcasareo.beaconService.beacons.Beacon;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -60,9 +61,12 @@ public class SignalData implements Parcelable {
         }
     }
 
-    public void add(Beacon beacon) {
-        signalData.put(beacon.id(), beacon.datum());
+    public HashMap<String, SignalDatum> asMap() {
+        return signalData;
     }
 
+    public void add(Beacon beacon) {
+        signalData.put(beacon.address(), beacon.datum());
+    }
 
 }

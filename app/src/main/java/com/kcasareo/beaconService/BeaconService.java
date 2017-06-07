@@ -26,6 +26,8 @@ import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
 import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 //import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
@@ -137,7 +139,7 @@ public class BeaconService extends Service {
         //mReceiver = new BluetoothReceiver();
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
-
+        // Enable Bluetooth Adapter
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableBtIntent);
@@ -148,13 +150,6 @@ public class BeaconService extends Service {
         }
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
-
-        // Enable bluetooth
-        if (mBluetoothAdapter != null && !mBluetoothAdapter.isEnabled()) {
-            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivity(enableIntent);
-        }
-        //IntentFilter gattFilter = new IntentFilter();
 
         // Begin discovery loop.
         startScan();
@@ -260,6 +255,7 @@ public class BeaconService extends Service {
     *  These methods are exposed when the service is bound.
     */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
+        private HashMap<String, IBeaconServiceCallback> callbacks = new HashMap<>();
 
         @Override
         public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
@@ -273,12 +269,12 @@ public class BeaconService extends Service {
 
         @Override
         public void registerCallback(IBeaconServiceCallback callback) throws RemoteException {
-
+            callbacks.put(Integer.toString(callback.hashCode()), callback);
         }
 
         @Override
         public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
-
+            callbacks.remove(Integer.toString(callback.hashCode()));
         }
     };
 

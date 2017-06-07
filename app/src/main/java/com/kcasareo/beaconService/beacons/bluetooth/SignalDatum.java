@@ -10,6 +10,7 @@ import android.os.Parcelable;
 public class SignalDatum implements Parcelable {
     private long rssi;
     private String name;
+    private long id;
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
         name = in.readString();
@@ -20,9 +21,10 @@ public class SignalDatum implements Parcelable {
     }
 
 
-    public SignalDatum(long rssi, String name) {
+    public SignalDatum(long rssi, String name, long id) {
         this.rssi = rssi;
         this.name = name;
+        this.id = id;
     }
 
     public final Creator<SignalDatum> CREATOR = new Creator<SignalDatum>() {
@@ -46,5 +48,14 @@ public class SignalDatum implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.rssi);
         dest.writeString(this.name);
+    }
+
+    // Returns hashcode of device detected.
+    public long id() {
+        return id;
+    }
+
+    public String toString() {
+        return "Name: " + this.name + " RSSI: " + this.rssi;
     }
 }

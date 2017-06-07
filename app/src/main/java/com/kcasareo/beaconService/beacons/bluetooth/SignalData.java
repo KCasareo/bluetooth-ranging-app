@@ -65,6 +65,14 @@ public class SignalData implements Parcelable {
         return signalData;
     }
 
+    public String toString() {
+        String s = "";
+        for (HashMap.Entry<String, SignalDatum> entry : signalData.entrySet()) {
+            s += entry.getValue().toString() + " ";
+        }
+        return s;
+    }
+
     public void add(Beacon beacon) {
         signalData.put(beacon.address(), beacon.datum());
     }

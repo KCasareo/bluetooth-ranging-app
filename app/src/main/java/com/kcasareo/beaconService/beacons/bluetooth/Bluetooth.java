@@ -22,7 +22,11 @@ public class Bluetooth extends Beacon {
         this.identifier = device.hashCode();
         this.address = device.getAddress();
         this.name = device.getName();
-        this.id = device.getUuids().hashCode();
+        this.id = device.hashCode();
+    }
+
+    public void setProfile(BluetoothGatt profile) {
+        this.profile = profile;
     }
 
     @Override
@@ -49,7 +53,9 @@ public class Bluetooth extends Beacon {
     // Async request from server for rssi.
     @Override
     public void poll() {
-        profile.readRemoteRssi();
+        // Profile is null for some reason.
+        if (profile != null)
+            profile.readRemoteRssi();
     }
 
     @Override
@@ -59,6 +65,6 @@ public class Bluetooth extends Beacon {
 
     @Override
     public SignalDatum datum() {
-        return new SignalDatum(signalStrength, address, id);
+        return new SignalDatum(signalStrength, address, id, name);
     }
 }

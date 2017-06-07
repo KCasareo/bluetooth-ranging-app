@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.text.Layout;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
     private ListView lv;
+    private ViewGroup layout;
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
 
@@ -54,11 +57,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(activity_main);
+
+
+        setContentView(R.layout.activity_main);
         lv = (ListView) findViewById(R.id.listview_rssi);
         intent = new Intent(this, BeaconService.class);
         startService(intent);
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
+        beaconAdapter = new BeaconAdapter();
+        lv.setAdapter(beaconAdapter);
+
+        ;
 
 
     }
@@ -102,14 +111,19 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.signalData = data;
             Log.i(TAG, "Signals Response.");
             Log.d(TAG, "SignalData Hash: " + data.hashCode());
-
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
-                lv.setAdapter(beaconAdapter);
             } else {
                 // Modify the entire dataset.
                 beaconAdapter.set(data);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        beaconAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         }
 
@@ -151,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }, 0, TIME_UPDATE) ;
-
         }
 
         @Override

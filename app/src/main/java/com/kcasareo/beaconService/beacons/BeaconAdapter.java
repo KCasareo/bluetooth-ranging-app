@@ -1,5 +1,6 @@
 package com.kcasareo.beaconService.beacons;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,25 +20,44 @@ import java.util.Map;
  */
 
 public class BeaconAdapter extends BaseAdapter {
-    private final ArrayList mData;
+    private final String TAG = "BeaconAdapter";
+    private final ArrayList<HashMap.Entry<String,SignalDatum>> mData;
 
     public BeaconAdapter(SignalData data) {
-        mData = new ArrayList();
+        this();
         mData.addAll(data.asMap().entrySet());
+    }
+
+    public BeaconAdapter() {
+        mData = new ArrayList();
     }
 
     public void set(SignalData data) {
         // Empty the list, add new values, notify.
         // If data returned is null or the collection is empty, skip setting new values.
-        if(data.asMap().size() <= 0 )
+        HashMap<String, SignalDatum> temp = data.asMap();
+
+        Log.i(TAG, "Set next data");
+        Log.d(TAG, "Data size " + temp.size());
+        if(temp.size() <= 0 )
             return;
-        mData.clear();
-        mData.addAll(data.asMap().entrySet());
-        notifyDataSetChanged();
+        Log.i(TAG, "Clearing");
+        for (HashMap.Entry<String, SignalDatum> entry : temp.entrySet()) {
+            // With the SignalDatum override, this should ensure that a matching address is the method of evaluation.
+            if(mData.contains(entry)) {
+                // More equals abuse.
+                mData.set(mData.indexOf(entry), entry);
+            } else {
+                // Add the entry if not found.
+                mData.add(entry);
+            }
+        }
+        Log.d(TAG, "Data Content:" + data.toString());
     }
 
     @Override
     public int getCount() {
+        Log.d(TAG, "Size: " + mData.size());
         return mData.size();
     }
 
@@ -48,12 +68,13 @@ public class BeaconAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        Map.Entry<String,SignalDatum> entry = (Map.Entry) mData.get(position);
-        return Long.parseLong(entry.getKey());
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i(TAG, "GetView");
+
         final View result;
 
         if (convertView == null) {
@@ -63,7 +84,7 @@ public class BeaconAdapter extends BaseAdapter {
         }
 
         Map.Entry<String, SignalDatum> item = getItem(position);
-
+        Log.d(TAG, "Item Contents: " + item.getKey());
         ((TextView) result.findViewById(R.id.signalAddress)).setText(item.getKey());
         ((TextView) result.findViewById(R.id.signalData)).setText(item.getValue().toString());
         return result;

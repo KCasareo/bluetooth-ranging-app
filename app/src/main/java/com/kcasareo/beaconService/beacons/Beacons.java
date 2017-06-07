@@ -41,8 +41,8 @@ public class Beacons {
     }
 
     public void add(Beacon beacon, BluetoothGatt gatt) {
-        if(!beacons.containsKey(beacon.id()))
-            beacons.put(beacon.id(), new Pair(beacon, gatt));
+        if(!beacons.containsKey(beacon.address()))
+            beacons.put(beacon.address(), new Pair(beacon, gatt));
     }
 
     public Beacon findBeacon(String id) {

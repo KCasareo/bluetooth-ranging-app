@@ -9,10 +9,12 @@ import android.os.Parcelable;
 
 public class SignalDatum implements Parcelable {
     private long rssi;
-    private String name;
+    private String address;
     private long id;
+    private String name;
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
+        address = in.readString();
         name = in.readString();
     }
 
@@ -21,10 +23,11 @@ public class SignalDatum implements Parcelable {
     }
 
 
-    public SignalDatum(long rssi, String name, long id) {
+    public SignalDatum(long rssi, String address, long id, String name) {
         this.rssi = rssi;
-        this.name = name;
+        this.address = address;
         this.id = id;
+        this.name = name;
     }
 
     public final Creator<SignalDatum> CREATOR = new Creator<SignalDatum>() {
@@ -47,6 +50,7 @@ public class SignalDatum implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.rssi);
+        dest.writeString(this.address);
         dest.writeString(this.name);
     }
 
@@ -56,6 +60,17 @@ public class SignalDatum implements Parcelable {
     }
 
     public String toString() {
-        return "Name: " + this.name + " RSSI: " + this.rssi;
+        return "Name: " + this.address + " RSSI: " + this.rssi;
     }
+
+    protected String address() {
+        return address;
+    }
+
+    // Manipulate contains method in BeaconAdapter.set()
+    @Override
+    public boolean equals(Object o) {
+        return this.address.equals(((SignalDatum) o).address());
+    }
+
 }

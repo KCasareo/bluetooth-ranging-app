@@ -7,6 +7,9 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -53,6 +56,7 @@ public class BeaconService extends Service {
     //private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
     private Handler mServiceHandler;
+    private BluetoothLeScanner mLeScanner;
     //private BluetoothAdapter mBluetoothAdapter;
 
     /* Messages for the service handler
@@ -142,6 +146,7 @@ public class BeaconService extends Service {
         // Enable Bluetooth Adapter
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            enableBtIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(enableBtIntent);
         }
 
@@ -150,6 +155,8 @@ public class BeaconService extends Service {
         }
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
+        mLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+
 
         // Begin discovery loop.
         startScan();
@@ -164,25 +171,33 @@ public class BeaconService extends Service {
     *  LE Scan Callback
     *
     * */
-    private BluetoothAdapter.LeScanCallback leScanCallback = new BluetoothAdapter.LeScanCallback() {
-        // Increase if period is too low
-        /*
-        * Callback that fires upon device discovery
-        *
-        * */
+    private ScanCallback leScanCallback = new ScanCallback() {
+        final String TAG = "LE Scan Callback";
         @Override
-        public void onLeScan(BluetoothDevice device, int rssi, byte[] scanRecord) {
-            final String TAG = "LE Scan Callback";
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+            BluetoothDevice device = result.getDevice();
+            int rssi = result.getRssi();
             Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
             // Will request a static factory next time.
             Bluetooth bluetooth = new Bluetooth(device);
             BluetoothGattCallback callback = new GattCallback(bluetooth);
             BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
+            bluetooth.setProfile(gatt);
             beacons.add(bluetooth, gatt);
+
         }
 
-    };
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+            super.onBatchScanResults(results);
+        }
 
+        @Override
+        public void onScanFailed(int errorCode) {
+            super.onScanFailed(errorCode);
+        }
+    };
     /*
     * Starts and restarts scan.
     *
@@ -205,13 +220,13 @@ public class BeaconService extends Service {
     // Initiate a discovery command to get the signal strength and determine
 
     private void startScan() {
-        mBluetoothAdapter.startDiscovery();
+        mLeScanner.startScan(leScanCallback);
         // Stop after 2500 ms
         mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
     }
 
     private void stopScan() {
-        mBluetoothAdapter.cancelDiscovery();
+        mLeScanner.stopScan(leScanCallback);
 
         // Start after 2500ms
         mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);

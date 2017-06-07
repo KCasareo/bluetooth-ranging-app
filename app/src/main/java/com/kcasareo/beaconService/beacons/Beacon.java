@@ -25,7 +25,7 @@ public abstract class Beacon {
     *
     * */
     public SignalDatum signalData() {
-        return new SignalDatum(signalStrength, address, id);
+        return new SignalDatum(signalStrength, address, id, name);
     }
 
     public Beacon() { signalStrength = 0; }

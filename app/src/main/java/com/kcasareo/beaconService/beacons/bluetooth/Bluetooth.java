@@ -22,6 +22,9 @@ public class Bluetooth extends Beacon {
         this.identifier = device.hashCode();
         this.address = device.getAddress();
         this.name = device.getName();
+        if (this.name == null) {
+            this.name = "Generic Bluetooth";
+        }
         this.id = device.hashCode();
     }
 
@@ -61,6 +64,16 @@ public class Bluetooth extends Beacon {
     @Override
     public String address() {
         return this.address;
+    }
+
+    @Override
+    public Runnable task() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                poll();
+            }
+        };
     }
 
     @Override

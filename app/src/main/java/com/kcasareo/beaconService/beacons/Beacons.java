@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 public class Beacons {
     private final String TAG = this.getClass().getSimpleName();
-    private final long POLL_TIME  = 500;
+    private final long POLL_TIME  = 1000;
     private HashMap<String, Pair<Beacon, BluetoothGatt>> beacons;
     private TimerTask pollTask;
     private Timer pollTimer;
@@ -31,8 +31,10 @@ public class Beacons {
             @Override
             public void run() {
                 for (Map.Entry<String, Pair<Beacon, BluetoothGatt>> entry : beacons.entrySet() ) {
-                    entry.getValue().first.poll();
+                    // Fire off polling asynchronously.
+                    new Thread(entry.getValue().first.task()).start();
                 }
+                
             }
         };
 

@@ -60,7 +60,7 @@ public class SignalDatum implements Parcelable {
     }
 
     public String toString() {
-        return "Name: " + this.address + " RSSI: " + this.rssi;
+        return "Name: " + this.name + " RSSI: " + this.rssi;
     }
 
     protected String address() {

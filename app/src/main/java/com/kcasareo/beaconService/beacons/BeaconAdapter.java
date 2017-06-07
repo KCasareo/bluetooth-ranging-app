@@ -38,7 +38,7 @@ public class BeaconAdapter extends BaseAdapter {
         HashMap<String, SignalDatum> temp = data.asMap();
 
         Log.i(TAG, "Set next data");
-        Log.d(TAG, "Data size " + temp.size());
+        //Log.d(TAG, "Data size " + temp.size());
         if(temp.size() <= 0 )
             return;
         Log.i(TAG, "Clearing");
@@ -57,7 +57,7 @@ public class BeaconAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.d(TAG, "Size: " + mData.size());
+        //Log.d(TAG, "Size: " + mData.size());
         return mData.size();
     }
 
@@ -73,7 +73,7 @@ public class BeaconAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.i(TAG, "GetView");
+        //Log.i(TAG, "GetView");
 
         final View result;
 
@@ -84,7 +84,7 @@ public class BeaconAdapter extends BaseAdapter {
         }
 
         Map.Entry<String, SignalDatum> item = getItem(position);
-        Log.d(TAG, "Item Contents: " + item.getKey());
+        //Log.d(TAG, "Item Contents: " + item.getKey());
         ((TextView) result.findViewById(R.id.signalAddress)).setText(item.getKey());
         ((TextView) result.findViewById(R.id.signalData)).setText(item.getValue().toString());
         return result;

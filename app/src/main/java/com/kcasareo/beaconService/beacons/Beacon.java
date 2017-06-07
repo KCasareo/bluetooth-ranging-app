@@ -20,6 +20,7 @@ public abstract class Beacon {
     public abstract void poll();
     public abstract SignalDatum datum();
     public abstract String address();
+    public abstract Runnable task();
     /*
     * Returns exportable data.
     *
@@ -29,5 +30,7 @@ public abstract class Beacon {
     }
 
     public Beacon() { signalStrength = 0; }
+
+
 
 }

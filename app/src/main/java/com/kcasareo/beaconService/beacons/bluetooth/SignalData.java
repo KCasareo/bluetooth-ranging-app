@@ -31,7 +31,7 @@ public class SignalData implements Parcelable {
     }
 
     public void add(SignalDatum datum) {
-        signalData.put(datum.name(), datum);
+        signalData.put(datum.address(), datum);
     }
 
     public static final Creator<SignalData> CREATOR = new Creator<SignalData>() {

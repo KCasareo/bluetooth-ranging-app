@@ -182,7 +182,7 @@ public class BeaconService extends Service {
             // Will request a static factory next time.
             Bluetooth bluetooth = new Bluetooth(device);
             BluetoothGattCallback callback = new GattCallback(bluetooth);
-            BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
+            BluetoothGatt gatt = device.connectGatt(BeaconService.this, false, callback);
             bluetooth.setProfile(gatt);
             beacons.add(bluetooth, gatt);
 
@@ -202,7 +202,7 @@ public class BeaconService extends Service {
     * Starts and restarts scan.
     *
     * */
-    private final long PULSE_HALF_PERIOD = 5000;
+    private final long PULSE_HALF_PERIOD = 2500;
 
     private Runnable mStopRunnable = new Runnable() {
         @Override

@@ -1,5 +1,7 @@
 package com.kcasareo.beaconService.beacons;
 
+import android.os.ParcelUuid;
+
 import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 
 /**
@@ -12,7 +14,7 @@ public abstract class Beacon {
     protected long signalStrength;
     protected String address;
     protected String name;
-    protected long id;
+    protected ParcelUuid id;
     public abstract long signalStrength();
     public abstract void setSignalStrength(long signalStrength);
     public abstract long id();

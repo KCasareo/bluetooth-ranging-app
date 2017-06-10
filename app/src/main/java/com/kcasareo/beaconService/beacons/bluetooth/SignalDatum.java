@@ -1,6 +1,7 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.os.Parcel;
+import android.os.ParcelUuid;
 import android.os.Parcelable;
 
 /**
@@ -10,7 +11,7 @@ import android.os.Parcelable;
 public class SignalDatum implements Parcelable {
     private long rssi;
     private String address;
-    private long id;
+    private ParcelUuid id;
     private String name;
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
@@ -23,7 +24,7 @@ public class SignalDatum implements Parcelable {
     }
 
 
-    public SignalDatum(long rssi, String address, long id, String name) {
+    public SignalDatum(long rssi, String address, ParcelUuid id, String name) {
         this.rssi = rssi;
         this.address = address;
         this.id = id;
@@ -55,7 +56,7 @@ public class SignalDatum implements Parcelable {
     }
 
     // Returns hashcode of device detected.
-    public long id() {
+    public ParcelUuid id() {
         return id;
     }
 

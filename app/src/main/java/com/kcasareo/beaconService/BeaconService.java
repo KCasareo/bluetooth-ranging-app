@@ -128,14 +128,16 @@ public class BeaconService extends Service {
      * }
      */
 
+
+
     @Override
     public IBinder onBind(Intent intent) {
-
         return mBeaconServiceBinder;
     }
 
     @Override
     public void onCreate() {
+        Log.i(TAG, "On Create");
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
         //mServiceLooper = thread.getLooper();
@@ -148,6 +150,7 @@ public class BeaconService extends Service {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             enableBtIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(enableBtIntent);
+            //mBluetoothAdapter.getBluetoothLeScanner();
         }
 
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -156,48 +159,61 @@ public class BeaconService extends Service {
 
         mBluetoothAdapter = mBluetoothManager.getAdapter();
         mLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
-
+        leScanCallback = new LeScanCallback();
 
         // Begin discovery loop.
         startScan();
 
     }
+
+
     /* Code for BluetoothLE Connections
-    *
-    *
-    *
-     */
+        *
+        *
+        *
+         */
     /*
     *  LE Scan Callback
     *
     * */
-    private ScanCallback leScanCallback = new ScanCallback() {
+    private ScanCallback leScanCallback;
+
+
+    private class LeScanCallback extends ScanCallback {
         final String TAG = "LE Scan Callback";
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
-            super.onScanResult(callbackType, result);
-            BluetoothDevice device = result.getDevice();
-            int rssi = result.getRssi();
-            Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
+            //super.onScanResult(callbackType, result);
+            parse(result.getDevice());
+            //int rssi = result.getRssi();
+            //Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
             // Will request a static factory next time.
+
+        }
+
+        private void parse(BluetoothDevice device) {
             Bluetooth bluetooth = new Bluetooth(device);
+            Log.i(TAG, "Building Callback");
             BluetoothGattCallback callback = new GattCallback(bluetooth);
-            BluetoothGatt gatt = device.connectGatt(BeaconService.this, false, callback);
+            BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
             bluetooth.setProfile(gatt);
             beacons.add(bluetooth, gatt);
-
         }
 
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
             super.onBatchScanResults(results);
+            for(ScanResult result : results) {
+                parse(result.getDevice());
+            }
         }
 
         @Override
         public void onScanFailed(int errorCode) {
+            Log.e(TAG, "Scan failed");
             super.onScanFailed(errorCode);
         }
-    };
+    }
     /*
     * Starts and restarts scan.
     *
@@ -271,6 +287,7 @@ public class BeaconService extends Service {
     */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
         private HashMap<String, IBeaconServiceCallback> callbacks = new HashMap<>();
+        private final String TAG = "IBeaconServiceStub";
 
         @Override
         public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
@@ -279,6 +296,7 @@ public class BeaconService extends Service {
         @Override
         public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
+            Log.i(TAG, "signalsStrength firing");
             callback.signalsResponse(beacons.getSignalData());
         }
 
@@ -300,6 +318,8 @@ public class BeaconService extends Service {
     @Override
     public void onDestroy() {
         mBluetoothAdapter.cancelDiscovery();
+        mServiceHandler.removeCallbacks(mStopRunnable);
+        mServiceHandler.removeCallbacks(mStartRunnable);
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
     }
     /* Private methods

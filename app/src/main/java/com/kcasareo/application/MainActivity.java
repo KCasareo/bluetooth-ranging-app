@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         beaconAdapter = new BeaconAdapter();
         lv.setAdapter(beaconAdapter);
 
-        ;
+
 
 
     }
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (beaconAdapter != null)
+            beaconAdapter.notifyDataSetChanged();
         /*
         if (arrayAdapter == null) {
             arrayAdapter = new ArrayAdapter<String>(
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         public void signalsResponse(SignalData data) throws RemoteException {
             MainActivity.this.signalData = data;
             Log.i(TAG, "Signals Response.");
-            Log.d(TAG, "SignalData Hash: " + data.hashCode());
+            Log.i(TAG, "SignalData Hash: " + data.hashCode());
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        Log.i(TAG, "Notifying Data Set");
                         beaconAdapter.notifyDataSetChanged();
                     }
                 });
@@ -148,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ServiceConnection beaconServiceConnection = new ServiceConnection() {
+        private String TAG = "BSC";
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.d("MainActivity", "OnServiceConnected");
@@ -159,12 +162,13 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 //                intent.setAction(IBeaconService.class.)
                     try {
+                        Log.i(TAG, "Dispatch signalStrength");
                         mBeaconService.signalsStrength(mCallback);
-
                     } catch (RemoteException e) {
+                        Log.e(TAG, "Remote does not exist");
                     }
                 }
-            }, 0, TIME_UPDATE) ;
+            }, TIME_UPDATE, TIME_UPDATE) ;
         }
 
         @Override

@@ -38,12 +38,13 @@ public class BeaconAdapter extends BaseAdapter {
         HashMap<String, SignalDatum> temp = data.asMap();
 
         Log.i(TAG, "Set next data");
-        //Log.d(TAG, "Data size " + temp.size());
+        Log.i(TAG, "Data size " + temp.size());
         if(temp.size() <= 0 )
             return;
         Log.i(TAG, "Clearing");
         for (HashMap.Entry<String, SignalDatum> entry : temp.entrySet()) {
             // With the SignalDatum override, this should ensure that a matching address is the method of evaluation.
+
             if(mData.contains(entry)) {
                 // More equals abuse.
                 mData.set(mData.indexOf(entry), entry);
@@ -84,7 +85,8 @@ public class BeaconAdapter extends BaseAdapter {
         }
 
         Map.Entry<String, SignalDatum> item = getItem(position);
-        //Log.d(TAG, "Item Contents: " + item.getKey());
+        Log.d(TAG, "Item Contents: " + item.getKey());
+        Log.d(TAG, "Item Value : " + item.getValue().toString());
         ((TextView) result.findViewById(R.id.signalAddress)).setText(item.getKey());
         ((TextView) result.findViewById(R.id.signalData)).setText(item.getValue().toString());
         return result;

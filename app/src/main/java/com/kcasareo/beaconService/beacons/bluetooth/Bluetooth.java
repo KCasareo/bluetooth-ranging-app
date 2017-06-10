@@ -2,6 +2,8 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
 
@@ -27,6 +29,7 @@ public class Bluetooth extends Beacon {
         }
         this.id = device.hashCode();
     }
+
 
     public void setProfile(BluetoothGatt profile) {
         this.profile = profile;
@@ -57,8 +60,11 @@ public class Bluetooth extends Beacon {
     @Override
     public void poll() {
         // Profile is null for some reason.
-        if (profile != null)
+        //Log.i(TAG, "Poll");
+        if (profile != null) {
+            //Log.d(TAG, "calling");
             profile.readRemoteRssi();
+        }
     }
 
     @Override
@@ -69,8 +75,10 @@ public class Bluetooth extends Beacon {
     @Override
     public Runnable task() {
         return new Runnable() {
+            private String TAG = Bluetooth.this.TAG + "/task()";
             @Override
             public void run() {
+                Log.i(TAG, "Polling");
                 poll();
             }
         };
@@ -78,6 +86,7 @@ public class Bluetooth extends Beacon {
 
     @Override
     public SignalDatum datum() {
+        Log.i(TAG, "Datum: " + signalStrength + " Address" + address + " Id" + id + " Name" + name);
         return new SignalDatum(signalStrength, address, id, name);
     }
 }

@@ -17,7 +17,7 @@ public abstract class Beacon {
     protected ParcelUuid id;
     public abstract long signalStrength();
     public abstract void setSignalStrength(long signalStrength);
-    public abstract long id();
+    public abstract ParcelUuid id();
     public abstract String name();
     public abstract void poll();
     public abstract SignalDatum datum();

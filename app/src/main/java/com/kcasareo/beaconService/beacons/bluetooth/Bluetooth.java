@@ -2,7 +2,7 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
-import android.bluetooth.le.BluetoothLeScanner;
+import android.os.ParcelUuid;
 import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
@@ -27,7 +27,7 @@ public class Bluetooth extends Beacon {
         if (this.name == null) {
             this.name = "Generic Bluetooth";
         }
-        this.id = device.hashCode();
+        this.id = device.getUuids()[0];
     }
 
 
@@ -47,8 +47,8 @@ public class Bluetooth extends Beacon {
     }
 
     @Override
-    public long id() {
-        return id;
+    public ParcelUuid id() {
+        return this.id;
     }
 
     @Override

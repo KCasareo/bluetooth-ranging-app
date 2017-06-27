@@ -24,6 +24,7 @@ import android.widget.Toast;
 //import com.kcasareo.beaconService.frames.Snapshot;
 //import com.kcasareo.beaconService.IBeaconServiceCallback;
 
+import com.kcasareo.beaconService.beacons.Beacon;
 import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
 import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
@@ -180,9 +181,22 @@ public class BeaconService extends Service {
             int rssi = result.getRssi();
             Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
             // Will request a static factory next time.
+            if (beacons.contains(device.getAddress())) {
+                Log.i(TAG, "Found existing.");
+                Beacon beacon = beacons.findBeacon(device.getAddress());
+
+                if (result.getRssi() != 0 || result.getRssi() != beacon.signalStrength()) {
+                    //beacon.setSignalStrength(result.getRssi());
+                } else
+                    beacon.poll();
+                //*/
+                return;
+            }
+
+            Log.i(TAG, "Building for " + device.getAddress());
             Bluetooth bluetooth = new Bluetooth(device);
             BluetoothGattCallback callback = new GattCallback(bluetooth);
-            BluetoothGatt gatt = device.connectGatt(BeaconService.this, false, callback);
+            BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
             bluetooth.setProfile(gatt);
             beacons.add(bluetooth, gatt);
 
@@ -191,6 +205,7 @@ public class BeaconService extends Service {
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
             super.onBatchScanResults(results);
+            Log.i(TAG, "Batch Scan");
         }
 
         @Override
@@ -201,37 +216,37 @@ public class BeaconService extends Service {
     /*
     * Starts and restarts scan.
     *
-    * */
+    //* */
     private final long PULSE_HALF_PERIOD = 2500;
 
-    private Runnable mStopRunnable = new Runnable() {
+    /*private Runnable mStopRunnable = new Runnable() {
         @Override
         public void run() {
             stopScan();
         }
-    };
+    };*/
 
-    private Runnable mStartRunnable = new Runnable () {
+    /*private Runnable mStartRunnable = new Runnable () {
         @Override
         public void run() {
             startScan();
         }
-    };
+    };*/
     // Initiate a discovery command to get the signal strength and determine
-
+    // Removing delay handler and seeing if this fixes it.
     private void startScan() {
         mLeScanner.startScan(leScanCallback);
         // Stop after 2500 ms
-        mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
+        //mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
     }
 
     private void stopScan() {
         mLeScanner.stopScan(leScanCallback);
 
         // Start after 2500ms
-        mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
+        //mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
     }
-
+    //*/
 
 
     // All Gatt Communications functionality defined here.

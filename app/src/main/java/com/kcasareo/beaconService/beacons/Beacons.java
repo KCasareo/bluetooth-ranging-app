@@ -60,4 +60,8 @@ public class Beacons {
         return data;
     }
 
+    public boolean contains(String id) {
+        return beacons.get(id) != null;
+    }
+
 }

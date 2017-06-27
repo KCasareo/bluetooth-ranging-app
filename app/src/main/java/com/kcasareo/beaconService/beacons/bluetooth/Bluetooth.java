@@ -2,8 +2,12 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
+import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -14,6 +18,8 @@ public class Bluetooth extends Beacon {
     protected BluetoothDevice device;
     protected int identifier;
     protected BluetoothGatt profile;
+    protected TimerTask rssiTask;
+    protected Timer timer;
 
     public Bluetooth(BluetoothDevice device) {
         // Initialise signal strength to 0.
@@ -26,6 +32,12 @@ public class Bluetooth extends Beacon {
             this.name = "Generic Bluetooth";
         }
         this.id = device.hashCode();
+        rssiTask = new TimerTask() {
+            @Override
+            public void run() {
+                poll();
+            }
+        };
     }
 
     public void setProfile(BluetoothGatt profile) {
@@ -57,8 +69,11 @@ public class Bluetooth extends Beacon {
     @Override
     public void poll() {
         // Profile is null for some reason.
-        if (profile != null)
+        Log.i(TAG, "Polling");
+        if (profile != null) {
+            Log.i(TAG, "Fire read remote");
             profile.readRemoteRssi();
+        }
     }
 
     @Override

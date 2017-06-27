@@ -2,6 +2,7 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -12,6 +13,8 @@ public class SignalDatum implements Parcelable {
     private String address;
     private long id;
     private String name;
+    private final String TAG = getClass().getSimpleName();
+
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
         address = in.readString();
@@ -28,6 +31,7 @@ public class SignalDatum implements Parcelable {
         this.address = address;
         this.id = id;
         this.name = name;
+        Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
     }
 
     public final Creator<SignalDatum> CREATOR = new Creator<SignalDatum>() {

@@ -46,13 +46,17 @@ public class GattCallback extends BluetoothGattCallback {
 
                 @Override
                 public void run() {
+                    Log.i(TAG, "Gatt calling poll");
                     beacon.poll();
                 }
             };
             //rssiTimer = new Timer();
-            //rssiTimer.schedule(task, 500, 500);
+            //rssiTimer.schedule(task, 500, 2500);
         } else if (newState == BluetoothProfile.STATE_CONNECTING) {
             Log.i(TAG, "State Connecting");
+        } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+            Log.i(TAG, "State disconnected");
+
         }
     }
     @Override

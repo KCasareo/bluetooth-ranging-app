@@ -179,11 +179,12 @@ public class BeaconService extends Service {
             super.onScanResult(callbackType, result);
             BluetoothDevice device = result.getDevice();
             int rssi = result.getRssi();
-            Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
+            Log.i(TAG, "New LE Device: " + device.getAddress() + " @ " + rssi);
             // Will request a static factory next time.
             if (beacons.contains(device.getAddress())) {
                 Log.i(TAG, "Found existing.");
                 Beacon beacon = beacons.findBeacon(device.getAddress());
+                //beacon.poll();
                 /*
                 if (result.getRssi() != 0 || result.getRssi() != beacon.signalStrength()) {
                     beacon.setSignalStrength(result.getRssi());

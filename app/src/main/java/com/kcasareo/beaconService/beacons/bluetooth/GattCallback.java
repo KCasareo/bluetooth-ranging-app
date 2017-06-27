@@ -49,8 +49,8 @@ public class GattCallback extends BluetoothGattCallback {
                     beacon.poll();
                 }
             };
-            rssiTimer = new Timer();
-            rssiTimer.schedule(task, 500, 500);
+            //rssiTimer = new Timer();
+            //rssiTimer.schedule(task, 500, 500);
         } else if (newState == BluetoothProfile.STATE_CONNECTING) {
             Log.i(TAG, "State Connecting");
         }

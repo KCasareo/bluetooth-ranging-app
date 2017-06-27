@@ -184,9 +184,9 @@ public class BeaconService extends Service {
             if (beacons.contains(device.getAddress())) {
                 Log.i(TAG, "Found existing.");
                 Beacon beacon = beacons.findBeacon(device.getAddress());
-
+                /*
                 if (result.getRssi() != 0 || result.getRssi() != beacon.signalStrength()) {
-                    //beacon.setSignalStrength(result.getRssi());
+                    beacon.setSignalStrength(result.getRssi());
                 } else
                     beacon.poll();
                 //*/

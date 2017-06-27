@@ -183,10 +183,10 @@ public class BeaconService extends Service {
         final String TAG = "LE Scan Callback";
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
-            //super.onScanResult(callbackType, result);
-            parse(result.getDevice());
+            super.onScanResult(callbackType, result);
+            BluetoothDevice device = result.getDevice();
             //int rssi = result.getRssi();
-            //Log.i(TAG, "New LE Device: " + device.getName() + " @ " + rssi);
+            Log.i(TAG, "New LE Device: " + device.getName() + " @ " + result.getRssi());
             // Will request a static factory next time.
 
         }

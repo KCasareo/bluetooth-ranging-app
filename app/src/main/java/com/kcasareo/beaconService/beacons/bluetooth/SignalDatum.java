@@ -4,12 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.kcasareo.beaconService.beacons.Delay;
+
 /**
  * Created by Kevin on 4/06/2017.
  */
 
 public class SignalDatum implements Parcelable {
     private long rssi;
+    //private Delay delay;
     private String address;
     private long id;
     private String name;
@@ -31,6 +34,7 @@ public class SignalDatum implements Parcelable {
         this.address = address;
         this.id = id;
         this.name = name;
+        //this.delay = new Delay();
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
     }
 

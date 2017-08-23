@@ -24,6 +24,11 @@ public class Delay implements Parcelable {
         end = in.readLong();
     }
 
+    public Delay(long start, long end) {
+        this.start = start;
+        this.end = end;
+    }
+
 
     public static final Creator<Delay> CREATOR = new Creator<Delay>() {
         @Override

@@ -25,6 +25,12 @@ public class GattCallback extends BluetoothGattCallback {
     private Timer rssiTimer;
     private ArrayList<Delay> delays;
     private Calendar calendar;
+    public GattCallback(Bluetooth bluetooth, ArrayList<Delay> delays){
+        super();
+        this.beacon = bluetooth;
+        this.delays = delays;
+    }
+
     public GattCallback(Bluetooth bluetooth) {
         super();
         // Need a reference for the beacon object to call back.
@@ -39,7 +45,8 @@ public class GattCallback extends BluetoothGattCallback {
     public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
         Log.d(TAG, "Read Remote RSSI " + rssi);
         super.onReadRemoteRssi(gatt, rssi, status);
-        delays.get(delays.size()-1).endOffset();
+        if (delays.size() > 0)
+            delays.get(delays.size()-1).endOffset();
         // When this object calls back, set the received signal strength value.
         if (rssi == 0)
             return;

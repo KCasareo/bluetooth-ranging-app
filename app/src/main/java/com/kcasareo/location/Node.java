@@ -8,14 +8,19 @@ import android.support.annotation.NonNull;
 
 public class Node implements Comparable<Node> {
     protected Position position;
-    String UUID;
+    protected String UUID;
 
-    public Node(Position position) {
+    public Node(Position position, String UUID) {
         this.position = position;
+        this.UUID = UUID;
     }
 
     public Position position() {
         return this.position;
+    }
+
+    public boolean matches(String UUID) {
+        return this.UUID.equals(UUID);
     }
 
     @Override

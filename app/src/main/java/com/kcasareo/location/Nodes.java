@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  * Created by Kevin on 23/08/2017.
- * Node positions tracked by the location service.
+ * Node entries tracked by the location service.
  */
 
 public class Nodes {
@@ -20,6 +20,7 @@ public class Nodes {
         nodes = new ArrayList<Node>();
     }
 
+    // Has to be this way to get the closest anchor nodes to the mobile node.
     public Node get(String UUID) {
         int i;
         try {
@@ -45,6 +46,7 @@ public class Nodes {
         flush();
     }
 
+    // Flush the memo for every time a new node is added.
     private void flush() {
         memo.clear();
     }

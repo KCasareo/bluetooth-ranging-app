@@ -13,6 +13,7 @@ import com.kcasareo.beaconService.beacons.Delay;
 public class SignalDatum implements Parcelable {
     private long rssi;
     private double distance = 0;
+    private double delay = 0;
     private String address;
     private long id;
     private String name;
@@ -23,6 +24,7 @@ public class SignalDatum implements Parcelable {
         address = in.readString();
         name = in.readString();
         distance = in.readDouble();
+        delay = in.readDouble();
     }
 
     public String name() {
@@ -63,6 +65,7 @@ public class SignalDatum implements Parcelable {
         dest.writeLong(this.rssi);
         dest.writeString(this.address);
         dest.writeString(this.name);
+        dest.writeDouble(this.distance);
         dest.writeDouble(this.distance);
     }
 

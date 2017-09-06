@@ -20,6 +20,18 @@ import java.util.TimerTask;
  */
 
 public class GattCallback extends BluetoothGattCallback {
+    // Remove sensortag service mapping.
+    //Base UUID
+    //F000-0000-0451-4000-B000-000000000000
+    //
+    public static final String SENSORTAG(String mapping) {
+        return "F000-" + mapping + "-0451-4000-B000-00000000000";
+    }
+
+    public static final String REFERENCE_UUID = SENSORTAG("EA00");
+    public static final String REFERENCE_CHAR_1 = SENSORTAG("EA01");
+    public static final String REFERENCE_CHAR_2 = SENSORTAG("EA02");
+
     private Beacon beacon;
     private final String TAG = "Gatt Callback " + this.hashCode();
     private Timer rssiTimer;
@@ -83,6 +95,9 @@ public class GattCallback extends BluetoothGattCallback {
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
         if (status == BluetoothGatt.GATT_SUCCESS) {
             Log.d(TAG, "Discovered Services.");
+
         }
     }
+
+
 }

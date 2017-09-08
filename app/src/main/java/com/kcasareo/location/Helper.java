@@ -53,7 +53,7 @@ public class Helper {
         *  Let [ a b ] = A
         *      [ d e ]
         *
-        *  Linear Least Squares
+        *  Linear Least Squares to solve the closest point [x y]
         *  A^-1 A [ x y ]^T = A^-1 [ c f ]^T
         *
         *  | x | =     1    * [ e -b ] [ c ]
@@ -63,6 +63,7 @@ public class Helper {
 
         double detA = 1 / (a*e - b*d);
 
+        // ;
         x = (e*c - b*f) * detA;
         y = (-d*c + a*f) * detA;
 

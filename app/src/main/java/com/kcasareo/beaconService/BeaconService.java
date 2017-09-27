@@ -186,7 +186,7 @@ public class BeaconService extends Service {
                 Beacon beacon = beacons.findBeacon(device.getAddress());
                 //beacon.poll();
 
-                if (result.getRssi() != 0 || result.getRssi() != beacon.signalStrength()) {
+                if (result.getRssi() != 0 && result.getRssi() != beacon.signalStrength()) {
                     beacon.setSignalStrength(result.getRssi());
 
                 }/* else

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Kevin on 23/08/2017.
- * Stateless helper functions
+ * Stateless static helper functions
  */
 
 public class Helper {
@@ -16,10 +16,19 @@ public class Helper {
     public static double distance(double pos_x, double pos_y, double pos_z) {
         return Math.pow(Math.pow(pos_x, 2) + Math.pow(pos_y, 2) + Math.pow(pos_z, 2), 0.5);
     }
+    /* rss0 - the RSSI when the distance from the beacon is 1m */
+    private static final double rss0 = -30;
+    /* factor - factor n, usually somewhere between 2 and 2.5 */
+    private static final double factor = 2.0;
+    // Convert the RSSI indicator to distance
+    public static double convert(double db) {
+        return Math.pow(10, (Math.abs(db) - rss0)/ (factor * 10));
+    }
 
     //Determine what position the nodes are in.
     /* Explicitly asks for three nodes.
     * This is a naive localisation w/ linear least square algorithm.
+    * Expects the three closest nodes.
     * */
     public static Position localise(Position pos1, Position pos2, Position pos3) {
         double x,y;
@@ -61,7 +70,7 @@ public class Helper {
         *
         * */
 
-        double detA = 1 / (a*e - b*d);
+        double detA = 1/(a*e - b*d);
 
         // ;
         x = (e*c - b*f) * detA;

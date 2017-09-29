@@ -27,6 +27,7 @@ import com.kcasareo.beaconService.IBeaconServiceCallback;
 //import com.kcasareo.beaconService.frames.Frames;
 //import com.kcasareo.beaconService.frames.Snapshot;
 import com.kcasareo.beaconService.beacons.BeaconAdapter;
+import com.kcasareo.beaconService.beacons.bluetooth.History;
 import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
 import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 import com.kcasareo.ranging.R;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewGroup layout;
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
+    private History history;
 
 
     @Override
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
         beaconAdapter = new BeaconAdapter();
         lv.setAdapter(beaconAdapter);
-
+        history = new History();
         ;
 
 
@@ -117,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // Modify the entire dataset.
                 beaconAdapter.set(data);
+                // Add current history.
+                history.update(data);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

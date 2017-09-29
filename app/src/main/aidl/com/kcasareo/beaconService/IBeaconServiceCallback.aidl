@@ -16,4 +16,5 @@ interface IBeaconServiceCallback {
     // Handle snapshot returns in the client.
     //void handleResponse(in Snapshot snapshot);
     void signalsResponse(in SignalData data);
+    //void closestResponse(in SignalData data);
 }

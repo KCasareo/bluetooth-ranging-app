@@ -12,15 +12,17 @@ public class History {
     private ArrayList<SignalData> signalDataHistory;
 
     public History() {
-
+        signalDataHistory = new ArrayList<>();
     }
 
     // Add history
-    public void update() {
-
+    // The latest history is retrieved using the the main activity's service connection.
+    public void update(SignalData data) {
+        signalDataHistory.add(data);
+        signalDataHistory.get(signalDataHistory.size() -1).sort();
     }
 
-    // Parse
+    /* Get the data at frame X */
     public SignalData read(int at) {
         return signalDataHistory.get(at);
     }

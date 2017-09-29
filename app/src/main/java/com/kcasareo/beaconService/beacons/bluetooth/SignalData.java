@@ -7,14 +7,22 @@ import android.util.SparseArray;
 import com.kcasareo.beaconService.beacons.Beacon;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Kevin on 4/06/2017.
  */
 
 public class SignalData implements Parcelable {
-    private HashMap<String, SignalDatum> signalData;
+    protected HashMap<String, SignalDatum> signalData;
 
     protected SignalData(Parcel in) {
         int size = in.readInt();
@@ -64,6 +72,25 @@ public class SignalData implements Parcelable {
     public HashMap<String, SignalDatum> asMap() {
         return signalData;
     }
+
+    public void sort () {
+        Set<Map.Entry<String, SignalDatum>> entries = signalData.entrySet();
+        List<Map.Entry<String, SignalDatum>> listEntries = new ArrayList<Map.Entry<String, SignalDatum>>(entries);
+        Collections.sort(listEntries, new Comparator<Map.Entry<String, SignalDatum>>() {
+            @Override
+            public int compare(Map.Entry<String, SignalDatum> o1, Map.Entry<String, SignalDatum> o2) {
+                // Utilises SignalDatum.compareTo()
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+
+        //LinkedHashMap<String, SignalDatum> sorted = new LinkedHashMap<>(listEntries.size());
+
+        signalData.clear();
+        for(Map.Entry<String, SignalDatum> entry : listEntries) {
+            signalData.put(entry.getKey(), entry.getValue());
+        }
+    };
 
     public String toString() {
         String s = "";

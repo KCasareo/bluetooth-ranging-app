@@ -1,7 +1,10 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
+import android.app.Fragment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Delay;
@@ -10,7 +13,7 @@ import com.kcasareo.beaconService.beacons.Delay;
  * Created by Kevin on 4/06/2017.
  */
 
-public class SignalDatum implements Parcelable {
+public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     private long rssi;
     private double distance = 0;
     private double delay = 0;
@@ -24,7 +27,7 @@ public class SignalDatum implements Parcelable {
         address = in.readString();
         name = in.readString();
         distance = in.readDouble();
-        delay = in.readDouble();
+        //delay = in.readDouble();
     }
 
     public String name() {
@@ -66,7 +69,7 @@ public class SignalDatum implements Parcelable {
         dest.writeString(this.address);
         dest.writeString(this.name);
         dest.writeDouble(this.distance);
-        dest.writeDouble(this.distance);
+        //dest.writeDouble(this.distance);
     }
 
     // Returns hashcode of device detected.
@@ -88,4 +91,16 @@ public class SignalDatum implements Parcelable {
         return this.address.equals(((SignalDatum) o).address());
     }
 
+
+    // For sorting hashmap
+    @Override
+    public int compareTo(@NonNull SignalDatum o) {
+        return o.rssi == this.rssi ? 0 :    // Equal
+                o.rssi > this.rssi? -1 : 1; // Less Than : Greater Than
+    }
+
+    /* Default fragment view */
+    protected class ScanViewFragment extends FragmentActivity {
+
+    }
 }

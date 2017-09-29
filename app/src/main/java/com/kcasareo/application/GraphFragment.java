@@ -18,6 +18,14 @@ public class GraphFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.graph, container, false);
+        View view = inflater.inflate(R.layout.graph, container, false);
+        graph = (Graph) view.findViewById(R.id.graph);
+        return view;
+    }
+
+    public static GraphFragment getInstance() {
+        GraphFragment fragment = new GraphFragment();
+        fragment.setRetainInstance(true);
+        return fragment;
     }
 }

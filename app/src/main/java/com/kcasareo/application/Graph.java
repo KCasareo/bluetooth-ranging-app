@@ -1,6 +1,7 @@
 package com.kcasareo.application;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.View;
 
@@ -9,6 +10,9 @@ import android.view.View;
  */
 
 public class Graph extends View {
+    private Bitmap plane = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
+    private Canvas canvas = new Canvas(plane);
+
     public Graph(Context context) {
         super(context);
     }

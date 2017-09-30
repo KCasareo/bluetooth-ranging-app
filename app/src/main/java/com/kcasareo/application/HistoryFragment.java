@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kcasareo.beaconService.beacons.bluetooth.History;
 import com.kcasareo.ranging.R;
 
 /**
@@ -14,6 +15,7 @@ import com.kcasareo.ranging.R;
  */
 
 public class HistoryFragment extends Fragment {
+    private History history;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

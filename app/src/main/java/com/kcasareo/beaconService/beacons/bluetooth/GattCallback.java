@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothProfile;
 import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
-import com.kcasareo.beaconService.beacons.Delay;
+//import com.kcasareo.beaconService.beacons.Delay;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,13 +35,14 @@ public class GattCallback extends BluetoothGattCallback {
     private Beacon beacon;
     private final String TAG = "Gatt Callback " + this.hashCode();
     private Timer rssiTimer;
-    private ArrayList<Delay> delays;
+    //private ArrayList<Delay> delays;
     private Calendar calendar;
+    /*
     public GattCallback(Bluetooth bluetooth, ArrayList<Delay> delays){
         super();
         this.beacon = bluetooth;
         this.delays = delays;
-    }
+    }*/
 
     public GattCallback(Bluetooth bluetooth) {
         super();
@@ -49,16 +50,19 @@ public class GattCallback extends BluetoothGattCallback {
         this.beacon = bluetooth;
     }
 
+    /*
     public void addDelay(Delay delay) {
         delays.add(delay);
-    }
+    }*/
 
     @Override
     public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
         Log.d(TAG, "Read Remote RSSI " + rssi);
         super.onReadRemoteRssi(gatt, rssi, status);
+        /*
         if (delays.size() > 0)
             delays.get(delays.size()-1).endOffset();
+        */
         // When this object calls back, set the received signal strength value.
         if (rssi == 0)
             return;

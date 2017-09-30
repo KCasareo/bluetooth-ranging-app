@@ -17,7 +17,8 @@ public class Helper {
         return Math.pow(Math.pow(pos_x, 2) + Math.pow(pos_y, 2) + Math.pow(pos_z, 2), 0.5);
     }
     /* rss0 - the RSSI when the distance from the beacon is 1m */
-    private static final double rss0 = -30;
+    /* empirical result places this value a about -59db*/
+    private static final double rss0 = -59;
     /* factor - factor n, usually somewhere between 2 and 2.5 */
     private static final double factor = 2.0;
     // Convert the RSSI indicator to distance

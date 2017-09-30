@@ -1,13 +1,10 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
-import android.app.Fragment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
-import com.kcasareo.beaconService.beacons.Delay;
 
 /**
  * Created by Kevin on 4/06/2017.

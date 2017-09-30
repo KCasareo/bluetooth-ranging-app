@@ -10,6 +10,7 @@ import com.kcasareo.ranging.R;
 
 /**
  * Created by Kevin on 29/09/2017.
+ * Attach this to main activity
  */
 
 public class ScannerFragment extends Fragment {

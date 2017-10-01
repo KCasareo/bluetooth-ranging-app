@@ -92,4 +92,8 @@ public class Position implements Comparable<Position>, Parcelable {
         dest.writeDouble(pos_x);
         dest.writeDouble(pos_y);
     }
+
+    public String toString() {
+        return "Pos X: " + pos_x + " Pos Y: " + pos_y;
+    }
 }

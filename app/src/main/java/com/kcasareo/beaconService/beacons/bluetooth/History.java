@@ -1,5 +1,7 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
+import android.widget.ArrayAdapter;
+
 import com.kcasareo.beaconService.beacons.BeaconAdapter;
 
 import java.util.ArrayList;
@@ -12,20 +14,14 @@ import java.util.HashMap;
 
 public class History {
     private ArrayList<SignalData> signalDataHistory;
+    //private ArrayAdapter<SignalData> signalDataArrayAdapter;
     private int index;
-    //private BeaconAdapter mBeaconAdapter;
+
     public History() {
         signalDataHistory = new ArrayList<>();
         index = 0;
     }
 
-
-    /* Do I need this? //
-    public History(BeaconAdapter beaconAdapter) {
-        this();
-        mBeaconAdapter = beaconAdapter;
-    }*/
-    // Called by the buttons
     public void next() {
         if (index < signalDataHistory.size() - 1)
             index++;
@@ -42,6 +38,8 @@ public class History {
     public void update(SignalData data) {
         signalDataHistory.add(data);
         signalDataHistory.get(signalDataHistory.size() -1).sort();
+        //signalDataArrayAdapter.clear();
+        //signalDataArrayAdapter.addAll(signalDataHistory);
     }
 
     /* Get the data at frame X */
@@ -50,4 +48,11 @@ public class History {
     }
 
     public SignalData showCurrent() { return read(index); }
+
+
+/*
+    public ArrayAdapter<SignalData> adapter() {
+        return signalDataArrayAdapter;
+    }*/
+
 }

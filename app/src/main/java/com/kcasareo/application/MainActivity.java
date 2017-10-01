@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
             // Add latest to history.
-            //history.update(data);
+            history.update(data);
         }
 
         /*

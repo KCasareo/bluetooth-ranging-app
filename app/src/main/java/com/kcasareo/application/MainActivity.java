@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
         beaconAdapter = new BeaconAdapter();
         lv.setAdapter(beaconAdapter);
-        history = new History();
+        history = new History(beaconAdapter);
         ;
 
 

@@ -1,5 +1,7 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
+import com.kcasareo.beaconService.beacons.BeaconAdapter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,9 +12,14 @@ import java.util.HashMap;
 
 public class History {
     private ArrayList<SignalData> signalDataHistory;
-
+    private BeaconAdapter mBeaconAdapter;
     public History() {
         signalDataHistory = new ArrayList<>();
+    }
+
+    public History(BeaconAdapter beaconAdapter) {
+        this();
+        mBeaconAdapter = beaconAdapter;
     }
 
     // Add history

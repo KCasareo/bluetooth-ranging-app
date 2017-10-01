@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_main);
         lv = (ListView) findViewById(R.id.listview_rssi);
         intent = new Intent(this, BeaconService.class);
@@ -68,9 +66,7 @@ public class MainActivity extends AppCompatActivity {
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
         beaconAdapter = new BeaconAdapter();
         lv.setAdapter(beaconAdapter);
-        history = new History(beaconAdapter);
-        ;
-
+        history = new History();
 
     }
 
@@ -119,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // Modify the entire dataset.
                 beaconAdapter.set(data);
-                // Add current history.
-                history.update(data);
+
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -128,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+            // Add latest to history.
+            history.update(data);
         }
 
         /*

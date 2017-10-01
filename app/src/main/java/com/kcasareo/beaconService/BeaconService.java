@@ -202,6 +202,7 @@ public class BeaconService extends Service {
             bluetooth.setProfile(gatt);
             beacons.add(bluetooth, gatt);
 
+
         }
 
         @Override
@@ -219,7 +220,7 @@ public class BeaconService extends Service {
     * Starts and restarts scan.
     *
     //* */
-    private final long PULSE_HALF_PERIOD = 2500;
+    private final long PULSE_HALF_PERIOD = 1000;
 
     /*private Runnable mStopRunnable = new Runnable() {
         @Override

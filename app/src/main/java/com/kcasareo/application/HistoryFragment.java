@@ -15,11 +15,21 @@ import com.kcasareo.ranging.R;
  */
 
 public class HistoryFragment extends Fragment {
-    private History history;
+    private History mHistory;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.history, container, false);
+    }
+
+    public static HistoryFragment getInstance() {
+        HistoryFragment fragment = new HistoryFragment();
+        fragment.setRetainInstance(true);
+        return fragment;
+    }
+
+    public void setHistory(History history) {
+        mHistory = history;
     }
 
 

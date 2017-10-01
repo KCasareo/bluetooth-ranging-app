@@ -19,5 +19,12 @@ public class ScannerFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.scanner, container, false);
     }
+
+    public static ScannerFragment getInstance() {
+        ScannerFragment fragment = new ScannerFragment();
+        fragment.setRetainInstance(true);
+        return fragment;
+    }
 }
+
 

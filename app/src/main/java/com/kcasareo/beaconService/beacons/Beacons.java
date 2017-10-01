@@ -8,6 +8,7 @@ import android.util.SparseArray;
 
 import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -19,9 +20,11 @@ import java.util.TimerTask;
  */
 
 public class Beacons {
+
     private final String TAG = this.getClass().getSimpleName();
     private final long POLL_TIME  = 1000;
     private HashMap<String, Pair<Beacon, BluetoothGatt>> beacons;
+    private final ArrayList<String> filter = new ArrayList<>();
     private TimerTask pollTask;
     private Timer pollTimer;
 
@@ -34,17 +37,21 @@ public class Beacons {
                     // Fire off polling asynchronously.
                     new Thread(entry.getValue().first.task()).start();
                 }
-                
             }
         };
 
         pollTimer = new Timer(true);
         pollTimer.schedule(pollTask, 0, POLL_TIME);
+        /* To do: dynamically add filter elements to array list */
+        filter.add("");
+        filter.add("");
+        filter.add("");
     }
 
     public void add(Beacon beacon, BluetoothGatt gatt) {
-        if(!beacons.containsKey(beacon.address()))
+        if(!beacons.containsKey(beacon.address())) {
             beacons.put(beacon.address(), new Pair(beacon, gatt));
+        }
     }
 
     public Beacon findBeacon(String id) {
@@ -59,6 +66,7 @@ public class Beacons {
         }
         return data;
     }
+
 
     public boolean contains(String id) {
         return beacons.get(id) != null;

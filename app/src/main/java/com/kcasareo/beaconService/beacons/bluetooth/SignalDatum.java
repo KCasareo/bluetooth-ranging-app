@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.kcasareo.location.Helper;
+
 /**
  * Created by Kevin on 4/06/2017.
  */
@@ -21,6 +23,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
 
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
+        id = in.readLong();
         address = in.readString();
         name = in.readString();
         distance = in.readDouble();
@@ -39,7 +42,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         this.address = address;
         this.id = id;
         this.name = name;
-        //this.delay = new Delay();
+        this.distance = Helper.convert((double)rssi);
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
     }
 
@@ -63,6 +66,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.rssi);
+        dest.writeLong(this.id);
         dest.writeString(this.address);
         dest.writeString(this.name);
         dest.writeDouble(this.distance);

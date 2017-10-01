@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -32,6 +32,8 @@ public class SignalData implements Parcelable {
             SignalDatum datum = in.readParcelable(SignalDatum.class.getClassLoader());
             signalData.put(name, datum);
         }
+        // Order by closest.
+        this.sort();
     }
 
     public SignalData() {

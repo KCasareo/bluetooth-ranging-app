@@ -12,14 +12,29 @@ import java.util.HashMap;
 
 public class History {
     private ArrayList<SignalData> signalDataHistory;
-    private BeaconAdapter mBeaconAdapter;
+    private int index;
+    //private BeaconAdapter mBeaconAdapter;
     public History() {
         signalDataHistory = new ArrayList<>();
+        index = 0;
     }
 
+
+    /* Do I need this? //
     public History(BeaconAdapter beaconAdapter) {
         this();
         mBeaconAdapter = beaconAdapter;
+    }*/
+    // Called by the buttons
+    public void next() {
+        if (index < signalDataHistory.size() - 1)
+            index++;
+    }
+
+    // Called
+    public void prev() {
+        if (index > 0)
+            index--;
     }
 
     // Add history
@@ -33,4 +48,6 @@ public class History {
     public SignalData read(int at) {
         return signalDataHistory.get(at);
     }
+
+    public SignalData showCurrent() { return read(index); }
 }

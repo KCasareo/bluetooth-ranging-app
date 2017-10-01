@@ -1,7 +1,9 @@
 package com.kcasareo.application;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,13 +14,14 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
+//import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.kcasareo.beaconService.BeaconService;
@@ -50,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private SignalData signalData;
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
-    private ListView lv;
+    //private ListView lv;
     private ViewGroup layout;
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
-    private History history;
-    private FragmentManager fragmentManger;
+    private History history = null;
+    private FragmentManager fragmentManager;
     private GraphFragment graphFragment;
     private HistoryFragment historyFragment;
     private ScannerFragment scannerFragment;
@@ -65,14 +68,36 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        lv = (ListView) findViewById(R.id.listview_rssi);
+
         intent = new Intent(this, BeaconService.class);
         startService(intent);
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
         beaconAdapter = new BeaconAdapter();
-        lv.setAdapter(beaconAdapter);
-        history = new History();
-        fragmentManger = getSupportFragmentManager();
+        //lv.setAdapter(beaconAdapter);
+
+        if (history == null) {
+            history = new History();
+        }
+
+        fragmentManager = getSupportFragmentManager();
+
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null)
+                return;
+
+            graphFragment = GraphFragment.getInstance();
+            historyFragment = HistoryFragment.getInstance();
+            historyFragment.setHistory(history);
+            scannerFragment = ScannerFragment.getInstance();
+
+
+            graphFragment.setArguments(getIntent().getExtras());
+            historyFragment.setArguments(getIntent().getExtras());
+            scannerFragment.setArguments(getIntent().getExtras());
+
+            fragmentManager.beginTransaction().add(R.id.fragment_container, scannerFragment).commit();
+
+        }
 
     }
 
@@ -118,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
+                scannerFragment.setmBeaconAdapter(beaconAdapter);
             } else {
                 // Modify the entire dataset.
                 beaconAdapter.set(data);

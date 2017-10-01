@@ -28,6 +28,10 @@ public class Position implements Comparable<Position>, Parcelable {
         pos_y = in.readDouble();
     }
 
+    public void setRange(double range) {
+        this.range = range;
+    }
+
     public static final Creator<Position> CREATOR = new Creator<Position>() {
         @Override
         public Position createFromParcel(Parcel in) {
@@ -39,6 +43,14 @@ public class Position implements Comparable<Position>, Parcelable {
             return new Position[size];
         }
     };
+
+    public void update_x(double x) {
+        pos_x = x;
+    }
+
+    public void update_y(double y) {
+        pos_y = y;
+    }
 
     public double x() {
         return pos_x;

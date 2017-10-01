@@ -28,6 +28,7 @@ import com.kcasareo.beaconService.beacons.Beacon;
 import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
 import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
+import com.kcasareo.location.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -303,6 +304,11 @@ public class BeaconService extends Service {
         public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
             callback.signalsResponse(beacons.getSignalData());
+        }
+
+        @Override
+        public void updatePosition(String address, double x, double y) throws RemoteException {
+            beacons.findBeacon(address).datum().update(new Position(x, y));
         }
 
         @Override

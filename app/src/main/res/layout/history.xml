@@ -27,30 +27,35 @@
                 android:layout_height="50dp"
                 android:background="@android:color/darker_gray"
                 android:layout_weight="1"
-                android:text="Previous">
+                android:text="Previous"
+                android:id="@+id/history_button_previous">
 
             </Button>
             <Button android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@android:color/darker_gray"
                 android:layout_weight="1"
-                android:text="Next">
+                android:text="Next"
+                android:id="@+id/history_button_next">
 
             </Button>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
+        <Button
             android:layout_height="50dp"
-            android:text="Test"
-            android:textSize="12dp"
-            android:layout_weight="1"/>
-        <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Test"
-            android:textSize="12dp"
-            android:layout_weight="1"/>
+            android:text="Update"
+            android:id="@+id/history_button_update"
+            >
+        </Button>
+        <ListView
+           android:id="@android:id/list"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+        </ListView>
+        <TextView
+            android:id="@id/android:empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </RelativeLayout>

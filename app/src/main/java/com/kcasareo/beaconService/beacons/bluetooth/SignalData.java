@@ -71,6 +71,19 @@ public class SignalData implements Parcelable {
         }
     }
 
+    public ArrayList<SignalDatum> asArray() {
+        ArrayList<SignalDatum> array = new ArrayList<>();
+        sort();
+        for(Map.Entry<String, SignalDatum> entry : signalData.entrySet()) {
+            array.add(entry.getValue());
+        }
+        return array;
+    }
+
+    public int size() {
+        return signalData.size();
+    }
+
     public HashMap<String, SignalDatum> asMap() {
         return signalData;
     }
@@ -104,6 +117,10 @@ public class SignalData implements Parcelable {
 
     public void add(Beacon beacon) {
         signalData.put(beacon.address(), beacon.datum());
+    }
+
+    public SignalDatum get(String address) {
+        return signalData.get(address);
     }
 
 }

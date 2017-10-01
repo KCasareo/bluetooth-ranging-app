@@ -1,5 +1,6 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
+import android.icu.text.DecimalFormat;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -29,8 +30,10 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         address = in.readString();
         name = in.readString();
         distance = in.readDouble();
-        position = new Position(0,0);
+        position = in.readParcelable(Position.class.getClassLoader());
+
         //delay = in.readDouble();
+
     }
 
     public String name() {
@@ -46,6 +49,8 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         this.id = id;
         this.name = name;
         this.distance = Helper.convert((double)rssi);
+        this.position = new Position(0,0);
+        position.setRange(distance);
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
     }
 
@@ -73,6 +78,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         dest.writeString(this.address);
         dest.writeString(this.name);
         dest.writeDouble(this.distance);
+        dest.writeParcelable(this.position, 0);
         //dest.writeDouble(this.distance);
     }
 
@@ -81,13 +87,22 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         return id;
     }
 
+    public void update(double x, double y) {
+        position.update(x, y);
+    }
+
+    public void update(Position position) {
+        this.position = position;
+    }
+
     public String toString() {
-        return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + this.distance; }
+
+        return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + String.format("%.2fm", this.distance); }
 
     protected String address() {
         return address;
     }
-    
+
     // Manipulate contains method in BeaconAdapter.set()
     @Override
     public boolean equals(Object o) {
@@ -102,8 +117,4 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
                 o.rssi > this.rssi? -1 : 1; // Less Than : Greater Than
     }
 
-    /* Default fragment view */
-    protected class ScanViewFragment extends FragmentActivity {
-
-    }
 }

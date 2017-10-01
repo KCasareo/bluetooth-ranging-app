@@ -18,8 +18,10 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.os.Bundle;
@@ -47,7 +49,7 @@ import static com.kcasareo.ranging.R.layout.activity_main;
  * Created by Kevin on 30/04/2017.
  * Main Activity is the user interface that uses and displays results from the Navigation Service
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HistoryFragment.HistoryListener {
     private BeaconService beaconService;
     private IBeaconService mBeaconService = null;
     private SignalData signalData;
@@ -86,19 +88,38 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null)
                 return;
 
-            graphFragment = GraphFragment.getInstance();
+            //graphFragment = GraphFragment.getInstance();
             historyFragment = HistoryFragment.getInstance();
             historyFragment.setHistory(history);
             scannerFragment = ScannerFragment.getInstance();
 
 
-            graphFragment.setArguments(getIntent().getExtras());
+            //graphFragment.setArguments(getIntent().getExtras());
             historyFragment.setArguments(getIntent().getExtras());
             scannerFragment.setArguments(getIntent().getExtras());
 
             fragmentManager.beginTransaction().add(R.id.fragment_container, scannerFragment).commit();
 
         }
+
+        Button buttonScanner = (Button) findViewById(R.id.button_scanner);
+        Button buttonHistory = (Button) findViewById(R.id.button_history);
+        //Button buttonGraph
+
+        buttonScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        buttonHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
     }
 
@@ -210,11 +231,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            // Stop all tiemrs if the service disconnects.
+            // Stop all timers if the service disconnects.
             updateTimer.purge();
         }
     };
 
+    @Override
+    public void onPositionUpdate(String address, double x, double y) throws RemoteException {
+        mBeaconService.updatePosition(address, x, y);
+    }
 }
 
 /*

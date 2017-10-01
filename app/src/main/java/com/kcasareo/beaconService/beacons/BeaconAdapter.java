@@ -1,5 +1,6 @@
 package com.kcasareo.beaconService.beacons;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +23,17 @@ import java.util.Map;
 public class BeaconAdapter extends BaseAdapter {
     private final String TAG = "BeaconAdapter";
     private final ArrayList<HashMap.Entry<String,SignalDatum>> mData;
-
+    //private LayoutInflater mInflater;
     public BeaconAdapter(SignalData data) {
         this();
         mData.addAll(data.asMap().entrySet());
     }
-
+/*
+    public BeaconAdapter(Context context, SignalData data) {
+        this(data);
+        mInflater = LayoutInflater.from(context);
+    }
+*/
     public BeaconAdapter() {
         mData = new ArrayList();
     }
@@ -38,7 +44,7 @@ public class BeaconAdapter extends BaseAdapter {
         HashMap<String, SignalDatum> temp = data.asMap();
 
         Log.i(TAG, "Set next data");
-        //Log.d(TAG, "Data size " + temp.size());
+        Log.d(TAG, "Data size " + temp.size());
         if(temp.size() <= 0 )
             return;
         Log.i(TAG, "Clearing");

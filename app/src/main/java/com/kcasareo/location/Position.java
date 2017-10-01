@@ -15,6 +15,7 @@ public class Position implements Comparable<Position>, Parcelable {
     public Position(double pos_x, double pos_y) {
         this.pos_x = pos_x;
         this.pos_y = pos_y;
+        this.range = 0;
     }
 
     public Position (double pos_x, double pos_y, double range) {

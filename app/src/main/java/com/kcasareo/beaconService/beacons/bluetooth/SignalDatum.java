@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.kcasareo.location.Helper;
+import com.kcasareo.location.Position;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -19,6 +20,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     private String address;
     private long id;
     private String name;
+    private Position position;
     private final String TAG = getClass().getSimpleName();
 
     protected SignalDatum(Parcel in) {
@@ -27,6 +29,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         address = in.readString();
         name = in.readString();
         distance = in.readDouble();
+        position = new Position(0,0);
         //delay = in.readDouble();
     }
 

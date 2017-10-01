@@ -1,9 +1,9 @@
 package com.kcasareo.application;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.FragmentActivity;
+import android.app.FragmentManager;
+//import android.support.v4.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
     //private ListView lv;
-    private ViewGroup layout;
+    //private ViewGroup layout;
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
     private History history = null;
@@ -72,14 +72,15 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(this, BeaconService.class);
         startService(intent);
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
-        beaconAdapter = new BeaconAdapter();
+        //beaconAdapter = new BeaconAdapter();
         //lv.setAdapter(beaconAdapter);
 
         if (history == null) {
             history = new History();
         }
 
-        fragmentManager = getSupportFragmentManager();
+        fragmentManager = getFragmentManager();
+
 
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null)
@@ -143,7 +144,14 @@ public class MainActivity extends AppCompatActivity {
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
-                scannerFragment.setmBeaconAdapter(beaconAdapter);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        scannerFragment.setListAdapter(beaconAdapter);
+                        //beaconAdapter.notifyDataSetChanged();
+                    }
+                });
+
             } else {
                 // Modify the entire dataset.
                 beaconAdapter.set(data);
@@ -157,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
             // Add latest to history.
-            history.update(data);
+            //history.update(data);
         }
 
         /*
@@ -206,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
             updateTimer.purge();
         }
     };
+
 }
 
 /*

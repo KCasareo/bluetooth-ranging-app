@@ -73,6 +73,9 @@ public class Helper {
         *
         * */
 
+        if ((a*e - b*d) == 0) {
+            return null;
+        }
         double detA = 1/(a*e - b*d);
 
         // ;

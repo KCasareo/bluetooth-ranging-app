@@ -137,6 +137,7 @@ public class BeaconService extends Service {
 
     @Override
     public void onCreate() {
+        Log.i(TAG, "Beacon Service created");
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
         //mServiceLooper = thread.getLooper();
@@ -161,6 +162,7 @@ public class BeaconService extends Service {
 
         // Begin discovery loop.
         startScan();
+        Log.i(TAG, "Beacon Service scanning");
 
     }
     /* Code for BluetoothLE Connections
@@ -181,6 +183,7 @@ public class BeaconService extends Service {
             int rssi = result.getRssi();
             Log.i(TAG, "New LE Device: " + device.getAddress() + " @ " + rssi);
             // Will request a static factory next time.
+
             if(!beacons.matches(device.getAddress()))
                 return;
             if (beacons.contains(device.getAddress())) {
@@ -222,21 +225,21 @@ public class BeaconService extends Service {
     * Starts and restarts scan.
     *
     //* */
-    private final long PULSE_HALF_PERIOD = 1000;
+    private final long PULSE_HALF_PERIOD = 2500;
 
-    /*private Runnable mStopRunnable = new Runnable() {
+    private Runnable mStopRunnable = new Runnable() {
         @Override
         public void run() {
             stopScan();
         }
-    };*/
+    };
 
-    /*private Runnable mStartRunnable = new Runnable () {
+    private Runnable mStartRunnable = new Runnable () {
         @Override
         public void run() {
             startScan();
         }
-    };*/
+    };
     // Initiate a discovery command to get the signal strength and determine
     // Removing delay handler and seeing if this fixes it.
     private void startScan() {

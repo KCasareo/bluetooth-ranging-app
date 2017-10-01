@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kcasareo.beaconService.beacons.BeaconAdapter;
 import com.kcasareo.ranging.R;
 
 /**
@@ -14,6 +15,8 @@ import com.kcasareo.ranging.R;
  */
 
 public class ScannerFragment extends Fragment {
+    private BeaconAdapter mBeaconAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -24,6 +27,10 @@ public class ScannerFragment extends Fragment {
         ScannerFragment fragment = new ScannerFragment();
         fragment.setRetainInstance(true);
         return fragment;
+    }
+
+    public void setmBeaconAdapter(BeaconAdapter beaconAdapter) {
+        this.mBeaconAdapter = beaconAdapter;
     }
 }
 

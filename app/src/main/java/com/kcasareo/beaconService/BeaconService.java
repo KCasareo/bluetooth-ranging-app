@@ -181,6 +181,8 @@ public class BeaconService extends Service {
             int rssi = result.getRssi();
             Log.i(TAG, "New LE Device: " + device.getAddress() + " @ " + rssi);
             // Will request a static factory next time.
+            if(!beacons.matches(device.getAddress()))
+                return;
             if (beacons.contains(device.getAddress())) {
                 Log.i(TAG, "Found existing.");
                 Beacon beacon = beacons.findBeacon(device.getAddress());

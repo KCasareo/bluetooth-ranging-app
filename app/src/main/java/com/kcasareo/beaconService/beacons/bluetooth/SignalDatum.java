@@ -79,7 +79,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     }
 
     public String toString() {
-        return "Name: " + this.name + " RSSI: " + this.rssi;
+        return "Name: " + this.name + " RSSI: " + this.rssi + " Distance: " + this.distance;
     }
 
     protected String address() {

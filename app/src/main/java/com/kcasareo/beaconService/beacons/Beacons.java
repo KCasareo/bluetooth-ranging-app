@@ -43,9 +43,9 @@ public class Beacons {
         pollTimer = new Timer(true);
         pollTimer.schedule(pollTask, 0, POLL_TIME);
         /* To do: dynamically add filter elements to array list */
-        filter.add("");
-        filter.add("");
-        filter.add("");
+        filter.add("B0:91:22:EA:3A:05");
+        filter.add("B0:B4:48:D7:5D:02");
+        filter.add("B0:91:22:F6:A0:87");
     }
 
     public void add(Beacon beacon, BluetoothGatt gatt) {
@@ -67,6 +67,9 @@ public class Beacons {
         return data;
     }
 
+    public boolean matches(String address) {
+        return filter.contains(address);
+    }
 
     public boolean contains(String id) {
         return beacons.get(id) != null;

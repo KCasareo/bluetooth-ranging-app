@@ -39,12 +39,13 @@
                 android:id="@+id/listview_rssi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
+
                 android:layout_weight="1"></ListView>
-            <fragment android:name="com.kcasareo.application.HistoryFragment"
-                android:id="@+id/history_fragment"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
+            <fragment
+                android:id="@+id/fragment_container"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+            </fragment>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 

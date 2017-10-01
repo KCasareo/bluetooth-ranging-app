@@ -1,6 +1,7 @@
 package com.kcasareo.application;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
@@ -54,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
     private History history;
+    private FragmentManager fragmentManger;
+    private GraphFragment graphFragment;
+    private HistoryFragment historyFragment;
+    private ScannerFragment scannerFragment;
 
 
     @Override
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         beaconAdapter = new BeaconAdapter();
         lv.setAdapter(beaconAdapter);
         history = new History();
+        fragmentManger = getSupportFragmentManager();
 
     }
 

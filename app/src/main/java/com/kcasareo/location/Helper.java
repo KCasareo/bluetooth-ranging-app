@@ -20,9 +20,9 @@ public class Helper {
     /* empirical result places this value between -52 to -65*/
     /* -52 occurs when there is clear LOS between the phone and the sensor. */
     /* -65 when the sensor is on the floor */
-    private static final double rss0 = -65;
+    private static final double rss0 = -57;
     /* factor - factor n, usually somewhere between 2 and 2.5 */
-    private static final double factor = 2.5;
+    private static final double factor = 3.61;
     // Convert the RSSI indicator to distance
     public static double convert(double db) {
         return Math.pow(10, (rss0 - db)/ (factor * 10));

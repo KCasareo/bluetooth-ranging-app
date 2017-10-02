@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 
 public class HistoryFragment extends ListFragment {
+    private final String TAG = "HisFrag";
     HistoryListener mCallback;
 
     private View view;
@@ -38,17 +40,19 @@ public class HistoryFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.history, container, false);
+        View view = inflater.inflate(R.layout.history, container, false);
 
         Button buttonNext = (Button) view.findViewById(R.id.history_button_next);
         Button buttonPrev = (Button) view.findViewById(R.id.history_button_previous);
+        Button buttonLatest = (Button) view.findViewById(R.id.history_button_latest);
         Button buttonUpdate = (Button) view.findViewById(R.id.history_button_update);
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mHistory.next();
-                view.notify();
+                Log.d(TAG, "Next Click " + mHistory.index());
+                //v.notify();
 
             }
         });
@@ -57,7 +61,15 @@ public class HistoryFragment extends ListFragment {
             @Override
             public void onClick(View v) {
                 mHistory.prev();
-                view.notify();
+                Log.d(TAG, "Previous Click " + mHistory.index());
+                //v.notify();
+            }
+        });
+
+        buttonLatest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mHistory.last();
             }
         });
 
@@ -70,7 +82,7 @@ public class HistoryFragment extends ListFragment {
                     try {
                         mCallback.onPositionUpdate(entry.getKey(), x, y);
                     } catch (RemoteException e) {
-
+                        return;
                     }
                 }
             }
@@ -87,6 +99,8 @@ public class HistoryFragment extends ListFragment {
 
     public void setHistory(History history) {
         mHistory = history;
+        setListAdapter(mHistory);
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import java.util.Map;
  */
 
 public class History extends BaseAdapter {
+    private final String TAG = "History Adapter";
     private ArrayList<SignalData> signalDataHistory;
     private HashMap<String, Position> changeMap = new HashMap<>();
 
@@ -41,6 +43,7 @@ public class History extends BaseAdapter {
     public void next() {
         if (index < signalDataHistory.size() - 1)
             index++;
+
     }
 
     public HashMap<String, Position> transaction() {
@@ -55,11 +58,19 @@ public class History extends BaseAdapter {
     public void prev() {
         if (index > 0)
             index--;
+
+    }
+
+    public void last() {
+        index = signalDataHistory.size() - 1;
+
     }
 
     public int index() {
         return index;
     }
+
+
 
     // Add history
     // The latest history is retrieved using the the main activity's service connection.
@@ -93,6 +104,7 @@ public class History extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final View result;
+        Log.d(TAG, "Get View");
 
         if(convertView == null) {
             result = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_adapter_item, parent, false);
@@ -101,9 +113,12 @@ public class History extends BaseAdapter {
         }
 
         final SignalDatum item = signalDataHistory.get(index).asArray().get(position);
+        Log.d(TAG, "Text Edit Address: " + item.address());
         ((TextView) result.findViewById(R.id.history_item_address)).setText(item.address());
+        Log.d(TAG, "Text Edit Distance: " + item.distance());
         ((TextView) result.findViewById(R.id.history_item_distance)).setText(String.format("%.2fm", item.distance()));
         /* Add Listener to x_position */
+        Log.d(TAG, "Add Listener X");
         ((EditText) result.findViewById(R.id.history_item_edit_x)).addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
             private final int index = index();
@@ -130,6 +145,7 @@ public class History extends BaseAdapter {
             }
         });
         /* Add Listener to y_position */
+        Log.d(TAG, "Add Listener Y");
         ((EditText) result.findViewById(R.id.history_item_edit_y)).addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
             private final int index = index();
@@ -154,7 +170,7 @@ public class History extends BaseAdapter {
 
             }
         });
-        return null;
+        return result;
     }
 
 

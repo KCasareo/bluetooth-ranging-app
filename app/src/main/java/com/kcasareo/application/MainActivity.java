@@ -4,6 +4,7 @@ import android.app.Activity;
 //import android.support.v4.app.FragmentActivity;
 import android.app.FragmentManager;
 //import android.support.v4.app.Fragment;
+import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ComponentName;
 import android.content.Context;
@@ -39,11 +40,14 @@ import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 import com.kcasareo.ranging.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.kcasareo.ranging.R.layout.activity_main;
+import static com.kcasareo.ranging.R.layout.scanner;
 
 /**
  * Created by Kevin on 30/04/2017.
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     private GraphFragment graphFragment;
     private HistoryFragment historyFragment;
     private ScannerFragment scannerFragment;
+    private HashMap<String, Boolean> state = new HashMap<>();
 
 
     @Override
@@ -107,9 +112,21 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
         //Button buttonGraph
 
         buttonScanner.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
 
+                if (scannerFragment == null) {
+                    scannerFragment = ScannerFragment.getInstance();
+                    scannerFragment.setArguments(getIntent().getExtras());
+                }
+
+
+
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container, scannerFragment);
+                transaction.commit();
             }
         });
 
@@ -117,6 +134,17 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
             @Override
             public void onClick(View v) {
 
+                if (historyFragment == null) {
+                    historyFragment = HistoryFragment.getInstance();
+                    historyFragment.setHistory(history);
+                    historyFragment.setArguments(getIntent().getExtras());
+                }
+
+
+
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container, historyFragment);
+                transaction.commit();
             }
         });
 
@@ -158,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
         final String TAG = "MainActivity/bscb";
         @Override
-        public void signalsResponse(SignalData data) throws RemoteException {
+        public void signalsResponse(final SignalData data) throws RemoteException {
             MainActivity.this.signalData = data;
             Log.i(TAG, "Signals Response.");
             Log.d(TAG, "SignalData Hash: " + data.hashCode());
@@ -186,7 +214,15 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                 });
             }
             // Add latest to history.
-            history.update(data);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    history.update(data);
+                    history.notifyDataSetChanged();
+                }
+            });
+
         }
 
         /*

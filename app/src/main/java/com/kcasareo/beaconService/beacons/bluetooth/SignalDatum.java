@@ -17,7 +17,7 @@ import com.kcasareo.location.Position;
 public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     private long rssi;
     private double distance = 0;
-    private double delay = 0;
+    //private double delay = 0;
     private String address;
     private long id;
     private String name;
@@ -41,6 +41,8 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     }
 
     public double distance() { return distance; }
+
+    public long rssi() { return rssi; }
 
 
     public SignalDatum(long rssi, String address, long id, String name) {
@@ -96,8 +98,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     }
 
     public String toString() {
-
-        return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + String.format("%.2fm", this.distance); }
+        return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + String.format("%.2fm", this.distance) + String.format("%.1f%.1f", this.position.x(), this.position.y()); }
 
     protected String address() {
         return address;

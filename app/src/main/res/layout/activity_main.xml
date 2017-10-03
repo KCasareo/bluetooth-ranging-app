@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.kcasareo.application.MainActivity">
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 >
@@ -24,24 +25,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="History"/>
-                <Button
+                <!--Button
                     android:id="@+id/button_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Map"/>
+                    android:text="Map"/-->
                 <Button
                     android:id="@+id/button_scanner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Scanner"/>
-                <Button
+                <!--Button
                     android:id="@+id/button_positions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Positions"/>
+                    android:text="Positions"/-->
             </LinearLayout>
 
             <!--ListView

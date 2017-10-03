@@ -7,18 +7,15 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.kcasareo.beaconService.beacons.BeaconAdapter;
 import com.kcasareo.location.Position;
 import com.kcasareo.ranging.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Kevin on 28/09/2017.
@@ -46,6 +43,7 @@ public class History extends BaseAdapter {
 
     }
 
+    /* Update the position of the beacon */
     public HashMap<String, Position> transaction() {
         // Copy the old changes to safely clear the old one
         HashMap<String, Position> temp = new HashMap<>();
@@ -101,6 +99,7 @@ public class History extends BaseAdapter {
         return position;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final View result;
@@ -117,11 +116,12 @@ public class History extends BaseAdapter {
         ((TextView) result.findViewById(R.id.history_item_address)).setText(item.address());
         Log.d(TAG, "Text Edit Distance: " + item.distance());
         ((TextView) result.findViewById(R.id.history_item_distance)).setText(String.format("%.2fm", item.distance()));
+        ((TextView) result.findViewById(R.id.history_item_db)).setText(String.format("%ddb", item.rssi()));
         /* Add Listener to x_position */
         Log.d(TAG, "Add Listener X");
         ((EditText) result.findViewById(R.id.history_item_edit_x)).addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
-            private final int index = index();
+            //private final int index = index();
             private final String address = item.address();
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -148,7 +148,7 @@ public class History extends BaseAdapter {
         Log.d(TAG, "Add Listener Y");
         ((EditText) result.findViewById(R.id.history_item_edit_y)).addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
-            private final int index = index();
+            //private final int index = index();
             private final String address = item.address();
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

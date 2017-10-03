@@ -101,6 +101,7 @@ public class HistoryFragment extends ListFragment {
         mHistory = history;
         setListAdapter(mHistory);
 
+
     }
 
     @Override

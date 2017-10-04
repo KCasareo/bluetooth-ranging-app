@@ -1,6 +1,7 @@
 package com.kcasareo.beaconService.beacons;
 
 import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
+import com.kcasareo.location.Position;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -12,6 +13,7 @@ public abstract class Beacon {
     protected long signalStrength;
     protected String address;
     protected String name;
+    protected Position position;
     protected long id;
     public abstract long signalStrength();
     public abstract void setSignalStrength(long signalStrength);
@@ -21,12 +23,13 @@ public abstract class Beacon {
     public abstract SignalDatum datum();
     public abstract String address();
     public abstract Runnable task();
+    public abstract void update(Position position);
     /*
     * Returns exportable data.
     *
     * */
     public SignalDatum signalData() {
-        return new SignalDatum(signalStrength, address, id, name);
+        return new SignalDatum(signalStrength, address, id, name, position);
     }
 
     public Beacon() {

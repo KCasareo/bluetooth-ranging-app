@@ -49,8 +49,11 @@ public class History extends BaseAdapter {
     }
 
     public void next() {
-        if (index < signalDataHistory.size() - 1)
+        if (index < signalDataHistory.size() - 1) {
             index++;
+            onDataChangedListener.onIndexDataChanged(index);
+        }
+
 
     }
 
@@ -65,13 +68,17 @@ public class History extends BaseAdapter {
 
     // Called
     public void prev() {
-        if (index > 0)
+        if (index > 0) {
             index--;
+            onDataChangedListener.onIndexDataChanged(index);
+        }
+
 
     }
 
     public void last() {
         index = signalDataHistory.size() - 1;
+        onDataChangedListener.onIndexDataChanged(index);
 
     }
 
@@ -90,10 +97,20 @@ public class History extends BaseAdapter {
         //signalDataArrayAdapter.addAll(signalDataHistory);
     }
 
+    public void refresh(SignalData data) {
+
+    }
+
     /* Get the data at frame X */
     //public SignalData read(int at) { return signalDataHistory.get(at).as; }
 
     //public SignalData showCurrent() { return read(index); }
+
+    public String getCurrentAddress(int position) {
+        return signalDataHistory.get(index).asArray().get(position).address();
+    }
+
+    //public void update(SignalData)
 
     @Override
     public int getCount() {
@@ -110,8 +127,31 @@ public class History extends BaseAdapter {
         return position;
     }
 
+        /*
+    private final int minDelta = 300;
+    private long focusTime = 0;
+    private View focusTarget =null;
 
-    @Override
+    View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            long t = System.currentTimeMillis();
+            long delta = t - focusTime;
+            if(hasFocus && delta > minDelta) {
+                focusTime = t;
+                focusTarget = v;
+            } else {
+                if (delta <= minDelta && v == focusTarget) {
+                    focusTarget.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            focusTarget.requestFocus();
+                        }
+                    });
+                }
+            }
+        }
+    };*/
     public View getView(int position, View convertView, ViewGroup parent) {
         final View result;
         Log.d(TAG, "Get View");
@@ -129,12 +169,18 @@ public class History extends BaseAdapter {
         Log.d(TAG, "Text Edit Distance: " + item.distance());
         ((TextView) result.findViewById(R.id.history_item_distance)).setText(String.format("%.2fm", item.distance()));
         ((TextView) result.findViewById(R.id.history_item_db)).setText(String.format("%ddb", item.rssi()));
+        ((TextView) result.findViewById(R.id.history_item_read_x)).setText(String.format("%.1f", item.x()));
+        ((TextView) result.findViewById(R.id.history_item_read_y)).setText(String.format("%.1f", item.y()));
+
+
         /* Add Listener to x_position */
-        Log.d(TAG, "Add Listener X");
+        //Log.d(TAG, "Add Listener X");
+        /*
         EditText editx = ((EditText) result.findViewById(R.id.history_item_edit_x));
         //editx.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         //editx.clearFocus();
 
+        //editx.setOnFocusChangeListener(onFocusChangeListener);
         editx.addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
             //private final int index = index();
@@ -167,10 +213,10 @@ public class History extends BaseAdapter {
 
             }
         });
-        /* Add Listener to y_position */
+         Add Listener to y_position
         Log.d(TAG, "Add Listener Y");
         EditText edity = ((EditText) result.findViewById(R.id.history_item_edit_y));
-
+        //edity.setOnFocusChangeListener( onFocusChangeListener);
         //edity.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         //edity.clearFocus();
         edity.addTextChangedListener(new TextWatcher() {
@@ -206,6 +252,7 @@ public class History extends BaseAdapter {
 
             }
         });
+        */
         return result;
     }
 

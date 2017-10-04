@@ -45,15 +45,16 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     public long rssi() { return rssi; }
 
 
-    public SignalDatum(long rssi, String address, long id, String name) {
+    public SignalDatum(long rssi, String address, long id, String name, Position position) {
         this.rssi = rssi;
         this.address = address;
         this.id = id;
         this.name = name;
         this.distance = Helper.convert((double)rssi);
-        this.position = new Position(0,0);
+        this.position = position;
         position.setRange(distance);
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
+        Log.d(TAG, "Finding");
     }
 
     public final Creator<SignalDatum> CREATOR = new Creator<SignalDatum>() {
@@ -94,14 +95,23 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     }
 
     public void update(Position position) {
+        Log.d(TAG, "Updating Position");
         this.position = position;
     }
 
     public String toString() {
-        return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + String.format("%.2fm", this.distance) + String.format("%.1f%.1f", this.position.x(), this.position.y()); }
+        return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + String.format("%.2fm", this.distance) + String.format(" X:%.1f Y:%.1f", this.position.x(), this.position.y()); }
 
     protected String address() {
         return address;
+    }
+
+    public double x() {
+        return position.x();
+    }
+
+    public double y() {
+        return position.y();
     }
 
     // Manipulate contains method in BeaconAdapter.set()

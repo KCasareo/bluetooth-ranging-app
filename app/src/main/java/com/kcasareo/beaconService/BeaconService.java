@@ -308,7 +308,7 @@ public class BeaconService extends Service {
 
         @Override
         public void updatePosition(String address, double x, double y) throws RemoteException {
-            beacons.findBeacon(address).datum().update(new Position(x, y));
+            beacons.findBeacon(address).update(new Position(x, y));
         }
 
         @Override

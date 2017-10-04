@@ -26,7 +26,7 @@ public class BeaconAdapter extends BaseAdapter {
     //private LayoutInflater mInflater;
     public BeaconAdapter(SignalData data) {
         this();
-        mData.addAll(data.asMap().entrySet());
+        refresh(data);
     }
 /*
     public BeaconAdapter(Context context, SignalData data) {
@@ -36,6 +36,11 @@ public class BeaconAdapter extends BaseAdapter {
 */
     public BeaconAdapter() {
         mData = new ArrayList();
+    }
+
+    public void refresh(SignalData data) {
+        mData.clear();
+        mData.addAll(data.asMap().entrySet());
     }
 
     public void set(SignalData data) {

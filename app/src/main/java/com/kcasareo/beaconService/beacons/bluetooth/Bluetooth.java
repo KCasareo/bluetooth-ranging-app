@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothGatt;
 import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
+import com.kcasareo.location.Position;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -28,6 +29,7 @@ public class Bluetooth extends Beacon {
         this.identifier = device.hashCode();
         this.address = device.getAddress();
         this.name = device.getName();
+        this.position = new Position(0, 0);
         if (this.name == null) {
             this.name = "Generic Bluetooth";
         }
@@ -91,8 +93,15 @@ public class Bluetooth extends Beacon {
         };
     }
 
+    public void update(Position position) {
+        Log.d(TAG, position.toString());
+        Log.d(TAG, this.position.toString());
+        this.position = position;
+    }
+
     @Override
     public SignalDatum datum() {
-        return new SignalDatum(signalStrength, address, id, name);
+        Log.d(TAG, "Position is " + this.position.toString());
+        return new SignalDatum(signalStrength, address, id, name, this.position);
     }
 }

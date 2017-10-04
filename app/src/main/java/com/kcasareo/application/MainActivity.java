@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     private HistoryFragment historyFragment;
     private ScannerFragment scannerFragment;
     private HashMap<String, Boolean> state = new HashMap<>();
+    private Boolean refreshFlag = false;
 
 
     @Override
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                     historyFragment = HistoryFragment.getInstance();
                     historyFragment.setHistory(history);
                     historyFragment.setArguments(getIntent().getExtras());
+
                 }
 
 
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, historyFragment);
                 transaction.commit();
+                historyFragment.setHistoryListener((HistoryFragment.HistoryListener) getParent());
             }
         });
 
@@ -200,10 +203,12 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                         //beaconAdapter.notifyDataSetChanged();
                     }
                 });
-
             } else {
-                // Modify the entire dataset.
-                beaconAdapter.set(data);
+                if (refreshFlag)
+                    beaconAdapter.refresh(data);
+                // Modify the entire dataset
+                else
+                    beaconAdapter.set(data);
 
 
                 runOnUiThread(new Runnable() {
@@ -218,11 +223,14 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    history.update(data);
+                    if(refreshFlag)
+                        history.refresh(data);
+                    else
+                        history.update(data);
                     history.notifyDataSetChanged();
                 }
             });
-
+            refreshFlag = false;
         }
 
         /*
@@ -275,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     @Override
     public void onPositionUpdate(String address, double x, double y) throws RemoteException {
         mBeaconService.updatePosition(address, x, y);
+        refreshFlag = true;
     }
 }
 

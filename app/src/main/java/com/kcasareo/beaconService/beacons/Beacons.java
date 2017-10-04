@@ -3,6 +3,7 @@ package com.kcasareo.beaconService.beacons;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
+import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 
@@ -55,6 +56,7 @@ public class Beacons {
     }
 
     public Beacon findBeacon(String id) {
+        Log.d(TAG, "Finding Beacon");
         return beacons.get(id).first;
     }
 

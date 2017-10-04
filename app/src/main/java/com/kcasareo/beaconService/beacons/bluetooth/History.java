@@ -27,6 +27,16 @@ public class History extends BaseAdapter {
     private ArrayList<SignalData> signalDataHistory;
     private HashMap<String, Position> changeMap = new HashMap<>();
 
+    public interface OnDataChangedListener {
+        public void onIndexDataChanged(int index);
+    }
+
+    OnDataChangedListener onDataChangedListener;
+
+    public void setmOnDataChangedListener(OnDataChangedListener onDataChangedListener) {
+        this.onDataChangedListener = onDataChangedListener;
+    }
+
 
 
     //private ArrayAdapter<SignalData> signalDataArrayAdapter;

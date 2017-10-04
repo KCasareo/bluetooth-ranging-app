@@ -13,10 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.kcasareo.beaconService.beacons.bluetooth.History;
 import com.kcasareo.location.Position;
 import com.kcasareo.ranging.R;
+
+import org.w3c.dom.Text;
 
 import java.util.Map;
 
@@ -24,11 +27,17 @@ import java.util.Map;
  * Created by Kevin on 29/09/2017.
  */
 
-public class HistoryFragment extends ListFragment {
+public class HistoryFragment extends ListFragment implements History.OnDataChangedListener{
     private final String TAG = "HisFrag";
+    private int index;
     HistoryListener mCallback;
 
     private View view;
+
+    @Override
+    public void onIndexDataChanged(int index) {
+        this.index = index;
+    }
 
     public interface HistoryListener {
         // Tell the main activity bound to service to update the position of a beacon
@@ -46,6 +55,11 @@ public class HistoryFragment extends ListFragment {
         Button buttonPrev = (Button) view.findViewById(R.id.history_button_previous);
         Button buttonLatest = (Button) view.findViewById(R.id.history_button_latest);
         Button buttonUpdate = (Button) view.findViewById(R.id.history_button_update);
+        TextView indexText = (TextView) view.findViewById(R.id.history_text_index);
+
+        indexText.setText(Integer.toString(index));
+
+
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +114,7 @@ public class HistoryFragment extends ListFragment {
     public void setHistory(History history) {
         mHistory = history;
         setListAdapter(mHistory);
-
-
+        mHistory.setmOnDataChangedListener(this);
     }
 
     @Override

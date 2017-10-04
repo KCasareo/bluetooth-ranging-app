@@ -1,6 +1,7 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Pair;
@@ -120,6 +121,7 @@ public class History extends BaseAdapter {
         } else {
             result = convertView;
         }
+        result.clearFocus();
 
         final SignalDatum item = signalDataHistory.get(index).asArray().get(position);
         Log.d(TAG, "Text Edit Address: " + item.address());
@@ -129,7 +131,11 @@ public class History extends BaseAdapter {
         ((TextView) result.findViewById(R.id.history_item_db)).setText(String.format("%ddb", item.rssi()));
         /* Add Listener to x_position */
         Log.d(TAG, "Add Listener X");
-        ((EditText) result.findViewById(R.id.history_item_edit_x)).addTextChangedListener(new TextWatcher() {
+        EditText editx = ((EditText) result.findViewById(R.id.history_item_edit_x));
+        //editx.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        //editx.clearFocus();
+
+        editx.addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
             //private final int index = index();
             private final String address = item.address();
@@ -141,22 +147,33 @@ public class History extends BaseAdapter {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // Cache changes, then push on update. Only push the currently selected change.
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
                     double d = Double.parseDouble(s.toString());
                     if(!changeMap.containsKey(address)) {
                         changeMap.put(address, new Position(d, 0.0));
                     } else {
                         changeMap.get(address).update_x(d);
                     }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+                } catch (NumberFormatException e) {
+                    Log.d(TAG, "Edit X Wrong double");
+                    // Ignore input.
+                    return;
+                }
 
             }
         });
         /* Add Listener to y_position */
         Log.d(TAG, "Add Listener Y");
-        ((EditText) result.findViewById(R.id.history_item_edit_y)).addTextChangedListener(new TextWatcher() {
+        EditText edity = ((EditText) result.findViewById(R.id.history_item_edit_y));
+
+        //edity.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        //edity.clearFocus();
+        edity.addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
             //private final int index = index();
             private final String address = item.address();
@@ -167,16 +184,25 @@ public class History extends BaseAdapter {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                double d = Double.parseDouble(s.toString());
-                if(!changeMap.containsKey(address)) {
-                    changeMap.put(address, new Position(0.0, d));
-                } else {
-                    changeMap.get(address).update_y(d);
-                }
+
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                try {
+                    double d = Double.parseDouble(s.toString());
+                    if(!changeMap.containsKey(address)) {
+                        changeMap.put(address, new Position(0.0, d));
+                    } else {
+                        changeMap.get(address).update_y(d);
+                    }
+
+                } catch (NumberFormatException e) {
+                    Log.d(TAG, "Edit Y Wrong double");
+                    // Ignore input.
+                    return;
+                }
 
             }
         });

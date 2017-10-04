@@ -46,6 +46,8 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
 
     private History mHistory;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

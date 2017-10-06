@@ -1,4 +1,4 @@
-package com.kcasareo.beaconService.beacons.bluetooth;
+package com.kcasareo.application.adapter;
 
 import android.text.Editable;
 import android.text.InputType;
@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
+import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
 import com.kcasareo.location.Position;
 import com.kcasareo.ranging.R;
 
@@ -20,11 +22,11 @@ import java.util.HashMap;
 
 /**
  * Created by Kevin on 28/09/2017.
- * History object to be constructed at the view side.
+ * HistoryAdapter object to be constructed at the view side.
  */
 
-public class History extends BaseAdapter {
-    private final String TAG = "History Adapter";
+public class HistoryAdapter extends BaseAdapter {
+    private final String TAG = "HistoryAdapter Adapter";
     private ArrayList<SignalData> signalDataHistory;
     private HashMap<String, Position> changeMap = new HashMap<>();
 
@@ -43,7 +45,7 @@ public class History extends BaseAdapter {
     //private ArrayAdapter<SignalData> signalDataArrayAdapter;
     private int index;
 
-    public History() {
+    public HistoryAdapter() {
         signalDataHistory = new ArrayList<>();
         index = 0;
     }

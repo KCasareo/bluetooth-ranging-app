@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * Stateless static helper functions
  */
 
-public class Helper {
+public class Localise {
     public static double distance(double pos_x, double pos_y) {
-        return Math.pow(Math.pow(pos_x, 2) + Math.pow(pos_y, 2), 0.5);
+        return distance(pos_x, pos_y, 0);
     }
 
     // For 3d entries
@@ -33,6 +33,26 @@ public class Helper {
     * This is a naive localisation w/ linear least square algorithm.
     * Expects the three closest nodes.
     * */
+    public static Position localise(Position pos1, Position pos2, Position pos3, Position pos4) {
+        /* Require a 3x3 matrix to find x,y,z*/
+        /*
+        *   [ a b c ] [ x ]   [ d ]
+        *   [ e f g ] [ y ] = [ h ]
+        *   [ i j k ] [ z ]   [ l ]
+        *   Solve for x,y,z
+        * R_2 ** 2 - R_1 ** 2
+        * R_3 ** 2 - R_2 ** 2
+        * R_4 ** 2 - R_3 ** 2
+        *
+        *
+        * */
+
+        double x, y, z;
+        x = y = z = 0;
+
+        return new Position(x,y,z);
+    }
+
     public static Position localise(Position pos1, Position pos2, Position pos3) {
         double x,y;
         x = y = 0;

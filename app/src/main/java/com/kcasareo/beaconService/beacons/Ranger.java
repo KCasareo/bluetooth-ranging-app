@@ -1,6 +1,6 @@
 package com.kcasareo.beaconService.beacons;
 
-/** Ranging Helper Class
+/** Ranging Localise Class
  * Created by Kevin on 16/08/2017.
  */
 

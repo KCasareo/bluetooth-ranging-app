@@ -320,6 +320,10 @@ public class BeaconService extends Service {
         public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
             callbacks.remove(Integer.toString(callback.hashCode()));
         }
+
+        public void whitelist(String address) throws RemoteException {
+            
+        }
     };
 
     // Create a private implementation to gattcallback then pass a new copy of for each

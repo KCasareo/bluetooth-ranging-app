@@ -9,18 +9,19 @@ import android.support.annotation.NonNull;
  */
 
 public class Position implements Comparable<Position>, Parcelable {
-    private double pos_x, pos_y;
+    private double pos_x, pos_y, pos_z;
     private double range;
 
     public Position(double pos_x, double pos_y) {
-        this.pos_x = pos_x;
-        this.pos_y = pos_y;
+        this(pos_x, pos_y, 0);
         this.range = 0;
     }
 
-    public Position (double pos_x, double pos_y, double range) {
-        this(pos_x, pos_y);
-        this.range = range;
+    public Position (double pos_x, double pos_y, double pos_z) {
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
+        this.pos_z = pos_z;
+        this.range = 0;
     }
 
     protected Position(Parcel in) {
@@ -44,13 +45,15 @@ public class Position implements Comparable<Position>, Parcelable {
         }
     };
 
-    public void update_x(double x) {
-        pos_x = x;
+    public void update_x(double pos_x) {
+        this.pos_x = pos_x;
     }
 
-    public void update_y(double y) {
-        pos_y = y;
+    public void update_y(double pos_y) {
+        this.pos_y = pos_y;
     }
+
+    public void update_z(double pos_z) { this.pos_z = pos_z;}
 
     public double x() {
         return pos_x;
@@ -59,6 +62,8 @@ public class Position implements Comparable<Position>, Parcelable {
     public double y() {
         return pos_y;
     }
+
+    public double z() { return pos_z; }
 
     public void update(double pos_x, double pos_y) {
         this.pos_x = pos_x;
@@ -74,15 +79,15 @@ public class Position implements Comparable<Position>, Parcelable {
 
     @Override
     public int compareTo(@NonNull Position other) {
-        double local = Helper.distance(this.pos_x, this.pos_y);
-        double compared = Helper.distance(other.x(), other.y());
+        double local = Localise.distance(this.pos_x, this.pos_y);
+        double compared = Localise.distance(other.x(), other.y());
         return local == compared ? EQUALS :
                 local > compared ? GREATER : LESS;
     }
 
     // Incase you have to check for distance between nodes
     public double range(@NonNull Position other) {
-        return Helper.distance(Math.abs(this.pos_x - other.x()), Math.abs(this.pos_y - other.y()));
+        return Localise.distance(Math.abs(this.pos_x - other.x()), Math.abs(this.pos_y - other.y()));
     }
 
     // Return range from sensor to node

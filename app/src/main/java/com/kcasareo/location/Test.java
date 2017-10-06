@@ -40,7 +40,7 @@ public class Test extends Positions {
                 double pos_y = s.nextDouble();
                 double range = s.nextDouble();
 
-                positions.add(new Position(pos_x,pos_y, range));
+//                positions.add(new Position(pos_x,pos_y, range));
                 if ( positions.size() == 3) {
                     // Add the three members of the buffer.
                     entries.add(new Entry(positions.get(0), positions.get(1), positions.get(2)));

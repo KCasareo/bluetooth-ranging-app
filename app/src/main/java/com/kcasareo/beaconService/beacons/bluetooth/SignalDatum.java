@@ -1,13 +1,11 @@
 package com.kcasareo.beaconService.beacons.bluetooth;
 
-import android.icu.text.DecimalFormat;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
-import com.kcasareo.location.Helper;
+import com.kcasareo.location.Localise;
 import com.kcasareo.location.Position;
 
 /**
@@ -15,15 +13,16 @@ import com.kcasareo.location.Position;
  */
 
 public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
-    private long rssi;
-    private double distance = 0;
+    protected long rssi;
+    protected double distance = 0;
     //private double delay = 0;
-    private String address;
-    private long id;
-    private String name;
-    private Position position;
+    protected String address;
+    protected long id;
+    protected String name;
+    protected Position position;
     private final String TAG = getClass().getSimpleName();
 
+    /* When extending SignalDatum, always call super first */
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
         id = in.readLong();
@@ -50,7 +49,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         this.address = address;
         this.id = id;
         this.name = name;
-        this.distance = Helper.convert((double)rssi);
+        this.distance = Localise.convert((double)rssi);
         this.position = position;
         position.setRange(distance);
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
@@ -74,6 +73,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         return 0;
     }
 
+    /* When extending SignalDatum, call super.writeToParcel(dest, flags) before adding your custom fields */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.rssi);
@@ -82,7 +82,6 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         dest.writeString(this.name);
         dest.writeDouble(this.distance);
         dest.writeParcelable(this.position, 0);
-        //dest.writeDouble(this.distance);
     }
 
     // Returns hashcode of device detected.
@@ -102,7 +101,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     public String toString() {
         return "Name: " + this.name + " RSSI: " + this.rssi + "\n Distance: " + String.format("%.2fm", this.distance) + String.format(" X:%.1f Y:%.1f", this.position.x(), this.position.y()); }
 
-    protected String address() {
+    public String address() {
         return address;
     }
 
@@ -117,7 +116,10 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     // Manipulate contains method in BeaconAdapter.set()
     @Override
     public boolean equals(Object o) {
-        return this.address.equals(((SignalDatum) o).address());
+        // Guard against incorrect types
+        if (o instanceof SignalDatum)
+            return this.address.equals(((SignalDatum) o).address());
+        return false;
     }
 
 

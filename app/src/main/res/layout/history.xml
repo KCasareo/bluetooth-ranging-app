@@ -23,28 +23,39 @@
             android:layout_gravity="center"
             >
             <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:background="@android:color/darker_gray"
                 android:layout_weight="1"
                 android:text="Previous"
-                android:id="@+id/history_button_previous">
+                android:id="@+id/history_button_previous"
+                >
 
             </Button>
-            <Button android:layout_width="50dp"
-                android:layout_height="50dp"
+            <Button android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:background="@android:color/darker_gray"
                 android:layout_weight="1"
                 android:text="Next"
                 android:id="@+id/history_button_next">
             </Button>
-            <Button android:layout_width="50dp"
-                android:layout_height="50dp"
+            <Button android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:background="@android:color/darker_gray"
                 android:layout_weight="1"
                 android:text="Latest"
                 android:id="@+id/history_button_latest">
             </Button>
+            <ToggleButton
+                android:id="@+id/history_toggle_auto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+
+
+                android:textOff="Auto?"
+                android:textOn="Active"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,12 +126,13 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="2">
-            <Button
+            <ToggleButton
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="Localise">
-            </Button>
+                android:textOn="Localising"
+                android:textOff="Localise">
+            </ToggleButton>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

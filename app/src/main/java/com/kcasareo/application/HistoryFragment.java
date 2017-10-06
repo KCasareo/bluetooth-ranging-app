@@ -2,12 +2,10 @@ package com.kcasareo.application;
 
 //import android.support.v4.app.Fragment;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,15 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
-import com.kcasareo.beaconService.beacons.bluetooth.History;
+import com.kcasareo.application.adapter.HistoryAdapter;
 import com.kcasareo.location.Position;
 import com.kcasareo.ranging.R;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +30,7 @@ import java.util.Map;
  * Created by Kevin on 29/09/2017.
  */
 
-public class HistoryFragment extends ListFragment implements History.OnDataChangedListener{
+public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDataChangedListener{
     private final String TAG = "HisFrag";
     private int index;
     HistoryListener mCallback;
@@ -40,24 +38,27 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
     private HashMap<String, Position> changeMap = new HashMap<>();
     TextView indexText;
     private View view;
+    private boolean autoState = false;
+
+    public boolean autoState() { return autoState; }
+
+    protected void setAutoState(boolean bool) {
+        autoState = bool;
+    }
 
     @Override
     public void onIndexDataChanged(int index) {
         this.index = index;
         indexText.setText(Integer.toString(index));
-
     }
 
-    public void notifyText() {
-
-    }
 
     public interface HistoryListener {
         // Tell the main activity bound to service to update the position of a beacon
         public void onPositionUpdate(String address, double x, double y) throws RemoteException;
     }
 
-    private History mHistory;
+    private HistoryAdapter mHistoryAdapter;
 
 
 
@@ -70,6 +71,7 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
         Button buttonPrev = (Button) view.findViewById(R.id.history_button_previous);
         Button buttonLatest = (Button) view.findViewById(R.id.history_button_latest);
         Button buttonUpdate = (Button) view.findViewById(R.id.history_button_update);
+        ToggleButton toggleAuto = (ToggleButton) view.findViewById(R.id.history_toggle_auto);
         EditText editTextX = (EditText) view.findViewById(R.id.history_edit_x);
         EditText editTextY = (EditText) view.findViewById(R.id.history_edit_y);
         indexText = (TextView) view.findViewById(R.id.history_text_index);
@@ -122,7 +124,7 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
                     if(!changeMap.containsKey(selectedAddress)) {
                         changeMap.put(selectedAddress, new Position(d, 0.0));
                     } else {
-                        changeMap.get(selectedAddress).update_y(d);
+                        changeMap.get(selectedAddress).update_x(d);
                     }
 
                 } catch (NumberFormatException e) {
@@ -134,15 +136,20 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
             }
         });
 
-
+        toggleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setAutoState(isChecked);
+            }
+        });
 
 
 
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHistory.next();
-                Log.d(TAG, "Next Click " + mHistory.index());
+                mHistoryAdapter.next();
+                Log.d(TAG, "Next Click " + mHistoryAdapter.index());
                 //v.notify();
 
             }
@@ -151,8 +158,8 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
         buttonPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHistory.prev();
-                Log.d(TAG, "Previous Click " + mHistory.index());
+                mHistoryAdapter.prev();
+                Log.d(TAG, "Previous Click " + mHistoryAdapter.index());
                 //v.notify();
             }
         });
@@ -160,7 +167,7 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
         buttonLatest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHistory.last();
+                mHistoryAdapter.last();
             }
         });
 
@@ -192,16 +199,16 @@ public class HistoryFragment extends ListFragment implements History.OnDataChang
         return fragment;
     }
 
-    public void setHistory(History history) {
-        mHistory = history;
-        setListAdapter(mHistory);
-        mHistory.setmOnDataChangedListener(this);
+    public void setHistory(HistoryAdapter historyAdapter) {
+        mHistoryAdapter = historyAdapter;
+        setListAdapter(mHistoryAdapter);
+        mHistoryAdapter.setmOnDataChangedListener(this);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        selectedAddress = mHistory.getCurrentAddress(position);
+        selectedAddress = mHistoryAdapter.getCurrentAddress(position);
     }
 
     @Override

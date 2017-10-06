@@ -1,53 +1,36 @@
 package com.kcasareo.application;
 
-import android.app.Activity;
 //import android.support.v4.app.FragmentActivity;
 import android.app.FragmentManager;
 //import android.support.v4.app.Fragment;
 import android.app.FragmentTransaction;
-import android.bluetooth.BluetoothAdapter;
-import android.content.ComponentName;
+        import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
+        import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcel;
-import android.os.RemoteException;
+        import android.os.RemoteException;
 //import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
-import android.util.Log;
+        import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.os.Bundle;
+        import android.widget.Button;
 
+import com.kcasareo.application.adapter.HistoryAdapter;
 import com.kcasareo.beaconService.BeaconService;
 import com.kcasareo.beaconService.IBeaconService;
 import com.kcasareo.beaconService.IBeaconServiceCallback;
 //import com.kcasareo.beaconService.frames.Frame;
 //import com.kcasareo.beaconService.frames.Frames;
 //import com.kcasareo.beaconService.frames.Snapshot;
-import com.kcasareo.beaconService.beacons.BeaconAdapter;
-import com.kcasareo.beaconService.beacons.bluetooth.History;
+import com.kcasareo.application.adapter.BeaconAdapter;
 import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
-import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
-import com.kcasareo.ranging.R;
+        import com.kcasareo.ranging.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Timer;
+        import java.util.HashMap;
+        import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.kcasareo.ranging.R.layout.activity_main;
-import static com.kcasareo.ranging.R.layout.scanner;
 
 /**
  * Created by Kevin on 30/04/2017.
@@ -63,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     //private ViewGroup layout;
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
-    private History history = null;
+    private HistoryAdapter historyAdapter = null;
     private FragmentManager fragmentManager;
     private GraphFragment graphFragment;
     private HistoryFragment historyFragment;
@@ -83,8 +66,8 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
         //beaconAdapter = new BeaconAdapter();
         //lv.setAdapter(beaconAdapter);
 
-        if (history == null) {
-            history = new History();
+        if (historyAdapter == null) {
+            historyAdapter = new HistoryAdapter();
         }
 
         fragmentManager = getFragmentManager();
@@ -96,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
 
             //graphFragment = GraphFragment.getInstance();
             historyFragment = HistoryFragment.getInstance();
-            historyFragment.setHistory(history);
+            historyFragment.setHistory(historyAdapter);
             scannerFragment = ScannerFragment.getInstance();
 
 
@@ -137,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
 
                 if (historyFragment == null) {
                     historyFragment = HistoryFragment.getInstance();
-                    historyFragment.setHistory(history);
+                    historyFragment.setHistory(historyAdapter);
                     historyFragment.setArguments(getIntent().getExtras());
 
                 }
@@ -186,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     }
 
 
+
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
         final String TAG = "MainActivity/bscb";
         @Override
@@ -218,16 +202,16 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                     }
                 });
             }
-            // Add latest to history.
+            // Add latest to historyAdapter.
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     if(refreshFlag)
-                        history.refresh(data);
+                        historyAdapter.refresh(data);
                     else
-                        history.update(data);
-                    history.notifyDataSetChanged();
+                        historyAdapter.update(data);
+                    historyAdapter.notifyDataSetChanged();
                 }
             });
             refreshFlag = false;

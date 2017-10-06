@@ -25,7 +25,7 @@ public class Graph extends View {
         /*
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.History,
+                R.styleable.HistoryAdapter,
                 0, 0;
         );*/
     }

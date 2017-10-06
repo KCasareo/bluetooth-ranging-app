@@ -1,4 +1,4 @@
-package com.kcasareo.beaconService.beacons;
+package com.kcasareo.application.adapter;
 
 import android.content.Context;
 import android.util.Log;

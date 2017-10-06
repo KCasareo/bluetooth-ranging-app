@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -28,7 +27,7 @@ import com.kcasareo.beaconService.beacons.Beacon;
 import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
 import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
-import com.kcasareo.location.Position;
+import com.kcasareo.beaconService.location.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;

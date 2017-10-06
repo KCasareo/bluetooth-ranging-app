@@ -43,7 +43,7 @@ public class BeaconAdapter extends BaseAdapter {
         mData.addAll(data.asMap().entrySet());
     }
 
-    public void set(SignalData data) {
+    public void add(SignalData data) {
         // Empty the list, add new values, notify.
         // If data returned is null or the collection is empty, skip setting new values.
         HashMap<String, SignalDatum> temp = data.asMap();

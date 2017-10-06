@@ -1,4 +1,4 @@
-package com.kcasareo.location;
+package com.kcasareo.beaconService.location;
 
 import android.os.Parcel;
 import android.os.Parcelable;

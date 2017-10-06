@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                     beaconAdapter.refresh(data);
                 // Modify the entire dataset
                 else
-                    beaconAdapter.set(data);
+                    beaconAdapter.add(data);
 
 
                 runOnUiThread(new Runnable() {

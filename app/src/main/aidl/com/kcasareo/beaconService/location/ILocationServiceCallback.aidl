@@ -1,5 +1,5 @@
 // ILocationServiceCallback.aidl
-package com.kcasareo.location;
+package com.kcasareo.beaconService.location;
 
 // Declare any non-default types here with import statements
 

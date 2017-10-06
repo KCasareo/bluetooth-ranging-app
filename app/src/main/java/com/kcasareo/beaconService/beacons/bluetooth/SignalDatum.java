@@ -5,8 +5,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.kcasareo.location.Localise;
-import com.kcasareo.location.Position;
+import com.kcasareo.beaconService.location.Localise;
+import com.kcasareo.beaconService.location.Position;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -113,7 +113,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         return position.y();
     }
 
-    // Manipulate contains method in BeaconAdapter.set()
+    // Manipulate contains method in BeaconAdapter.add()
     @Override
     public boolean equals(Object o) {
         // Guard against incorrect types

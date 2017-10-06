@@ -1,13 +1,13 @@
-package com.kcasareo.location;
-
-import java.util.ArrayList;
+package com.kcasareo.beaconService.location;
 
 /**
  * Created by Kevin on 23/08/2017.
- * Stateless static helper functions
+ * Stateless static helper functions for Localisation and Ranging.
+ * All static pure methods.
  */
 
 public class Localise {
+
     public static double distance(double pos_x, double pos_y) {
         return distance(pos_x, pos_y, 0);
     }
@@ -16,6 +16,7 @@ public class Localise {
     public static double distance(double pos_x, double pos_y, double pos_z) {
         return Math.pow(Math.pow(pos_x, 2) + Math.pow(pos_y, 2) + Math.pow(pos_z, 2), 0.5);
     }
+
     /* rss0 - the RSSI when the distance from the beacon is 1m */
     /* empirical result places this value between -52 to -65*/
     /* -52 occurs when there is clear LOS between the phone and the sensor. */
@@ -70,7 +71,7 @@ public class Localise {
         double y2 = pos2.y();
         double y3 = pos3.y();
 
-        //Storage for readability, going to arrange as a set of linear equations.
+        //Storage for readability, going to arrange as a add of linear equations.
         double a, b, c, d, e, f;
         a = -2*x1 + 2*x2;
         b = -2*y1 + 2*y2;

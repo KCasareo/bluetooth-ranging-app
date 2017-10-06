@@ -1,6 +1,6 @@
 // ILocationService.aidl
-package com.kcasareo.location;
-import com.kcasareo.location.Position;
+package com.kcasareo.beaconService.location;
+import com.kcasareo.beaconService.location.Position;
 // Declare any non-default types here with import statements
 
 interface ILocationService {

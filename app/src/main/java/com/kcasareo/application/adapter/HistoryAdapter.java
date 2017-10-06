@@ -1,20 +1,15 @@
 package com.kcasareo.application.adapter;
 
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kcasareo.beaconService.beacons.bluetooth.SignalData;
 import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
-import com.kcasareo.location.Position;
+import com.kcasareo.beaconService.location.Position;
 import com.kcasareo.ranging.R;
 
 import java.util.ArrayList;
@@ -100,7 +95,10 @@ public class HistoryAdapter extends BaseAdapter {
     }
 
     public void refresh(SignalData data) {
-
+        // Update
+        update(data);
+        // Set to last index
+        last();
     }
 
     /* Get the data at frame X */
@@ -173,6 +171,9 @@ public class HistoryAdapter extends BaseAdapter {
         ((TextView) result.findViewById(R.id.history_item_db)).setText(String.format("%ddb", item.rssi()));
         ((TextView) result.findViewById(R.id.history_item_read_x)).setText(String.format("%.1f", item.x()));
         ((TextView) result.findViewById(R.id.history_item_read_y)).setText(String.format("%.1f", item.y()));
+        TextView textLocaliseX = (TextView) result.findViewById(R.id.history_text_pos_x);
+        TextView textLocaliseY = (TextView) result.findViewById(R.id.history_text_pos_y);
+
 
 
         /* Add Listener to x_position */

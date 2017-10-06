@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothGatt;
 import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
-import com.kcasareo.location.Position;
+import com.kcasareo.beaconService.location.Position;
 
 import java.util.Timer;
 import java.util.TimerTask;

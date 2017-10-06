@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.kcasareo.application.adapter.HistoryAdapter;
-import com.kcasareo.location.Position;
+import com.kcasareo.beaconService.location.Position;
 import com.kcasareo.ranging.R;
 
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package com.kcasareo.beaconService.beacons;
 
 import com.kcasareo.beaconService.beacons.bluetooth.SignalDatum;
-import com.kcasareo.location.Position;
+import com.kcasareo.beaconService.location.Position;
 
 /**
  * Created by Kevin on 4/06/2017.

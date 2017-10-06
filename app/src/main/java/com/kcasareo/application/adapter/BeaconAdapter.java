@@ -15,7 +15,7 @@ import com.kcasareo.ranging.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+//
 /**
  * Created by Kevin on 7/06/2017.
  */

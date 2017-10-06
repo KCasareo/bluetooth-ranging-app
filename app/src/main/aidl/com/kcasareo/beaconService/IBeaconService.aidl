@@ -17,7 +17,10 @@ interface IBeaconService {
     //com.kcasareo.beaconService.frames.Snapshot sendSnapshot(com.kcasareo.beaconService.frames.Snapshot snapshot);
 
     oneway void lastSnap(IBeaconServiceCallback callback);
+    //oneway void closest(IBeaconServiceCallback callback);
     oneway void signalsStrength(IBeaconServiceCallback callback);
+
+    void updatePosition(String address, double x, double y);
     /* Register callback */
     void registerCallback(IBeaconServiceCallback callback);
     void unregisterCallback(IBeaconServiceCallback callback);

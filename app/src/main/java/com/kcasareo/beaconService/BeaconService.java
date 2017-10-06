@@ -5,7 +5,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -24,9 +23,11 @@ import android.widget.Toast;
 //import com.kcasareo.beaconService.frames.Snapshot;
 //import com.kcasareo.beaconService.IBeaconServiceCallback;
 
+import com.kcasareo.beaconService.beacons.Beacon;
 import com.kcasareo.beaconService.beacons.Beacons;
 import com.kcasareo.beaconService.beacons.bluetooth.Bluetooth;
 import com.kcasareo.beaconService.beacons.bluetooth.GattCallback;
+import com.kcasareo.beaconService.location.Position;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,7 +138,7 @@ public class BeaconService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i(TAG, "On Create");
+        Log.i(TAG, "Beacon Service created");
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
         //mServiceLooper = thread.getLooper();
@@ -163,6 +164,7 @@ public class BeaconService extends Service {
 
         // Begin discovery loop.
         startScan();
+        Log.i(TAG, "Beacon Service scanning");
 
     }
 
@@ -185,13 +187,27 @@ public class BeaconService extends Service {
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
             BluetoothDevice device = result.getDevice();
-            //int rssi = result.getRssi();
-            Log.i(TAG, "New LE Device: " + device.getName() + " @ " + result.getRssi());
+            int rssi = result.getRssi();
+            Log.i(TAG, "New LE Device: " + device.getAddress() + " @ " + rssi);
             // Will request a static factory next time.
 
-        }
+            if(!beacons.matches(device.getAddress()))
+                return;
+            if (beacons.contains(device.getAddress())) {
+                Log.i(TAG, "Found existing.");
+                Beacon beacon = beacons.findBeacon(device.getAddress());
+                //beacon.poll();
 
-        private void parse(BluetoothDevice device) {
+                if (result.getRssi() != 0 && result.getRssi() != beacon.signalStrength()) {
+                    beacon.setSignalStrength(result.getRssi());
+
+                }/* else
+                    beacon.poll();
+                //*/
+                return;
+            }
+
+            Log.i(TAG, "Building for " + device.getAddress());
             Bluetooth bluetooth = new Bluetooth(device);
             Log.i(TAG, "Building Callback");
             BluetoothGattCallback callback = new GattCallback(bluetooth);
@@ -203,9 +219,7 @@ public class BeaconService extends Service {
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
             super.onBatchScanResults(results);
-            for(ScanResult result : results) {
-                parse(result.getDevice());
-            }
+            Log.i(TAG, "Batch Scan");
         }
 
         @Override
@@ -217,7 +231,7 @@ public class BeaconService extends Service {
     /*
     * Starts and restarts scan.
     *
-    * */
+    //* */
     private final long PULSE_HALF_PERIOD = 2500;
 
     private Runnable mStopRunnable = new Runnable() {
@@ -234,20 +248,20 @@ public class BeaconService extends Service {
         }
     };
     // Initiate a discovery command to get the signal strength and determine
-
+    // Removing delay handler and seeing if this fixes it.
     private void startScan() {
         mLeScanner.startScan(leScanCallback);
         // Stop after 2500 ms
-        mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
+        //mServiceHandler.postDelayed(mStopRunnable, PULSE_HALF_PERIOD);
     }
 
     private void stopScan() {
         mLeScanner.stopScan(leScanCallback);
 
         // Start after 2500ms
-        mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
+        //mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
     }
-
+    //*/
 
 
     // All Gatt Communications functionality defined here.
@@ -301,6 +315,11 @@ public class BeaconService extends Service {
         }
 
         @Override
+        public void updatePosition(String address, double x, double y) throws RemoteException {
+            beacons.findBeacon(address).update(new Position(x, y));
+        }
+
+        @Override
         public void registerCallback(IBeaconServiceCallback callback) throws RemoteException {
             callbacks.put(Integer.toString(callback.hashCode()), callback);
         }
@@ -308,6 +327,10 @@ public class BeaconService extends Service {
         @Override
         public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
             callbacks.remove(Integer.toString(callback.hashCode()));
+        }
+
+        public void whitelist(String address) throws RemoteException {
+            
         }
     };
 

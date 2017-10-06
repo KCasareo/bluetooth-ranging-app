@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:text="History"
+            android:textAlignment="center"
+            android:textSize="12pt"
+            >
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:text="Previous"
+                android:id="@+id/history_button_previous"
+                >
+
+            </Button>
+            <Button android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:text="Next"
+                android:id="@+id/history_button_next">
+            </Button>
+            <Button android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:text="Latest"
+                android:id="@+id/history_button_latest">
+            </Button>
+            <ToggleButton
+                android:id="@+id/history_toggle_auto"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+
+
+                android:textOff="Auto?"
+                android:textOn="Active"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:padding="2dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:textSize="15dp"
+                    android:text="Index: "
+                    />
+                <TextView
+                    android:id="@+id/history_text_index"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:text=" "
+                    android:textSize="15dp"/>
+            </LinearLayout>
+            <Button
+                android:layout_height="match_parent"
+                android:layout_width="0px"
+                android:text="Update"
+                android:id="@+id/history_button_update"
+                android:layout_weight="3">
+            </Button>
+            <EditText
+                android:id="@+id/history_edit_x"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:digits="0123456789.-"
+                android:inputType="numberDecimal|numberSigned"/>
+            <EditText
+                android:id="@+id/history_edit_y"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:digits="0123456789.-"
+                android:inputType="numberDecimal|numberSigned"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <ListView
+                android:id="@android:id/list"
+                android:descendantFocusability="afterDescendants"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+            <TextView
+                android:id="@id/android:empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="No Data"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+            <ToggleButton
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:textOn="Localising"
+                android:textOff="Localise">
+            </ToggleButton>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:padding="6dp"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:text="X"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    android:id="@+id/history_text_pos_x"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="6dp"
+                    android:textAlignment="center"
+                    android:layout_weight="1"
+                    android:text="Y"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:id="@+id/history_text_pos_y"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

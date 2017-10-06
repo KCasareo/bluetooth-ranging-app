@@ -1,5 +1,6 @@
-package com.kcasareo.beaconService.beacons;
+package com.kcasareo.application.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,7 @@ import com.kcasareo.ranging.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+//
 /**
  * Created by Kevin on 7/06/2017.
  */
@@ -22,23 +23,33 @@ import java.util.Map;
 public class BeaconAdapter extends BaseAdapter {
     private final String TAG = "BeaconAdapter";
     private final ArrayList<HashMap.Entry<String,SignalDatum>> mData;
-
+    //private LayoutInflater mInflater;
     public BeaconAdapter(SignalData data) {
         this();
-        mData.addAll(data.asMap().entrySet());
+        refresh(data);
     }
-
+/*
+    public BeaconAdapter(Context context, SignalData data) {
+        this(data);
+        mInflater = LayoutInflater.from(context);
+    }
+*/
     public BeaconAdapter() {
         mData = new ArrayList();
     }
 
-    public void set(SignalData data) {
+    public void refresh(SignalData data) {
+        mData.clear();
+        mData.addAll(data.asMap().entrySet());
+    }
+
+    public void add(SignalData data) {
         // Empty the list, add new values, notify.
         // If data returned is null or the collection is empty, skip setting new values.
         HashMap<String, SignalDatum> temp = data.asMap();
 
         Log.i(TAG, "Set next data");
-        Log.i(TAG, "Data size " + temp.size());
+        Log.d(TAG, "Data size " + temp.size());
         if(temp.size() <= 0 )
             return;
         Log.i(TAG, "Clearing");

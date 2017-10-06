@@ -14,6 +14,4 @@
 .externalNativeBuild
 gradle
 .gradle
-keystore.properties
 key.properties
-*.apk

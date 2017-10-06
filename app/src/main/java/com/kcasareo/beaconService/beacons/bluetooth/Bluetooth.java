@@ -2,10 +2,17 @@ package com.kcasareo.beaconService.beacons.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
+<<<<<<< HEAD
 import android.os.ParcelUuid;
+=======
+>>>>>>> BeaconRestructure
 import android.util.Log;
 
 import com.kcasareo.beaconService.beacons.Beacon;
+import com.kcasareo.beaconService.location.Position;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Kevin on 4/06/2017.
@@ -16,6 +23,8 @@ public class Bluetooth extends Beacon {
     protected BluetoothDevice device;
     protected int identifier;
     protected BluetoothGatt profile;
+    protected TimerTask rssiTask;
+    protected Timer timer;
 
     public Bluetooth(BluetoothDevice device) {
         // Initialise signal strength to 0.
@@ -24,10 +33,21 @@ public class Bluetooth extends Beacon {
         this.identifier = device.hashCode();
         this.address = device.getAddress();
         this.name = device.getName();
+        this.position = new Position(0, 0);
         if (this.name == null) {
             this.name = "Generic Bluetooth";
         }
+<<<<<<< HEAD
         this.id = device.getUuids()[0];
+=======
+        this.id = device.hashCode();
+        rssiTask = new TimerTask() {
+            @Override
+            public void run() {
+                poll();
+            }
+        };
+>>>>>>> BeaconRestructure
     }
 
 
@@ -60,9 +80,15 @@ public class Bluetooth extends Beacon {
     @Override
     public void poll() {
         // Profile is null for some reason.
+<<<<<<< HEAD
         //Log.i(TAG, "Poll");
         if (profile != null) {
             //Log.d(TAG, "calling");
+=======
+        Log.i(TAG, "Polling");
+        if (profile != null) {
+            Log.i(TAG, "Fire read remote");
+>>>>>>> BeaconRestructure
             profile.readRemoteRssi();
         }
     }
@@ -84,9 +110,20 @@ public class Bluetooth extends Beacon {
         };
     }
 
+    public void update(Position position) {
+        Log.d(TAG, position.toString());
+        Log.d(TAG, this.position.toString());
+        this.position = position;
+    }
+
     @Override
     public SignalDatum datum() {
+<<<<<<< HEAD
         Log.i(TAG, "Datum: " + signalStrength + " Address" + address + " Id" + id + " Name" + name);
         return new SignalDatum(signalStrength, address, id, name);
+=======
+        Log.d(TAG, "Position is " + this.position.toString());
+        return new SignalDatum(signalStrength, address, id, name, this.position);
+>>>>>>> BeaconRestructure
     }
 }

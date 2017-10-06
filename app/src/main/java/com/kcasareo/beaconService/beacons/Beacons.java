@@ -3,7 +3,10 @@ package com.kcasareo.beaconService.beacons;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
+<<<<<<< HEAD
 import android.provider.Telephony;
+=======
+>>>>>>> BeaconRestructure
 import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
@@ -22,11 +25,16 @@ import java.util.TimerTask;
  */
 
 public class Beacons {
+
     private final String TAG = this.getClass().getSimpleName();
     private final long POLL_TIME  = 2500;
     private final long POLL_DELAY = 2500;
     private HashMap<String, Pair<Beacon, BluetoothGatt>> beacons;
+<<<<<<< HEAD
     private HashMap<String, Thread> threads;
+=======
+    private final ArrayList<String> filter = new ArrayList<>();
+>>>>>>> BeaconRestructure
     private TimerTask pollTask;
     private Timer pollTimer;
 
@@ -49,15 +57,25 @@ public class Beacons {
         };
 
         pollTimer = new Timer(true);
+<<<<<<< HEAD
         pollTimer.schedule(pollTask, POLL_DELAY, POLL_TIME);//*/
+=======
+        pollTimer.schedule(pollTask, 0, POLL_TIME);
+        /* To do: dynamically add filter elements to array list */
+        filter.add("B0:91:22:EA:3A:05");
+        filter.add("B0:B4:48:D7:5D:02");
+        filter.add("B0:91:22:F6:A0:87");
+>>>>>>> BeaconRestructure
     }
 
     public void add(Beacon beacon, BluetoothGatt gatt) {
-        if(!beacons.containsKey(beacon.address()))
+        if(!beacons.containsKey(beacon.address())) {
             beacons.put(beacon.address(), new Pair(beacon, gatt));
+        }
     }
 
     public Beacon findBeacon(String id) {
+        Log.d(TAG, "Finding Beacon");
         return beacons.get(id).first;
     }
 
@@ -69,6 +87,14 @@ public class Beacons {
             data.add(beacon.datum());
         }
         return data;
+    }
+
+    public boolean matches(String address) {
+        return filter.contains(address);
+    }
+
+    public boolean contains(String id) {
+        return beacons.get(id) != null;
     }
 
 }

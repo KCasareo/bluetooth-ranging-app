@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.kcasareo.application.MainActivity">
+    tools:context="com.LocaliseFramework.application.MainActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

@@ -25,33 +25,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="History"/>
-                <!--Button
-                    android:id="@+id/button_map"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Map"/-->
                 <Button
                     android:id="@+id/button_scanner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Scanner"/>
-                <!--Button
-                    android:id="@+id/button_positions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Positions"/-->
+
             </LinearLayout>
-
-            <!--ListView
-                android:id="@+id/listview_rssi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_weight="1">
-             </ListView-->
             <FrameLayout
                 android:id="@+id/fragment_container"
                 android:layout_height="match_parent"

@@ -141,26 +141,11 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     @Override
     protected void onStart() {
         super.onStart();
-        /*
-        if (arrayAdapter == null) {
-            arrayAdapter = new ArrayAdapter<String>(
-                    this,
-                    android.R.layout.simple_list_item_1,
-                    current);
-            lv.setAdapter(arrayAdapter);
-        }*/
-
-
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        /*
-        if (mConnectedGatt != null) {
-            mConnectedGatt.disconnect();
-            mConnectedGatt = null;
-        } //*/
     }
 
     @Override
@@ -181,13 +166,15 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
+                scannerFragment.setListAdapter(beaconAdapter);
+                /*
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        scannerFragment.setListAdapter(beaconAdapter);
+
                         //beaconAdapter.notifyDataSetChanged();
                     }
-                });
+                });*/
             } else {
                 if (refreshFlag)
                     beaconAdapter.refresh(data);
@@ -204,14 +191,13 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
                 });
             }
             // Add latest to historyAdapter.
-
+            if(refreshFlag)
+                historyAdapter.refresh(data);
+            else
+                historyAdapter.update(data);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(refreshFlag)
-                        historyAdapter.refresh(data);
-                    else
-                        historyAdapter.update(data);
                     historyAdapter.notifyDataSetChanged();
                 }
             });
@@ -232,23 +218,6 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
             });
 
         }
-
-        /*
-        @Override
-        public void handleResponse(Snapshot snapshot) throws RemoteException {
-            /*
-            if (frames == null) {
-                return;
-            }
-            frames = snapshot.frames();
-            captured = true;
-            current = frames.getLast().toList();
-            // Update the list view;
-            arrayAdapter.notifyDataSetChanged();
-
-        }*/
-
-
     };
 
 
@@ -286,8 +255,3 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
         refreshFlag = true;
     }
 }
-
-/*
-* Combine Drone Odometry, Beacon Distances to determine location.
-*
-* */

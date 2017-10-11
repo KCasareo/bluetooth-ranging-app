@@ -1,10 +1,14 @@
 package com.LocaliseFramework.beaconService.location;
 
+import java.util.Arrays;
+
 /**
  * Created by Kevin on 23/08/2017.
  * Stateless static helper functions for Localisation and Ranging.
  * All static pure methods.
  */
+
+
 
 public class Localise {
 
@@ -106,4 +110,32 @@ public class Localise {
 
         return new Position(x,y);
     }
+
+
+
+    // return determinant of 2x2 matrix
+    private final int MAT_SQ_DIMENSION_2 = 2;
+    private double det2(double[][] mat) {
+        // Check guards
+        double determinant =
+                mat.length != MAT_SQ_DIMENSION_2 ? 0 :
+                    mat[0].length != MAT_SQ_DIMENSION_2 ? 0 :
+                        mat[1].length != MAT_SQ_DIMENSION_2 ? 0 :
+                            mat[0][0]*mat[1][1] - mat[0][1] * mat[1][0];
+        return determinant;
+    }
+    private final int MAT_SQ_DIMENSION_3 = 3;
+    private double det3(double [][] mat) {
+        if (mat.length != 3)
+            return 0;
+        for (int i = 0; i < 3; i++) {
+            if (mat[i].length != MAT_SQ_DIMENSION_3)
+                return 0;
+        }
+        //double[][] minor_1_1 =  Arrays.copyOfRange(mat)
+        //double[][] minor_1_2 =
+        //double[][] minor_1_3 =
+        return 0;
+    }
+
 }

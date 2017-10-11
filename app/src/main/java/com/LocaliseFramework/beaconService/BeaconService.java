@@ -254,40 +254,8 @@ public class BeaconService extends Service {
         // Start after 2500ms
         //mServiceHandler.postDelayed(mStartRunnable, PULSE_HALF_PERIOD);
     }
-    //*/
+    
 
-
-    // All Gatt Communications functionality defined here.
-    // Maybe this should be a public class
-    /*
-    * This will be unnecessary since you have one callback per device.
-    *
-    * */
-    /*
-    private final BluetoothGattCallback btleGattCallback = new BluetoothGattCallback() {
-        @Override
-        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            super.onConnectionStateChange(gatt, status, newState);
-        }
-        // Code when the
-        @Override
-        public void onCharacteristicChanged(BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
-
-        }
-
-        @Override
-        public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
-
-        }
-
-        @Override
-        public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
-            // Put RSSI update code here
-            super.onReadRemoteRssi(gatt, rssi, status);
-
-        }
-
-    }; //*/
 
     /* Returned on bind
     *  These methods are exposed when the service is bound.
@@ -344,79 +312,5 @@ public class BeaconService extends Service {
         mBluetoothAdapter.cancelDiscovery();
         //Toast.makeText(this, "Beacon Service Done", Toast.LENGTH_SHORT).show();
     }
-    /* Private methods
-    *
-    * */
 
-    // Create a snapshot to use
-    /*
-    private void createSnapshot() {
-        snapshots.add(new Snapshot(beacons));
-    }
-
-    // Remove the oldest snapshot
-    private void purgeSnapshot() {
-        snapshots.remove(0);
-    }
-
-
-    /* Client methods
-    * Methods that should be accessible by from the service.
-    * */
-/*
-    // Get snapshot within the given time
-    public Snapshot snapshot(int thresholdUpper, int thresholdLower) {
-        return null;
-    }
-
-    // Get the latest snapshot
-    public Snapshot lastSnapshot() {
-        if (snapshots != null && snapshots.size() > 0) {
-            return snapshots.remove(snapshots.size() - 1);
-        }
-        return null;
-    }
-
-*/
-
-
-
-    /* Broadcast discovery handler
-     * Must exist in an activity class. 11-05-17
-     * Deprecated 01-06-17
-     */
-    /* Use Gatt receiver instead.
-    private class BluetoothReceiver extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            // Discovery
-
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If device not found.
-                if (device != null) {
-                    // Check if the device exists
-                    if (beacons.findBeacon(device) != null) {
-                        beacons.findBeacon(device).setSignalStrength(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
-                    } else {
-                        beacons.add(new BeaconCreateDescription(device));
-                    }
-
-                }
-            }
-            // Broadcast Action detected.
-            if(BluetoothDevice.ACTION_UUID.equals(action)) {
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.ACTION_UUID);
-
-                // Set the RSSI
-                int rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
-                beacons.findBeacon(device.getAddress().toString()).setSignalStrength(rssi);
-            }
-        }
-    };
-
-
-}
-*/
 }

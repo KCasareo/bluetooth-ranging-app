@@ -18,6 +18,7 @@ import android.view.View;
         import android.widget.Button;
 
 import com.LocaliseFramework.application.adapter.HistoryAdapter;
+import com.LocaliseFramework.application.rosPublisher.BeaconPublisher;
 import com.LocaliseFramework.beaconService.BeaconService;
 import com.LocaliseFramework.beaconService.IBeaconService;
 import com.LocaliseFramework.beaconService.IBeaconServiceCallback;
@@ -29,7 +30,10 @@ import com.LocaliseFramework.beaconService.beacons.bluetooth.SignalData;
 import com.LocaliseFramework.beaconService.location.Position;
 import com.LocaliseFramework.ranging.R;
 
-        import java.util.HashMap;
+import org.ros.android.RosActivity;
+import org.ros.node.NodeMainExecutor;
+
+import java.util.HashMap;
         import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,14 +41,17 @@ import java.util.TimerTask;
  * Created by Kevin on 30/04/2017.
  * Main Activity is the user interface that uses and displays results from the Navigation Service
  */
-public class MainActivity extends AppCompatActivity implements HistoryFragment.HistoryListener {
-    private BeaconService beaconService;
+
+
+
+
+public class MainActivity extends RosActivity implements HistoryFragment.HistoryListener {
+    private BeaconPublisher publisher;
     private IBeaconService mBeaconService = null;
     private SignalData signalData;
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
-    //private ListView lv;
-    //private ViewGroup layout;
+
     private Intent intent;
     private BeaconAdapter beaconAdapter = null;
     private HistoryAdapter historyAdapter = null;
@@ -54,7 +61,16 @@ public class MainActivity extends AppCompatActivity implements HistoryFragment.H
     private ScannerFragment scannerFragment;
     private HashMap<String, Boolean> state = new HashMap<>();
     private Boolean refreshFlag = false;
+    //private final String MASTER_URI
 
+    public MainActivity() {
+        super("Android Beacon Sensor","Beacon Sensor");
+    }
+
+    @Override
+    protected void init(NodeMainExecutor nodeMainExecutor) {
+        //super.init(nodeMainExecutor);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

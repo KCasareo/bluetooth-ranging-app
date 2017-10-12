@@ -27,6 +27,8 @@ import com.LocaliseFramework.beaconService.beacons.Beacon;
 import com.LocaliseFramework.beaconService.beacons.Beacons;
 import com.LocaliseFramework.beaconService.beacons.bluetooth.Bluetooth;
 import com.LocaliseFramework.beaconService.beacons.bluetooth.GattCallback;
+import com.LocaliseFramework.beaconService.location.Localise;
+import com.LocaliseFramework.beaconService.location.MODE;
 import com.LocaliseFramework.beaconService.location.Position;
 
 import java.util.ArrayList;
@@ -42,92 +44,14 @@ import java.util.List;
 public class BeaconService extends Service {
     private final String TAG = "Beacon Service";
     private Beacons beacons = new Beacons();
-    //private final IBinder mBeaconServiceBinder = new BeaconServiceBinder();
-    //private Looper mServiceLooper;
-    //private ServiceHandler mServiceHandler;
-    //private BluetoothReceiver mReceiver;
     private ArrayList<BluetoothDevice> devices = new ArrayList<>();
     private BluetoothManager mBluetoothManager;
-    //private BluetoothGatt gatt;
-    // Use a thread safe list;
-    //private List<Snapshot> snapshots = Collections.synchronizedList(new ArrayList<Snapshot>());
-    //private List<Frame> frames = Collections.synchronizedList(new ArrayList<Frame>());
+
     private BluetoothAdapter mBluetoothAdapter;
-    //private Timer snapshotScheduler;
-    //private final int MAX_SNAPSHOTS_HELD = 10;
     private IntentFilter mReceiverFilter;
     private Handler mServiceHandler;
     private BluetoothLeScanner mLeScanner;
-    //private BluetoothAdapter mBluetoothAdapter;
 
-    /* Messages for the service handler
-    *
-    *
-    public enum BEACON_MSG {
-        REGISTER(0),
-        UNREGISTER(1),
-        SET_VALUE(2),
-        SNAPSHOT(3);
-
-        private final int value;
-        BEACON_MSG(int value) {
-            this.value = value;
-        }
-
-        public int value() {
-            return value;
-        }
-
-    }//*/
-
-    /* Message handler for BeaconService
-    *
-    * */
-    /*
-    private final class ServiceHandler extends Handler {
-        /* Manual message handling?
-        *  Don't know if I want this yet.
-        *
-        *
-        public ServiceHandler(Looper looper) {
-            super(looper);
-        }
-        // Non AIDL messenging.
-        @Override
-        public void handleMessage(Message msg) {
-            // Put time-dependent code here
-            // Convert msg.what int into a human readable enum message.
-            BEACON_MSG beaconMsg = BEACON_MSG.values()[msg.what];
-            switch(beaconMsg) {
-                case REGISTER:
-                    break;
-                case UNREGISTER:
-                    break;
-                case SET_VALUE:
-                    break;
-                case SNAPSHOT:
-                    Messenger messenger = msg.replyTo;
-                    Message reply = new Message();
-                    reply.obj = lastSnapshot();
-                    try {
-                        messenger.send(reply);
-                    } catch (RemoteException e) {
-                        // Handle when client no longer exists.
-                    }
-                    break;
-            }
-            //stopSelf(msg.arg1);
-        }
-    }//*/
-
-    /**
-     * Not needed anymore since I have an AIDL binder.
-     * public class BeaconServiceBinder extends Binder {
-     * public BeaconService getService () {
-     * return BeaconService.this;
-     * }
-     * }
-     */
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -140,9 +64,7 @@ public class BeaconService extends Service {
         Log.i(TAG, "Beacon Service created");
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
-        //mServiceLooper = thread.getLooper();
         mServiceHandler = new Handler();
-        //mReceiver = new BluetoothReceiver();
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
         // Enable Bluetooth Adapter
@@ -159,17 +81,12 @@ public class BeaconService extends Service {
         mBluetoothAdapter = mBluetoothManager.getAdapter();
         mLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
-
         // Begin discovery loop.
         startScan();
         Log.i(TAG, "Beacon Service scanning");
 
     }
-    /* Code for BluetoothLE Connections
-    *
-    *
-    *
-     */
+
     /*
     *  LE Scan Callback
     *
@@ -264,10 +181,6 @@ public class BeaconService extends Service {
         private HashMap<String, IBeaconServiceCallback> callbacks = new HashMap<>();
 
         @Override
-        public void lastSnap(IBeaconServiceCallback callback) throws RemoteException {
-        }
-
-        @Override
         public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
             callback.signalsResponse(beacons.getSignalData());
@@ -288,18 +201,22 @@ public class BeaconService extends Service {
             beacons.findBeacon(address).update(new Position(x, y));
         }
 
-        @Override
+        /* Implement if software is to be developed further. Modify the callback map to act as a queue for responses.
+        //@Override
         public void registerCallback(IBeaconServiceCallback callback) throws RemoteException {
             callbacks.put(Integer.toString(callback.hashCode()), callback);
         }
 
-        @Override
+        //@Override
         public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
             callbacks.remove(Integer.toString(callback.hashCode()));
         }
+*/
 
-        public void whitelist(String address) throws RemoteException {
-            
+        // Set Mode to localise
+        @Override
+        public void setMode(MODE mode) throws RemoteException {
+
         }
     };
 

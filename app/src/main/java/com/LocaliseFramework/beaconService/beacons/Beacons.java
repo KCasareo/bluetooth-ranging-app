@@ -6,6 +6,7 @@ import android.util.Pair;
 
 import com.LocaliseFramework.beaconService.beacons.bluetooth.SignalData;
 import com.LocaliseFramework.beaconService.location.Localise;
+import com.LocaliseFramework.beaconService.location.MODE;
 import com.LocaliseFramework.beaconService.location.Position;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class Beacons {
     private final ArrayList<String> filter = new ArrayList<>();
     private TimerTask pollTask;
     private Timer pollTimer;
+    private MODE mode = MODE.TWO;
 
     public Beacons() {
         beacons = new HashMap<>();
@@ -53,6 +55,10 @@ public class Beacons {
         if(!beacons.containsKey(beacon.address())) {
             beacons.put(beacon.address(), new Pair(beacon, gatt));
         }
+    }
+
+    public void setMode(MODE mode) {
+         this.mode = mode;
     }
 
     public Position localise() {

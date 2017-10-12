@@ -1,5 +1,15 @@
 package com.LocaliseFramework.beaconService.location;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.LUDecomposition;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.util.ResizableDoubleArray;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -38,7 +48,9 @@ public class Localise {
     * This is a naive localisation w/ linear least square algorithm.
     * Expects the three closest nodes.
     * */
-    public static Position localise(Position pos1, Position pos2, Position pos3, Position pos4) {
+    public static Position localise(ArrayList<Position> positions) {
+        final int MAT3_SIZE = 3;
+        final int MIN_BEACONS = 4;
         /* Require a 3x3 matrix to find x,y,z*/
         /*
         *   [ a b c ] [ x ]   [ d ]
@@ -51,11 +63,45 @@ public class Localise {
         *
         *
         * */
+        // Error if not enough beacons
+        if(positions.size() < MIN_BEACONS)
+            return null;
 
-        double x, y, z;
-        x = y = z = 0;
 
-        return new Position(x,y,z);
+
+        double[][] matrixLeft = new double[MAT3_SIZE][MAT3_SIZE];
+        // Column matrix for the answer
+        double[][] matrixRight = new double[3][1];
+
+
+
+        for(int row = 0; row < MAT3_SIZE; row++) {
+            Position first = positions.get(row);
+            double r1 = first.range();
+            double x1 = first.x();
+            double y1 = first.y();
+            double z1 = first.z();
+            Position second = positions.get(row+1);
+            double r2 = second.range();
+            double x2 = second.x();
+            double y2 = second.y();
+            double z2 = second.z();
+            matrixLeft[row] =
+                new double[]{
+                    -2*(x1 - x2),
+                    -2*(y1 - y2),
+                    -2*(z1 - z2)
+            };
+            matrixRight[row][0] = r1*r1-r2*r2 - x1*x1 + x2*x2 - y1*y1 + y2*y2 - z1*z1 + z2*z2;
+        }
+
+        RealMatrix lhs = new Array2DRowRealMatrix(matrixLeft);
+        RealMatrix rhs = new Array2DRowRealMatrix(matrixRight);
+
+        // Post multiply the inverse of the left side matrix with the rhs to get approximations for x,y,z
+        rhs = MatrixUtils.inverse(lhs).multiply(rhs);
+        double[][] result = rhs.getData();
+        return new Position(result[0][0],result[1][0],result[2][0]);
     }
 
     public static Position localise(Position pos1, Position pos2, Position pos3) {
@@ -77,6 +123,7 @@ public class Localise {
 
         //Storage for readability, going to arrange as a add of linear equations.
         double a, b, c, d, e, f;
+        //double[][] matrix
         a = -2*x1 + 2*x2;
         b = -2*y1 + 2*y2;
         c = r1*r1 - r2*r2 - x1*x1 + x2*x2 - y1*y1 + y2*y2;
@@ -97,45 +144,27 @@ public class Localise {
         *  | y |    ae - bd   [-d  a ] [ f ]
         *
         * */
+        RealMatrix rhs = new Array2DRowRealMatrix(new double[]{c, f});
+        RealMatrix lhs = new Array2DRowRealMatrix(
+                new double[][] {
+                        {a, b},
+                        {d, e}
+                });
+
 
         if ((a*e - b*d) == 0) {
             return null;
         }
         double detA = 1/(a*e - b*d);
 
-        // ;
-        x = (e*c - b*f) * detA;
-        y = (-d*c + a*f) * detA;
+        rhs = MatrixUtils.inverse(lhs).multiply(rhs);
 
+        // ;
+        x = rhs.getData()[0][0];//(e*c - b*f) * detA;
+        y = rhs.getData()[1][0];//(-d*c + a*f) * detA;
 
         return new Position(x,y);
     }
 
-
-
-    // return determinant of 2x2 matrix
-    private final int MAT_SQ_DIMENSION_2 = 2;
-    private double det2(double[][] mat) {
-        // Check guards
-        double determinant =
-                mat.length != MAT_SQ_DIMENSION_2 ? 0 :
-                    mat[0].length != MAT_SQ_DIMENSION_2 ? 0 :
-                        mat[1].length != MAT_SQ_DIMENSION_2 ? 0 :
-                            mat[0][0]*mat[1][1] - mat[0][1] * mat[1][0];
-        return determinant;
-    }
-    private final int MAT_SQ_DIMENSION_3 = 3;
-    private double det3(double [][] mat) {
-        if (mat.length != 3)
-            return 0;
-        for (int i = 0; i < 3; i++) {
-            if (mat[i].length != MAT_SQ_DIMENSION_3)
-                return 0;
-        }
-        //double[][] minor_1_1 =  Arrays.copyOfRange(mat)
-        //double[][] minor_1_2 =
-        //double[][] minor_1_3 =
-        return 0;
-    }
 
 }

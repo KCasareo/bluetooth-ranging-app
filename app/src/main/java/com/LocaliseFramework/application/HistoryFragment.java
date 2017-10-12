@@ -39,11 +39,26 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
     TextView indexText;
     private View view;
     private boolean autoState = false;
+    private boolean localise = false;
+    private Position localPosition;
+    private TextView textLocaliseX;
+    private TextView textLocaliseY;
 
+    public boolean localiseState() { return localise; }
     public boolean autoState() { return autoState; }
 
-    protected void setAutoState(boolean bool) {
-        autoState = bool;
+    protected void setAutoState(boolean autoState) {
+        this.autoState = autoState;
+    }
+
+    protected void setLocaliseState(boolean localise) {
+        this.localise = localise;
+    }
+
+    public void setLocalPosition(Position position) {
+        this.localPosition = position;
+        this.textLocaliseX.setText(String.format("%.1f", position.x()));
+        this.textLocaliseY.setText(String.format("%.1f", position.y()));
     }
 
     @Override
@@ -62,6 +77,7 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
 
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,8 +88,30 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
         Button buttonLatest = (Button) view.findViewById(R.id.history_button_latest);
         Button buttonUpdate = (Button) view.findViewById(R.id.history_button_update);
         ToggleButton toggleAuto = (ToggleButton) view.findViewById(R.id.history_toggle_auto);
+        ToggleButton toggleLocal = (ToggleButton) view.findViewById(R.id.history_toggle_localise);
         EditText editTextX = (EditText) view.findViewById(R.id.history_edit_x);
         EditText editTextY = (EditText) view.findViewById(R.id.history_edit_y);
+
+        this.textLocaliseX = (TextView) view.findViewById(R.id.history_text_pos_x);
+        this.textLocaliseY = (TextView) view.findViewById(R.id.history_text_pos_y);
+        //textLocaliseX.setText(String.format("%.1f", 0));
+        //textLocaliseY.setText(String.format("%.1f", 0));
+
+
+        toggleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                autoState = isChecked;
+            }
+        });
+
+        toggleLocal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                localise = isChecked;
+            }
+        });
+
         indexText = (TextView) view.findViewById(R.id.history_text_index);
 
         indexText.setText(Integer.toString(index));

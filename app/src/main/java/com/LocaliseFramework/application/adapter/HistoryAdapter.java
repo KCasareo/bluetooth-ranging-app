@@ -25,6 +25,7 @@ public class HistoryAdapter extends BaseAdapter {
     private ArrayList<SignalData> signalDataHistory;
     private HashMap<String, Position> changeMap = new HashMap<>();
     private Position localised = new Position(0, 0, 0);
+    private boolean localise;
 
     public interface OnDataChangedListener {
         public void onIndexDataChanged(int index);
@@ -53,7 +54,6 @@ public class HistoryAdapter extends BaseAdapter {
             index++;
             onDataChangedListener.onIndexDataChanged(index);
         }
-
 
     }
 
@@ -174,92 +174,9 @@ public class HistoryAdapter extends BaseAdapter {
         ((TextView) result.findViewById(R.id.history_item_db)).setText(String.format("%ddb", item.rssi()));
         ((TextView) result.findViewById(R.id.history_item_read_x)).setText(String.format("%.1f", item.x()));
         ((TextView) result.findViewById(R.id.history_item_read_y)).setText(String.format("%.1f", item.y()));
-        TextView textLocaliseX = (TextView) result.findViewById(R.id.history_text_pos_x);
-        TextView textLocaliseY = (TextView) result.findViewById(R.id.history_text_pos_y);
 
 
-
-        /* Add Listener to x_position */
-        //Log.d(TAG, "Add Listener X");
-        /*
-        EditText editx = ((EditText) result.findViewById(R.id.history_item_edit_x));
-        //editx.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-        //editx.clearFocus();
-
-        //editx.setOnFocusChangeListener(onFocusChangeListener);
-        editx.addTextChangedListener(new TextWatcher() {
-            //Assign the current index for this listener
-            //private final int index = index();
-            private final String address = item.address();
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Cache changes, then push on update. Only push the currently selected change.
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    double d = Double.parseDouble(s.toString());
-                    if(!changeMap.containsKey(address)) {
-                        changeMap.put(address, new Position(d, 0.0));
-                    } else {
-                        changeMap.get(address).update_x(d);
-                    }
-                } catch (NumberFormatException e) {
-                    Log.d(TAG, "Edit X Wrong double");
-                    // Ignore input.
-                    return;
-                }
-
-            }
-        });
-         Add Listener to y_position
-        Log.d(TAG, "Add Listener Y");
-        EditText edity = ((EditText) result.findViewById(R.id.history_item_edit_y));
-        //edity.setOnFocusChangeListener( onFocusChangeListener);
-        //edity.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-        //edity.clearFocus();
-        edity.addTextChangedListener(new TextWatcher() {
-            //Assign the current index for this listener
-            //private final int index = index();
-            private final String address = item.address();
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                try {
-                    double d = Double.parseDouble(s.toString());
-                    if(!changeMap.containsKey(address)) {
-                        changeMap.put(address, new Position(0.0, d));
-                    } else {
-                        changeMap.get(address).update_y(d);
-                    }
-
-                } catch (NumberFormatException e) {
-                    Log.d(TAG, "Edit Y Wrong double");
-                    // Ignore input.
-                    return;
-                }
-
-            }
-        });
-        */
-        return result;
+         return result;
     }
 
 

@@ -46,6 +46,7 @@ import java.util.TimerTask;
 
 
 public class MainActivity extends RosActivity implements HistoryFragment.HistoryListener {
+    private final String TAG = "Main Activity";
     private BeaconPublisher publisher;
     private IBeaconService mBeaconService = null;
     private SignalData signalData;
@@ -86,6 +87,8 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
         if (historyAdapter == null) {
             historyAdapter = new HistoryAdapter();
         }
+
+        // Add to whitelist;
 
         fragmentManager = getFragmentManager();
 
@@ -182,15 +185,15 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
-                scannerFragment.setListAdapter(beaconAdapter);
-                /*
+
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        scannerFragment.setListAdapter(beaconAdapter);
                         //beaconAdapter.notifyDataSetChanged();
                     }
-                });*/
+                });//*/
             } else {
                 if (refreshFlag)
                     beaconAdapter.refresh(data);
@@ -225,11 +228,7 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (historyAdapter == null) {
-                        return;
-                    }
-                    historyAdapter.updateLocal(position);
-                    historyAdapter.notifyDataSetChanged();
+                historyFragment.setLocalPosition(position);
                 }
             });
 
@@ -244,18 +243,30 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
             Log.d("MainActivity", "OnServiceConnected");
             mBeaconService = IBeaconService.Stub.asInterface(iBinder);
             updateTimer = new Timer();
+
+            try {
+                mBeaconService.whitelistAddress("B0:91:22:EA:3A:05");
+                mBeaconService.whitelistAddress("B0:B4:48:D7:5D:02");
+                mBeaconService.whitelistAddress("B0:91:22:F6:A0:87");
+            } catch (RemoteException e) {
+                Log.e(TAG, e.getMessage());
+            }
             // Every 500 ms, call last snap
             updateTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-//                intent.setAction(IBeaconService.class.)
                     try {
                         mBeaconService.signalsStrength(mCallback);
-
+                        if (historyFragment.localiseState())
+                            mBeaconService.localise(mCallback);
                     } catch (RemoteException e) {
+                        Log.e(TAG, e.getMessage());
                     }
                 }
             }, 0, TIME_UPDATE) ;
+
+
+
         }
 
         @Override

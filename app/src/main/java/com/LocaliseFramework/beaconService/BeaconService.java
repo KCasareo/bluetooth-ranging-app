@@ -193,6 +193,7 @@ public class BeaconService extends Service {
 
         @Override
         public void whitelistAddress(String address) throws RemoteException {
+            Log.i(TAG, "Address whitelisted: " + address);
             beacons.filter(address);
         }
 

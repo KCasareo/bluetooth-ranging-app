@@ -29,7 +29,12 @@
                 <category android:name="android.intent.category.HOME"/>
             </intent-filter>
         </activity>
-        <activity android:name="org.ros.android.MasterChooser"/>
+        <activity android:name="org.ros.android.MasterChooser"
+            android:parentActivityName="com.LocaliseFramework.application.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.LocaliseFramework.application.MainActivity"/>
+        </activity>
         <service android:name="org.ros.android.NodeMainExecutorService">
             <intent-filter>
                 <action android:name="org.ros.android.NodeMainExecutorService"/>

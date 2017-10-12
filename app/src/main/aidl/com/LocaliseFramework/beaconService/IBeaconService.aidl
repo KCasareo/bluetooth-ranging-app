@@ -18,6 +18,7 @@ interface IBeaconService {
     void whitelistAddress(String address);
     void updatePosition(String address, double x, double y);
     void setMode(in MODE mode);
+
     /* Register callback */
     //void registerCallback(IBeaconServiceCallback callback);
     //void unregisterCallback(IBeaconServiceCallback callback);

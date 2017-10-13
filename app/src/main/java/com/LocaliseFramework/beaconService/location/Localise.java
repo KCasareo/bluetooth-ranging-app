@@ -2,6 +2,7 @@ package com.LocaliseFramework.beaconService.location;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.LUDecomposition;
@@ -38,6 +39,7 @@ public class Localise {
     private static final double rss0 = -54;
     /* path loss factor - factor n, usually somewhere between 2 and 2.5 */
     private static final double factor = 2.7;
+    private final String TAG = "Localise";
     // Convert the RSSI indicator to distance
     public static double convert(double db) {
         return Math.pow(10, (rss0 - db)/ (factor * 10));
@@ -105,6 +107,7 @@ public class Localise {
     }
 
     public static Position localise(Position pos1, Position pos2, Position pos3) {
+        String TAG = "2d Localise";
         double x,y;
         x = y = 0;
 
@@ -162,7 +165,7 @@ public class Localise {
         // ;
         x = rhs.getData()[0][0];//(e*c - b*f) * detA;
         y = rhs.getData()[1][0];//(-d*c + a*f) * detA;
-
+        Log.i(TAG, "X:" +x  + "Y" + y);
         return new Position(x,y);
     }
 

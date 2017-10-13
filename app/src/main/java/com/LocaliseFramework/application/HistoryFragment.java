@@ -36,13 +36,14 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
     HistoryListener mCallback;
     private String selectedAddress;
     private HashMap<String, Position> changeMap = new HashMap<>();
-    TextView indexText;
+
     private View view;
     private boolean autoState = false;
     private boolean localise = false;
     private Position localPosition;
     private TextView textLocaliseX;
     private TextView textLocaliseY;
+    private TextView indexText;
 
     public boolean localiseState() { return localise; }
     public boolean autoState() { return autoState; }
@@ -57,14 +58,11 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
 
     public void setLocalPosition(Position position) {
         this.localPosition = position;
-        this.textLocaliseX.setText(String.format("%.1f", position.x()));
-        this.textLocaliseY.setText(String.format("%.1f", position.y()));
     }
 
     @Override
     public void onIndexDataChanged(int index) {
         this.index = index;
-        indexText.setText(Integer.toString(index));
     }
 
 
@@ -97,6 +95,8 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
         //textLocaliseX.setText(String.format("%.1f", 0));
         //textLocaliseY.setText(String.format("%.1f", 0));
 
+        this.textLocaliseX.setText("0.0");
+        this.textLocaliseY.setText("0.0");
 
         toggleAuto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -108,13 +108,15 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
         toggleLocal.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 localise = isChecked;
             }
         });
 
-        indexText = (TextView) view.findViewById(R.id.history_text_index);
+        this.indexText = (TextView) view.findViewById(R.id.history_text_index);
 
-        indexText.setText(Integer.toString(index));
+
+
 
         editTextY.addTextChangedListener(new TextWatcher() {
             //Assign the current index for this listener
@@ -229,6 +231,28 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
         });
 
         return view;
+    }
+
+    public void updateTextViews() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (autoState) {
+                    indexText.setText(Integer.toString(index));
+                }
+
+                if(localPosition != null && localise) {
+                    Log.i(TAG, "localPosition exists");
+                    textLocaliseX.setText(String.format("%.2f", localPosition.x()));
+                    textLocaliseY.setText(String.format("%.2f", localPosition.y()));
+                } else {
+                    Log.i(TAG, "localPosition != exist");
+                    textLocaliseX.setText("0.0");
+                    textLocaliseY.setText("0.0");
+                }
+            }
+        });
+
     }
 
     public static HistoryFragment getInstance() {

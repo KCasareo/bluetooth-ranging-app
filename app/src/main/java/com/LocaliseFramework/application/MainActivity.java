@@ -153,8 +153,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
                 historyFragment.setHistoryListener((HistoryFragment.HistoryListener) getParent());
             }
         });
-
-
     }
 
     @Override
@@ -195,6 +193,7 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
                     }
                 });//*/
             } else {
+                refreshFlag = historyFragment.autoState();
                 if (refreshFlag)
                     beaconAdapter.refresh(data);
                 // Modify the entire dataset
@@ -225,13 +224,12 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
 
         @Override
         public void localiseResponse(final Position position) throws RemoteException {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                historyFragment.setLocalPosition(position);
-                }
-            });
-
+            if (position == null)
+                return;
+            Log.i(TAG, "Localise Response:" + position.toString());
+            Log.i(TAG, "Setting Local Position");
+            historyFragment.setLocalPosition(position);
+            historyFragment.updateTextViews();
         }
     };
 
@@ -279,6 +277,5 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
     @Override
     public void onPositionUpdate(String address, double x, double y) throws RemoteException {
         mBeaconService.updatePosition(address, x, y);
-        refreshFlag = true;
     }
 }

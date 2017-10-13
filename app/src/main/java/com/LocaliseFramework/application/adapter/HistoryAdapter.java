@@ -79,7 +79,6 @@ public class HistoryAdapter extends BaseAdapter {
     public void last() {
         index = signalDataHistory.size() - 1;
         onDataChangedListener.onIndexDataChanged(index);
-
     }
 
     public int index() {

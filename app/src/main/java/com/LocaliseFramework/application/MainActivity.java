@@ -71,6 +71,7 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
     @Override
     protected void init(NodeMainExecutor nodeMainExecutor) {
         //super.init(nodeMainExecutor);
+        //publisher = new BeaconPublisher();
     }
 
     @Override
@@ -81,8 +82,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
         intent = new Intent(this, BeaconService.class);
         startService(intent);
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
-        //beaconAdapter = new BeaconAdapter();
-        //lv.setAdapter(beaconAdapter);
 
         if (historyAdapter == null) {
             historyAdapter = new HistoryAdapter();
@@ -91,7 +90,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
         // Add to whitelist;
 
         fragmentManager = getFragmentManager();
-
 
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null)
@@ -126,8 +124,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
                     scannerFragment.setArguments(getIntent().getExtras());
                 }
 
-
-
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, scannerFragment);
                 transaction.commit();
@@ -144,8 +140,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
                     historyFragment.setArguments(getIntent().getExtras());
 
                 }
-
-
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.fragment_container, historyFragment);

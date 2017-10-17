@@ -108,6 +108,7 @@ public class BeaconService extends Service {
                 Beacon beacon = beacons.findBeacon(device.getAddress());
                 //beacon.poll();
 
+                // This one is getting called, not onreadremote
                 if (result.getRssi() != 0 && result.getRssi() != beacon.signalStrength()) {
                     beacon.setSignalStrength(result.getRssi());
 

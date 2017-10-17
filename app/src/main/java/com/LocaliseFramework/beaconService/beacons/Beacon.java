@@ -3,6 +3,8 @@ package com.LocaliseFramework.beaconService.beacons;
 import com.LocaliseFramework.beaconService.beacons.bluetooth.SignalDatum;
 import com.LocaliseFramework.beaconService.location.Position;
 
+import java.util.ArrayList;
+
 /**
  * Created by Kevin on 4/06/2017.
  * An extensible beacon class for connecting to a source.
@@ -15,6 +17,7 @@ public abstract class Beacon {
     protected String name;
     protected Position position;
     protected long id;
+    protected ArrayList<Long> strengths;
     public abstract long signalStrength();
     public abstract void setSignalStrength(long signalStrength);
     public abstract long id();
@@ -33,8 +36,12 @@ public abstract class Beacon {
     }
 
     public Beacon() {
-        //signalStrength = 0;
+
     }
+
+    /* Weighting method
+    *  Override to apply your own method */
+    protected abstract long calculate(long signalStrength);
 
 
 

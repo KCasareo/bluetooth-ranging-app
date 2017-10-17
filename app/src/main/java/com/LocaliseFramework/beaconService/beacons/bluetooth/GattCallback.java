@@ -62,8 +62,10 @@ public class GattCallback extends BluetoothGattCallback {
             delays.get(delays.size()-1).endOffset();
         */
         // When this object calls back, set the received signal strength value.
-        if (rssi == 0)
+        if (rssi == 0) {
+            Log.i(TAG, "Returning 0 from onReadRemote");
             return;
+        }
         this.beacon.setSignalStrength(rssi);
         //Get the last delay
 
@@ -76,16 +78,6 @@ public class GattCallback extends BluetoothGattCallback {
         if (newState == BluetoothProfile.STATE_CONNECTED) {
             Log.i(TAG, "New Polling");
             gatt.discoverServices();
-            TimerTask task = new TimerTask() {
-
-                @Override
-                public void run() {
-                    Log.i(TAG, "Gatt calling poll");
-                    beacon.poll();
-                }
-            };
-            //rssiTimer = new Timer();
-            //rssiTimer.schedule(task, 500, 2500);
         } else if (newState == BluetoothProfile.STATE_CONNECTING) {
             Log.i(TAG, "State Connecting");
         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {

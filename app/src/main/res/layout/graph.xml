@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="match_parent">
 
-    <com.LocaliseFramework.application.Graph
+    <com.BeaconManager.application.Graph
         android:id="@+id/graph"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -13,6 +13,6 @@
         android:layout_marginRight="5dp"
         android:background="@android:color/transparent">
 
-    </com.LocaliseFramework.application.Graph>
+    </com.BeaconManager.application.Graph>
 
 </RelativeLayout>

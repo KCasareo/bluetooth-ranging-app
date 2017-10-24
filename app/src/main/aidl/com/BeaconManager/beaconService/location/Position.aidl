@@ -1,5 +1,5 @@
 // IPosition.aidl
-package com.LocaliseFramework.beaconService.location;
+package com.BeaconManager.beaconService.location;
 
 // Declare any non-default types here with import statements
 parcelable Position;

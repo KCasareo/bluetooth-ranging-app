@@ -7,8 +7,8 @@ import android.os.Parcelable;
  * Created by Kevin on 12/10/2017.
  */
 public enum MODE implements Parcelable {
-    TWO,
-    THREE;
+    DIM_2,
+    DIM_3;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

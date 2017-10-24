@@ -1,6 +1,6 @@
 // ILocationService.aidl
-package com.LocaliseFramework.beaconService.location;
-import com.LocaliseFramework.beaconService.location.Position;
+package com.BeaconManager.beaconService.location;
+import com.BeaconManager.beaconService.location.Position;
 // Declare any non-default types here with import statements
 
 interface ILocationService {

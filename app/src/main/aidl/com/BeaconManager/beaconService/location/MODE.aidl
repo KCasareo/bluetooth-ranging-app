@@ -1,3 +1,3 @@
 // IMode.aidl
-package com.LocaliseFramework.beaconService.location;
+package com.BeaconManager.beaconService.location;
 parcelable MODE;

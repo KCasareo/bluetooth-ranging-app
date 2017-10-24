@@ -168,6 +168,17 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
 
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
         final String TAG = "MainActivity/bscb";
+
+        @Override
+        public void strengthDistanceZeroResponse(long strengthDistanceZero) throws RemoteException {
+
+        }
+
+        @Override
+        public void pathLossFactorResponse(double pathloss) throws RemoteException {
+
+        }
+
         @Override
         public void signalsResponse(final SignalData data) throws RemoteException {
             MainActivity.this.signalData = data;

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.BeaconManager.beaconService.beacons.Beacon;
 import com.BeaconManager.beaconService.beacons.Beacons;
 import com.BeaconManager.beaconService.beacons.bluetooth.Bluetooth;
+import com.BeaconManager.beaconService.beacons.bluetooth.BluetoothFactory;
 import com.BeaconManager.beaconService.beacons.bluetooth.GattCallback;
 import com.BeaconManager.beaconService.location.MODE;
 import com.BeaconManager.beaconService.location.Position;
@@ -118,7 +119,7 @@ public class BeaconService extends Service {
             }
 
             Log.i(TAG, "Building for " + device.getAddress());
-            Bluetooth bluetooth = new Bluetooth(device);
+            Bluetooth bluetooth = BluetoothFactory.create(device);
             BluetoothGattCallback callback = new GattCallback(bluetooth);
             BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
             bluetooth.setProfile(gatt);
@@ -192,6 +193,16 @@ public class BeaconService extends Service {
         }
 
         @Override
+        public void getStrengthDistanceZero(IBeaconServiceCallback callback) throws RemoteException {
+
+        }
+
+        @Override
+        public void getPathLossFactor(IBeaconServiceCallback callback) throws RemoteException {
+
+        }
+
+        @Override
         public void whitelistAddress(String address) throws RemoteException {
             Log.i(TAG, "Address whitelisted: " + address);
             beacons.filter(address);
@@ -217,6 +228,16 @@ public class BeaconService extends Service {
         // Set Mode to localise
         @Override
         public void setMode(MODE mode) throws RemoteException {
+
+        }
+
+        @Override
+        public void setPathLoss(double pathLoss) throws RemoteException {
+
+        }
+
+        @Override
+        public void setStrengthDistanceZero(long strengthDistanceZero) throws RemoteException {
 
         }
     };

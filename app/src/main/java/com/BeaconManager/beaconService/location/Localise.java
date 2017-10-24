@@ -105,7 +105,11 @@ public class Localise {
     }
 
     public static Position localise(Position pos1, Position pos2, Position pos3) {
+        final int MAT2_SIZE = 2;
+        final int MAX_SAMPLE = 3;
+
         String TAG = "2d Localise";
+        /*
         double x,y;
         x = y = 0;
 
@@ -144,7 +148,7 @@ public class Localise {
         *  | x | =     1    * [ e -b ] [ c ]
         *  | y |    ae - bd   [-d  a ] [ f ]
         *
-        * */
+        * //*//*
         RealMatrix rhs = new Array2DRowRealMatrix(new double[]{c, f});
         RealMatrix lhs = new Array2DRowRealMatrix(
                 new double[][] {
@@ -165,6 +169,46 @@ public class Localise {
         y = rhs.getData()[1][0];//(-d*c + a*f) * detA;
         Log.i(TAG, "X:" +x  + "Y" + y);
         return new Position(x,y);
+        //*/
+        ArrayList<Position> positions = new ArrayList<>();
+        positions.add(pos1);
+        positions.add(pos2);
+        positions.add(pos3);
+        double x,y;
+        double[][] matrixLeft = new double[MAT2_SIZE][MAT2_SIZE];
+        double[][] matrixRight = new double[2][1];
+        for (int row = 0; row < MAX_SAMPLE; row++) {
+            Position first = positions.get(row);
+
+            double r1 = first.range();
+            double x1 = first.x();
+            double y1 = first.y();
+            Position second = positions.get(row+1);
+            double r2 = second.range();
+            double x2 = second.x();
+            double y2 = second.y();
+            matrixLeft[row] =
+                    new double[]{
+                            -2*(x1 - x2),
+                            -2*(y1 - y2)
+                    };
+            matrixRight[row][0] = r1*r1-r2*r2 - x1*x1 + x2*x2 - y1*y1 + y2*y2;
+        }
+
+        RealMatrix lhs = new Array2DRowRealMatrix(matrixLeft);
+        RealMatrix rhs = new Array2DRowRealMatrix(matrixRight);
+
+        // Post multiply the inverse of the left side matrix with the rhs to get approximations for x,y,z
+        rhs = MatrixUtils.inverse(lhs).multiply(rhs);
+        double[][] result = rhs.getData();
+
+
+
+        // ;
+        x = result[0][0]; //(e*c - b*f) * detA;
+        y = result[1][0];//(-d*c + a*f) * detA;
+        Log.i(TAG, "X:" +x  + "Y" + y);
+        return new Position(x , y);
     }
 
 

@@ -66,6 +66,7 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
     }
 
 
+
     public interface HistoryListener {
         // Tell the main activity bound to service to update the position of a beacon
         public void onPositionUpdate(String address, double x, double y) throws RemoteException;
@@ -267,10 +268,15 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
         mHistoryAdapter.setmOnDataChangedListener(this);
     }
 
+    View previous;
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        previous.setSelected(false);
+        v.setSelected(true);
         selectedAddress = mHistoryAdapter.getCurrentAddress(position);
+        previous=v;
     }
 
     @Override

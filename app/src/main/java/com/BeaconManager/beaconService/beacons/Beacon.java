@@ -1,6 +1,7 @@
 package com.BeaconManager.beaconService.beacons;
 
 import com.BeaconManager.beaconService.beacons.bluetooth.SignalDatum;
+import com.BeaconManager.beaconService.location.Localiser;
 import com.BeaconManager.beaconService.location.Position;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public abstract class Beacon {
     public abstract String address();
     public abstract Runnable task();
     public abstract void update(Position position);
+    public abstract void setLocaliser(Localiser localiser);
     /*
     * Returns exportable data.
     *

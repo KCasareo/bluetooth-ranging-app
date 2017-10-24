@@ -9,8 +9,14 @@ import java.util.ArrayList;
 public abstract class Localiser {
     protected final double DEFAULT_PATHLOSS = 2.5;
     protected final long DEFAULT_ZERO = -54;
-    protected long strengthDistanceZero = DEFAULT_ZERO;
-    protected double pathLossFactor = DEFAULT_PATHLOSS;
+    protected long strengthDistanceZero;
+    protected double pathLossFactor;
+    public Localiser() {
+         strengthDistanceZero = DEFAULT_ZERO;
+         pathLossFactor = DEFAULT_PATHLOSS;
+    }
+
+
     public double convert(double db) {
         return Math.pow(10, (strengthDistanceZero - db)/ (pathLossFactor * 10));
     }

@@ -11,6 +11,7 @@ public class LocaliserFactory {
                 return new DimensionThree();
             case DIM_2:
                 return new DimensionTwo();
+            // Default to 2d mode
             default:
                 return new DimensionTwo();
 

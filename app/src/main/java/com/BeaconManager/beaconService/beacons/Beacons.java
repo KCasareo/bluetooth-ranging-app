@@ -6,6 +6,8 @@ import android.util.Pair;
 
 import com.BeaconManager.beaconService.beacons.bluetooth.SignalData;
 import com.BeaconManager.beaconService.location.Localise;
+import com.BeaconManager.beaconService.location.Localiser;
+import com.BeaconManager.beaconService.location.LocaliserFactory;
 import com.BeaconManager.beaconService.location.MODE;
 import com.BeaconManager.beaconService.location.Position;
 
@@ -22,14 +24,14 @@ import java.util.TimerTask;
  */
 
 public class Beacons {
-
     private final String TAG = this.getClass().getSimpleName();
     private final long POLL_TIME  = 1000;
     private HashMap<String, Pair<Beacon, BluetoothGatt>> beacons;
     private final ArrayList<String> filter = new ArrayList<>();
     private TimerTask pollTask;
     private Timer pollTimer;
-    private MODE mode = MODE.TWO;
+    private Localiser localiser;
+    //private MODE mode = MODE.DIM_2;
 
     public Beacons() {
         beacons = new HashMap<>();
@@ -45,6 +47,7 @@ public class Beacons {
 
         pollTimer = new Timer(true);
         pollTimer.schedule(pollTask, 0, POLL_TIME);
+        setMode(MODE.DIM_2);
         /* To do: dynamically add filter elements to array list */
         //filter.add("B0:91:22:EA:3A:05");
         //filter.add("B0:B4:48:D7:5D:02");
@@ -54,24 +57,21 @@ public class Beacons {
     public void add(Beacon beacon, BluetoothGatt gatt) {
         if(!beacons.containsKey(beacon.address())) {
             beacons.put(beacon.address(), new Pair(beacon, gatt));
+            beacon.setLocaliser(localiser);
         }
     }
 
     public void setMode(MODE mode) {
-         this.mode = mode;
+        localiser = LocaliserFactory.create(mode);
     }
 
     public Position localise() {
         ArrayList<Position> positions = new ArrayList<>();
         Iterator<Map.Entry<String, Pair<Beacon, BluetoothGatt>>> it = beacons.entrySet().iterator();
-        while(positions.size() < 3) {
-            // Stop if there are no more beacons detected
-            if (it.hasNext())
-                positions.add(it.next().getValue().first.position);
-            else
-                return new Position(0,0,0);
+        while(it.hasNext()) {
+            positions.add(it.next().getValue().first.position);
         }
-        return Localise.localise(positions.get(0), positions.get(1), positions.get(2));
+        return localiser.localise(positions);
     }
 
     public void filter(String address) {

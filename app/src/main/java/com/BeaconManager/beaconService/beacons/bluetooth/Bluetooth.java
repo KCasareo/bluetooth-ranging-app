@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothGatt;
 import android.util.Log;
 
 import com.BeaconManager.beaconService.beacons.Beacon;
+import com.BeaconManager.beaconService.location.Localiser;
 import com.BeaconManager.beaconService.location.Position;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Bluetooth extends Beacon {
     protected int identifier;
     protected BluetoothGatt profile;
     protected final int MAX_SIZE = 20;
+    protected Localiser localiser;
 
     public Bluetooth(BluetoothDevice device) {
         // Initialise signal strength to 0.
@@ -33,7 +35,11 @@ public class Bluetooth extends Beacon {
             this.name = "Generic Bluetooth";
         }
         this.id = device.hashCode();
+    }
 
+    public Bluetooth(BluetoothDevice device, Localiser localiser) {
+        this(device);
+        setLocaliser(localiser);
     }
 
     public void setProfile(BluetoothGatt profile) {
@@ -62,6 +68,8 @@ public class Bluetooth extends Beacon {
     private long calculate(long signalStrength) {
         final double weightCurrent = 0.25;
         final double weightNew = 0.75;
+        if (strengths.size() < MAX_SIZE)
+            return signalStrength;
         double total = 0;
         for (long value : strengths) {
             total += value;
@@ -113,9 +121,14 @@ public class Bluetooth extends Beacon {
     }
 
     @Override
+    public void setLocaliser(Localiser localiser) {
+
+    }
+
+    @Override
     public SignalDatum datum() {
         Log.d(TAG, "Position is " + this.position.toString());
         long strength = strengths.isEmpty() ? this.signalStrength : strengths.get(strengths.size() - 1);
-        return new SignalDatum(strength, address, id, name, this.position);
+        return new SignalDatum(strength, address, id, name, this.position, localiser.convert(strength));
     }
 }

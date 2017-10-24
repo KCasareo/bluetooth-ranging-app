@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.BeaconManager.beaconService.location.Localise;
+import com.BeaconManager.beaconService.location.Localiser;
 import com.BeaconManager.beaconService.location.Position;
 
 /**
@@ -43,17 +44,31 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
 
     public long rssi() { return rssi; }
 
-
     public SignalDatum(long rssi, String address, long id, String name, Position position) {
         this.rssi = rssi;
         this.address = address;
         this.id = id;
         this.name = name;
-        this.distance = Localise.convert((double)rssi);
+
         this.position = position;
         this.position.setRange(distance);
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");
         Log.d(TAG, "Finding");
+    }
+
+    public SignalDatum(long rssi, String address, long id, String name, Position position, double distance) {
+        this.rssi = rssi;
+        this.address = address;
+        this.id = id;
+        this.name = name;
+        this.position = position;
+        this.position.setRange(distance);
+        this.distance = distance;
+    }
+
+    public SignalDatum(long rssi, String address, long id, String name, Position position, Localiser localiser) {
+        this(rssi, address, id, name, position);
+        this.distance = localiser.convert(rssi);
     }
 
     public final Creator<SignalDatum> CREATOR = new Creator<SignalDatum>() {

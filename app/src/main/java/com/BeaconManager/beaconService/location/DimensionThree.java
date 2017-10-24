@@ -11,6 +11,10 @@ import java.util.ArrayList;
  */
 
 public class DimensionThree extends Localiser {
+    public DimensionThree() {
+        super();
+    }
+
     @Override
     public Position localise(ArrayList<Position> positions) {
         final int MAT3_SIZE = 3;

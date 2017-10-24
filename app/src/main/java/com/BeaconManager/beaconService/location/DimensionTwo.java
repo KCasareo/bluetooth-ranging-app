@@ -13,20 +13,23 @@ import java.util.ArrayList;
  */
 
 public class DimensionTwo extends Localiser {
-    private final int MAX_SAMPLE = 3;
+    private final int MIN_BEACONS = 3;
     private final int MAT2_SIZE = 2;
 
     public DimensionTwo() {
-
+        super();
     }
 
     @Override
     public Position localise(ArrayList<Position> positions) {
+        if (positions.size() < MIN_BEACONS)
+            return new Position(0,0);
+
         String TAG = "2d Localise";
         double x,y;
         double[][] matrixLeft = new double[MAT2_SIZE][MAT2_SIZE];
         double[][] matrixRight = new double[2][1];
-        for (int row = 0; row < MAX_SAMPLE; row++) {
+        for (int row = 0; row < MIN_BEACONS; row++) {
             Position first = positions.get(row);
 
             double r1 = first.range();

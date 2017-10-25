@@ -118,11 +118,12 @@ public class Bluetooth extends Beacon {
         Log.d(TAG, position.toString());
         Log.d(TAG, this.position.toString());
         this.position = position;
+        position.setRange(strengths.isEmpty() ? this.signalStrength : strengths.get(strengths.size()-1));
     }
 
     @Override
     public void setLocaliser(Localiser localiser) {
-
+        this.localiser = localiser;
     }
 
     @Override

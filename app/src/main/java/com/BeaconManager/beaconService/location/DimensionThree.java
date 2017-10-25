@@ -38,7 +38,8 @@ public class DimensionThree extends Localiser {
         * */
         // Error if not enough beacons
         if(positions.size() < MIN_BEACONS)
-            return null;
+            // Not sure how to error this out properlly. Null will crash the program at some point.
+            return new Position(0, 0, 0);
 
         double[][] matrixLeft = new double[MAT3_SIZE][MAT3_SIZE];
         // Column matrix for the answer

@@ -79,25 +79,18 @@ public class Position implements Comparable<Position>, Parcelable {
 
     @Override
     public int compareTo(@NonNull Position other) {
-        double local = Localise.distance(this.pos_x, this.pos_y);
-        double compared = Localise.distance(other.x(), other.y());
+        double local = this.range;
+        double compared = other.range();
         return local == compared ? EQUALS :
                 local > compared ? GREATER : LESS;
     }
 
-    // Incase you have to check for distance between nodes
-    public double range(@NonNull Position other) {
-        return Localise.distance(Math.abs(this.pos_x - other.x()), Math.abs(this.pos_y - other.y()));
-    }
 
     // Return range from sensor to node
     public double range() {
         return this.range;
     }
 
-    public void setRange(@NonNull Position local) {
-        this.range = range(local);
-    }
 
     @Override
     public int describeContents() {

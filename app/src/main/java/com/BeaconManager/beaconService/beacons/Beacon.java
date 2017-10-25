@@ -29,15 +29,8 @@ public abstract class Beacon {
     public abstract Runnable task();
     public abstract void update(Position position);
     public abstract void setLocaliser(Localiser localiser);
-    /*
-    * Returns exportable data.
-    *
-    * */
-    public SignalDatum signalData() {
-        return new SignalDatum(signalStrength, address, id, name, position);
-    }
-
+/*
     public Beacon() {
 
-    }
+    }*/
 }

@@ -49,7 +49,6 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         this.address = address;
         this.id = id;
         this.name = name;
-
         this.position = position;
         this.position.setRange(distance);
         Log.i(TAG, "New Data point: " + rssi + " " + address + " " + id + " " + "name");

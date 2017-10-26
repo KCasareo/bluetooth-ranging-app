@@ -61,6 +61,32 @@ public class Beacons {
         }
     }
 
+    public long getDistanceZero() {
+        if (localiser == null)
+            setMode(MODE.DIM_2);
+        return localiser.distanceZero();
+    }
+
+    public double getPathLossFactor() {
+        if (localiser == null)
+            setMode(MODE.DIM_2);
+        return localiser.pathLossFactor();
+    }
+
+    public void setPathLoss(double pathLoss) {
+        localiser.setPathLossFactor(pathLoss);
+    }
+
+    public void setStrengthDistanceZero(long strengthDistanceZero) {
+        localiser.setStrengthDistanceZero(strengthDistanceZero);
+    }
+
+    public Localiser getLocaliser() {
+        if (localiser == null)
+            setMode(MODE.DIM_2);
+        return localiser;
+    }
+
     public void setMode(MODE mode) {
         localiser = LocaliserFactory.create(mode);
     }

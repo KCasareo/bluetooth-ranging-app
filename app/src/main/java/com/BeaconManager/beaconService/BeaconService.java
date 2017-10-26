@@ -179,12 +179,13 @@ public class BeaconService extends Service {
     *  These methods are exposed when the service is bound.
     */
     private final IBeaconService.Stub mBeaconServiceBinder = new IBeaconService.Stub() {
-        private HashMap<String, IBeaconServiceCallback> callbacks = new HashMap<>();
+        //private HashMap<String, IBeaconServiceCallback> callbacks = new HashMap<>();
 
         @Override
         public void signalsStrength(IBeaconServiceCallback callback) throws RemoteException {
             // Redesign beacon to take a bluetooth device and connect to gatt
             callback.signalsResponse(beacons.getSignalData());
+
         }
 
         @Override
@@ -194,12 +195,12 @@ public class BeaconService extends Service {
 
         @Override
         public void getStrengthDistanceZero(IBeaconServiceCallback callback) throws RemoteException {
-
+            callback.strengthDistanceZeroResponse(beacons.getDistanceZero());
         }
 
         @Override
         public void getPathLossFactor(IBeaconServiceCallback callback) throws RemoteException {
-
+            callback.pathLossFactorResponse(beacons.getPathLossFactor());
         }
 
         @Override
@@ -213,32 +214,21 @@ public class BeaconService extends Service {
             beacons.findBeacon(address).update(new Position(x, y));
         }
 
-        /* Implement if software is to be developed further. Modify the callback map to act as a queue for responses.
-        //@Override
-        public void registerCallback(IBeaconServiceCallback callback) throws RemoteException {
-            callbacks.put(Integer.toString(callback.hashCode()), callback);
-        }
-
-        //@Override
-        public void unregisterCallback(IBeaconServiceCallback callback) throws RemoteException {
-            callbacks.remove(Integer.toString(callback.hashCode()));
-        }
-*/
 
         // Set Mode to localise
         @Override
         public void setMode(MODE mode) throws RemoteException {
-
+            beacons.setMode(mode);
         }
 
         @Override
         public void setPathLoss(double pathLoss) throws RemoteException {
-
+            beacons.setPathLoss(pathLoss);
         }
 
         @Override
         public void setStrengthDistanceZero(long strengthDistanceZero) throws RemoteException {
-
+            beacons.setPathLoss(strengthDistanceZero);
         }
     };
 

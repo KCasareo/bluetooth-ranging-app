@@ -20,7 +20,7 @@ public class Bluetooth extends Beacon {
     protected int identifier;
     protected BluetoothGatt profile;
     protected final int MAX_SIZE = 20;
-    protected Localiser localiser;
+    //protected Localiser localiser;
 
     public Bluetooth(BluetoothDevice device) {
         // Initialise signal strength to 0.
@@ -89,8 +89,8 @@ public class Bluetooth extends Beacon {
     }
 
     // Async request from server for rssi.
-    @Override
-    public void poll() {
+
+    private void poll() {
         // Profile is null for some reason.
         Log.i(TAG, "Polling");
         if (profile != null) {

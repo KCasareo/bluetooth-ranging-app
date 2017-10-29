@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothDevice;
 
 public class BluetoothFactory {
     // Ensure that no new instance can be created.
-    private BluetoothFactory() {};
 
     public static Bluetooth create(BluetoothDevice device) {
         // Build bluetooth creation here.

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public abstract class Beacon {
     private final String TAG = getClass().getSimpleName();
     protected long signalStrength;
+    protected Localiser localiser;
     protected String address;
     protected String name;
     protected Position position;
@@ -23,7 +24,6 @@ public abstract class Beacon {
     public abstract void setSignalStrength(long signalStrength);
     public abstract long id();
     public abstract String name();
-    public abstract void poll();
     public abstract SignalDatum datum();
     public abstract String address();
     public abstract Runnable task();

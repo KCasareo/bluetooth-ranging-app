@@ -31,9 +31,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
         name = in.readString();
         distance = in.readDouble();
         position = in.readParcelable(Position.class.getClassLoader());
-
         //delay = in.readDouble();
-
     }
 
     public String name() {

@@ -86,6 +86,7 @@ public class GattCallback extends BluetoothGattCallback {
     }
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+        super.onServicesDiscovered(gatt, status);
         if (status == BluetoothGatt.GATT_SUCCESS) {
             Log.d(TAG, "Discovered Services.");
 

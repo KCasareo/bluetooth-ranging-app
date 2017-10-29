@@ -17,11 +17,6 @@ import android.os.*;
 import android.os.Process;
 import android.util.Log;
 import android.widget.Toast;
-//import com.kcasareo.beaconService.beacons.BeaconCreateDescription;
-//import com.kcasareo.beaconService.beacons.Beacons;
-//import com.kcasareo.beaconService.frames.Frame;
-//import com.kcasareo.beaconService.frames.Snapshot;
-//import com.kcasareo.beaconService.IBeaconServiceCallback;
 
 import com.BeaconManager.beaconService.beacons.Beacon;
 import com.BeaconManager.beaconService.beacons.Beacons;
@@ -32,9 +27,7 @@ import com.BeaconManager.beaconService.location.MODE;
 import com.BeaconManager.beaconService.location.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-//import static com.kcasareo.beaconService.frames.Snapshot.MAX_REFRESH_TIME;
 
 
 /**
@@ -44,12 +37,9 @@ import java.util.List;
 public class BeaconService extends Service {
     private final String TAG = "Beacon Service";
     private Beacons beacons = new Beacons();
-    private ArrayList<BluetoothDevice> devices = new ArrayList<>();
     private BluetoothManager mBluetoothManager;
 
     private BluetoothAdapter mBluetoothAdapter;
-    private IntentFilter mReceiverFilter;
-    private Handler mServiceHandler;
     private BluetoothLeScanner mLeScanner;
 
 
@@ -64,7 +54,6 @@ public class BeaconService extends Service {
         Log.i(TAG, "Beacon Service created");
         HandlerThread thread = new HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
-        mServiceHandler = new Handler();
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
         // Enable Bluetooth Adapter
@@ -124,7 +113,6 @@ public class BeaconService extends Service {
             BluetoothGatt gatt = device.connectGatt(BeaconService.this, true, callback);
             bluetooth.setProfile(gatt);
             beacons.add(bluetooth, gatt);
-
 
         }
 
@@ -228,7 +216,7 @@ public class BeaconService extends Service {
 
         @Override
         public void setStrengthDistanceZero(long strengthDistanceZero) throws RemoteException {
-            beacons.setPathLoss(strengthDistanceZero);
+            beacons.setStrengthDistanceZero(strengthDistanceZero);
         }
     };
 

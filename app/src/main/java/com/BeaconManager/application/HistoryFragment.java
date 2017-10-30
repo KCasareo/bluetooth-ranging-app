@@ -268,15 +268,17 @@ public class HistoryFragment extends ListFragment implements HistoryAdapter.OnDa
         mHistoryAdapter.setmOnDataChangedListener(this);
     }
 
-    View previous;
+    //View previous;
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        previous.setSelected(false);
-        v.setSelected(true);
+        /*
+        if (previous != null)
+            previous.setSelected(false);
+        v.setSelected(true); */
         selectedAddress = mHistoryAdapter.getCurrentAddress(position);
-        previous=v;
+        //previous=v;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class DimensionTwo extends Localiser {
         double x,y;
         double[][] matrixLeft = new double[MAT2_SIZE][MAT2_SIZE];
         double[][] matrixRight = new double[2][1];
-        for (int row = 0; row < MIN_BEACONS; row++) {
+        for (int row = 0; row < MIN_BEACONS - 1; row++) {
             Position first = positions.get(row);
 
             double r1 = first.range();

@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 
 public abstract class Localiser {
-    protected final double DEFAULT_PATHLOSS = 2.7;
-    protected final long DEFAULT_ZERO = -59;
+    protected final double DEFAULT_PATHLOSS = 2.2;
+    protected final long DEFAULT_ZERO = -61;
     protected long strengthDistanceZero;
     protected double pathLossFactor;
     public Localiser() {

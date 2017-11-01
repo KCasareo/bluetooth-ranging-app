@@ -171,14 +171,18 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
 
         @Override
         public void strengthDistanceZeroResponse(long strengthDistanceZero) throws RemoteException {
-
+            /* Code to handle response from BeaconService */
         }
 
         @Override
         public void pathLossFactorResponse(double pathloss) throws RemoteException {
-
+            /* Code to handle response */
         }
 
+        /* signalsResponse
+        *  returns the latest batch of SignalData
+        *
+        * */
         @Override
         public void signalsResponse(final SignalData data) throws RemoteException {
             MainActivity.this.signalData = data;
@@ -187,15 +191,12 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
             // Create a new beaconadapter and have the listview bind to it.
             if( beaconAdapter == null) {
                 beaconAdapter = new BeaconAdapter(data);
-
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         scannerFragment.setListAdapter(beaconAdapter);
-                        //beaconAdapter.notifyDataSetChanged();
                     }
-                });//*/
+                });
             } else {
                 refreshFlag = historyFragment.autoState();
                 if (refreshFlag)
@@ -203,8 +204,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
                 // Modify the entire dataset
                 else
                     beaconAdapter.add(data);
-
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -238,7 +237,9 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
     };
 
 
-
+    /* beaconServiceConnection
+    *  Setup polling the beaconservice
+    * */
     private ServiceConnection beaconServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -268,8 +269,6 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
                     }
                 }
             }, 0, TIME_UPDATE) ;
-
-
 
         }
 

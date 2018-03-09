@@ -2,12 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.BeaconManager.ranging">
+    <!--Add these permissions for Bluetooth-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--Use this feature for BLE-->
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <!---->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         tools:replace="android:icon"
         android:allowBackup="true"
@@ -35,11 +38,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.BeaconManager.application.MainActivity"/>
         </activity>
+        <!--ROS Node service-->
         <service android:name="org.ros.android.NodeMainExecutorService">
             <intent-filter>
                 <action android:name="org.ros.android.NodeMainExecutorService"/>
             </intent-filter>
         </service>
+        <!--Needed to allow the application to communicate with BeaconService-->
         <service
             android:name="com.BeaconManager.beaconService.BeaconService"
             android:exported="false">

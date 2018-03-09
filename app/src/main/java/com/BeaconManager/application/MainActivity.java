@@ -44,11 +44,12 @@ import java.util.TimerTask;
 
 
 
-public class MainActivity extends RosActivity implements HistoryFragment.HistoryListener {
+public class MainActivity extends RosActivity  // Extend Activity instead for regular Application usage.
+        implements HistoryFragment.HistoryListener {
     private final String TAG = "Main Activity";
-    private BeaconPublisher publisher;
+    private BeaconPublisher publisher; // Ros
     private IBeaconService mBeaconService = null;
-    private SignalData signalData;
+    private SignalData signalData; // Will be set when the response to the SignalData batch is returned the the service
     private Timer updateTimer;
     private static final long TIME_UPDATE = 500;
 
@@ -56,7 +57,7 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
     private BeaconAdapter beaconAdapter = null;
     private HistoryAdapter historyAdapter = null;
     private FragmentManager fragmentManager;
-    private GraphFragment graphFragment;
+    //private GraphFragment graphFragment;
     private HistoryFragment historyFragment;
     private ScannerFragment scannerFragment;
     private HashMap<String, Boolean> state = new HashMap<>();
@@ -67,19 +68,58 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
         super("Android Beacon Sensor","Beacon Sensor");
     }
 
-    @Override
-    protected void init(NodeMainExecutor nodeMainExecutor) {
-        //super.init(nodeMainExecutor);
-        //publisher = new BeaconPublisher();
-    }
+    /* 1. Create a service connection to handle */
+    private ServiceConnection beaconServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.d("MainActivity", "OnServiceConnected");
+            /* Use the service contract established by IBeaconService.aidl*/
+            mBeaconService = IBeaconService.Stub.asInterface(iBinder);
+            updateTimer = new Timer();
+
+            try {
+                /* Add beacons to whitelist */
+                mBeaconService.whitelistAddress("B0:91:22:EA:3A:05");
+                mBeaconService.whitelistAddress("B0:B4:48:D7:5D:02");
+                mBeaconService.whitelistAddress("B0:91:22:F6:A0:87");
+            } catch (RemoteException e) {
+                Log.e(TAG, e.getMessage());
+            }
+            // Every 500 ms, call last snap
+            updateTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        mBeaconService.signalsStrength(mCallback);
+                        if (historyFragment == null)
+                            return;
+                        if (historyFragment.localiseState())
+                            mBeaconService.localise(mCallback);
+                    } catch (RemoteException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            }, 0, TIME_UPDATE);
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            // Stop all timers if the service disconnects.
+            updateTimer.purge();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /* 2. Create Intent to communication with BeaconService */
         intent = new Intent(this, BeaconService.class);
         startService(intent);
+
+        /* 3. Start the BeaconService and bind it */
         bindService(intent, beaconServiceConnection, Context.BIND_AUTO_CREATE);
 
         if (historyAdapter == null) {
@@ -164,21 +204,14 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
         unbindService(beaconServiceConnection);
     }
 
-
-
+    @Override
+    protected void init(NodeMainExecutor nodeMainExecutor) {
+        //super.init(nodeMainExecutor);
+        //publisher = new BeaconPublisher();
+    }
+    /* 3. Implement the Callbacks */
     private IBeaconServiceCallback mCallback = new IBeaconServiceCallback.Stub() {
         final String TAG = "MainActivity/bscb";
-
-        @Override
-        public void strengthDistanceZeroResponse(long strengthDistanceZero) throws RemoteException {
-            /* Code to handle response from BeaconService */
-        }
-
-        @Override
-        public void pathLossFactorResponse(double pathloss) throws RemoteException {
-            /* Code to handle response */
-        }
-
         /* signalsResponse
         *  returns the latest batch of SignalData
         *
@@ -234,50 +267,19 @@ public class MainActivity extends RosActivity implements HistoryFragment.History
             historyFragment.setLocalPosition(position);
             historyFragment.updateTextViews();
         }
-    };
 
-
-    /* beaconServiceConnection
-    *  Setup polling the beaconservice
-    * */
-    private ServiceConnection beaconServiceConnection = new ServiceConnection() {
         @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            Log.d("MainActivity", "OnServiceConnected");
-            mBeaconService = IBeaconService.Stub.asInterface(iBinder);
-            updateTimer = new Timer();
-
-            try {
-                mBeaconService.whitelistAddress("B0:91:22:EA:3A:05");
-                mBeaconService.whitelistAddress("B0:B4:48:D7:5D:02");
-                mBeaconService.whitelistAddress("B0:91:22:F6:A0:87");
-            } catch (RemoteException e) {
-                Log.e(TAG, e.getMessage());
-            }
-            // Every 500 ms, call last snap
-            updateTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        mBeaconService.signalsStrength(mCallback);
-                        if (historyFragment ==null)
-                            return;
-                        if (historyFragment.localiseState())
-                            mBeaconService.localise(mCallback);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                }
-            }, 0, TIME_UPDATE) ;
-
+        public void strengthDistanceZeroResponse(long strengthDistanceZero) throws RemoteException {
+            /* Code to handle response from BeaconService */
         }
 
         @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            // Stop all timers if the service disconnects.
-            updateTimer.purge();
+        public void pathLossFactorResponse(double pathloss) throws RemoteException {
+            /* Code to handle response */
         }
     };
+
+
 
     @Override
     public void onPositionUpdate(String address, double x, double y) throws RemoteException {

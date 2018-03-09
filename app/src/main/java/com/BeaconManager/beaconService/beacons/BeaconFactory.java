@@ -5,4 +5,5 @@ package com.BeaconManager.beaconService.beacons;
  */
 
 public interface BeaconFactory {
+    public Beacon create(BeaconFactoryParam param);
 }

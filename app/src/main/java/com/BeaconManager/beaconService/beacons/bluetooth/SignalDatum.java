@@ -1,6 +1,7 @@
 package com.BeaconManager.beaconService.beacons.bluetooth;
 
 import android.os.Parcel;
+import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,6 +14,13 @@ import com.BeaconManager.beaconService.location.Position;
  * Created by Kevin on 4/06/2017.
  */
 
+<<<<<<< HEAD
+public class SignalDatum implements Parcelable {
+    private long rssi;
+    private String address;
+    private ParcelUuid id;
+    private String name;
+=======
 public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     protected long rssi;
     protected double distance = 0;
@@ -24,6 +32,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     private final String TAG = getClass().getSimpleName();
 
     /* When extending SignalDatum, always call super first */
+>>>>>>> BeaconRestructure
     protected SignalDatum(Parcel in) {
         rssi = in.readLong();
         id = in.readLong();
@@ -42,7 +51,15 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
 
     public long rssi() { return rssi; }
 
+<<<<<<< HEAD:app/src/main/java/com/BeaconManager/beaconService/beacons/bluetooth/SignalDatum.java
+=======
+<<<<<<< HEAD
+    public SignalDatum(long rssi, String address, ParcelUuid id, String name) {
+=======
+
+>>>>>>> master:app/src/main/java/com/kcasareo/beaconService/beacons/bluetooth/SignalDatum.java
     public SignalDatum(long rssi, String address, long id, String name, Position position) {
+>>>>>>> BeaconRestructure
         this.rssi = rssi;
         this.address = address;
         this.id = id;
@@ -97,7 +114,7 @@ public class SignalDatum implements Parcelable, Comparable<SignalDatum> {
     }
 
     // Returns hashcode of device detected.
-    public long id() {
+    public ParcelUuid id() {
         return id;
     }
 

@@ -37,6 +37,16 @@ public class Bluetooth extends Beacon {
         this.id = device.hashCode();
     }
 
+    public Bluetooth(int identifier, String address, String name, Position position) {
+        super();
+        this.strengths = new ArrayList<>();
+        this.identifier = identifier;
+        this.address = address;
+        this.name = name;
+        this.position = position;
+
+    }
+
     public Bluetooth(BluetoothDevice device, Localiser localiser) {
         this(device);
         setLocaliser(localiser);

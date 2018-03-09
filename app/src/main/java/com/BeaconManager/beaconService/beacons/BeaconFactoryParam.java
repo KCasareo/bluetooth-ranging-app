@@ -5,4 +5,5 @@ package com.BeaconManager.beaconService.beacons;
  */
 
 public interface BeaconFactoryParam {
+    public BEACON_TYPE type();
 }

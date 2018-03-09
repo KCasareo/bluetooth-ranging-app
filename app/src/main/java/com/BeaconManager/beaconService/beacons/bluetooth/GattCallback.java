@@ -63,7 +63,7 @@ public class GattCallback extends BluetoothGattCallback {
 
     @Override
     public void onReadRemoteRssi(BluetoothGatt gatt, int rssi, int status) {
-<<<<<<< HEAD
+/*<<<<<<< HEAD
         Log.d(TAG, "Read Remote RSSI");
         //super.onReadRemoteRssi(gatt, rssi, status);
         Log.d(TAG, "RSSI : " + rssi);
@@ -71,7 +71,7 @@ public class GattCallback extends BluetoothGattCallback {
         // When this object calls back, set the received signal strength value.
         this.beacon.setSignalStrength((long)rssi);
     }
-=======
+//=======*/
         Log.d(TAG, "Read Remote RSSI " + rssi);
         super.onReadRemoteRssi(gatt, rssi, status);
         /*
@@ -85,32 +85,12 @@ public class GattCallback extends BluetoothGattCallback {
         }
         this.beacon.setSignalStrength(rssi);
         //Get the last delay
->>>>>>> BeaconRestructure
+//>>>>>>> BeaconRestructure
 
     }
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         super.onConnectionStateChange(gatt, status, newState);
-<<<<<<< HEAD
-        if(status == GATT_SUCCESS) {
-            Log.i(TAG, "Successful connection");
-        }
-        /* //This crashes things
-        if (newState == BluetoothProfile.STATE_CONNECTED) {
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    beacon.poll();
-                }
-            };
-
-            mRssiTimer = new Timer();
-            mRssiTimer.schedule(task, 1000, 2000);
-        } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-            mRssiTimer.cancel();
-        }
-        //*/
-=======
         String intentAction;
         Log.i(TAG, "Changed");
         if (newState == BluetoothProfile.STATE_CONNECTED) {
@@ -130,7 +110,7 @@ public class GattCallback extends BluetoothGattCallback {
             Log.d(TAG, "Discovered Services.");
 
         }
->>>>>>> BeaconRestructure
+//>>>>>>> BeaconRestructure
     }
 
 
